@@ -1,7 +1,11 @@
+import DefaultLayout from './layout/defaultLayout';
+
 function App() {
-  return <div className="App">
-    
-  </div>;
+  return (
+    <div>
+      <DefaultLayout />
+    </div>
+  );
 }
 
 export default App;
