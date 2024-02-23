@@ -5,17 +5,17 @@ import CssBaseline from '@mui/material/CssBaseline';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@mui/material';
 import { theme } from './theme';
-import { BrowserRouter } from 'react-router-dom';
+import {  RouterProvider } from 'react-router-dom';
 import GlobalStyle from 'components/GlobalStyle/GlobalStyle';
+import router from 'routers';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeProvider theme={theme}>
-    <BrowserRouter>
-      <GlobalStyle />
-      <App />
-      <CssBaseline />
-    </BrowserRouter>
+    <GlobalStyle />
+    <RouterProvider router={router} />
+    <App />
+    <CssBaseline />
   </ThemeProvider>
 );
 

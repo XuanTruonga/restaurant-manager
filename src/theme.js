@@ -1,6 +1,5 @@
 import { createTheme } from '@mui/material';
 
-
 export const theme = createTheme({
   palette: {
     primary: {
@@ -17,8 +16,8 @@ export const theme = createTheme({
     }
   },
 
-
   restaurants: {
-    appBarHeight:'56px'
+    appBarHeight: '56px',
+    boxMenuHeight: '596px'
   }
 });

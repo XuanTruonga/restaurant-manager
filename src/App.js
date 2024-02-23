@@ -1,11 +1,6 @@
-import DefaultLayout from './layout/defaultLayout';
 
 function App() {
-  return (
-    <div>
-      <DefaultLayout />
-    </div>
-  );
+  return <div></div>;
 }
 
 export default App;

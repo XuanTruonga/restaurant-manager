@@ -1,11 +1,11 @@
-import { Box, Grid, Stack, Typography } from '@mui/material';
+import { Box, Grid, Stack } from '@mui/material';
 import React from 'react';
 import { DASHBOARD } from '../utils/constants';
 import { theme } from '../theme';
 import MenuItem from './components/MenuItem';
 import Header from './components/Header';
 
-const DefaultLayout = () => {
+const DefaultLayout = ({children}) => {
   return (
     <Box
       sx={{
@@ -30,7 +30,7 @@ const DefaultLayout = () => {
                     overflow: 'hidden',
                     backgroundColor: theme.palette.primary.main,
                     borderRadius: '22px',
-                    height: '590px',
+                    height: theme.restaurants.boxMenuHeight,
                     overflowY: 'auto',
                     pt: '4px'
                   }}>
@@ -45,7 +45,7 @@ const DefaultLayout = () => {
               </Stack>
             </Grid>
             <Grid item xs={6} md={10}>
-              <Typography>xs=6 md=8</Typography>
+              {children}
             </Grid>
           </Grid>
         </Box>

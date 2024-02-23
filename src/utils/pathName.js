@@ -5,5 +5,8 @@ export const pathName = {
   eating: 'mon-an',
   bill: 'hoa-don',
   personnel: 'nhan-vien',
-  Timekeeping: 'cham-cong'
+  Timekeeping: 'cham-cong',
+  payroll: 'bang-luong',
+  introduce:'gioi-thieu',
+  account:'tai-khoan'
 };

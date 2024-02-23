@@ -9,6 +9,7 @@ import HiveIcon from '@mui/icons-material/Hive';
 import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import PlaceIcon from '@mui/icons-material/Place';
+import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 
 export const DASHBOARD = [
   {
@@ -53,8 +54,13 @@ export const DASHBOARD = [
   },
   {
     id: 9,
-    name: 'Website',
+    name: 'Giới thiệu',
     icon: MapsHomeWorkIcon
+  },
+  {
+    id: 10,
+    name: 'Tài khoản',
+    icon: SwitchAccountIcon
   }
 ];
 
