@@ -4,19 +4,23 @@ import App from './App';
 import CssBaseline from '@mui/material/CssBaseline';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@mui/material';
-import { theme } from './theme';
-import {  RouterProvider } from 'react-router-dom';
+import { theme } from './@Core/Theme/theme';
+import { RouterProvider } from 'react-router-dom';
 import GlobalStyle from 'components/GlobalStyle/GlobalStyle';
-import router from 'routers';
+import router from 'routers/routers';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const queryClient = new QueryClient();
 root.render(
-  <ThemeProvider theme={theme}>
-    <GlobalStyle />
-    <RouterProvider router={router} />
-    <App />
-    <CssBaseline />
-  </ThemeProvider>
+  <QueryClientProvider client={queryClient}>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <RouterProvider router={router} />
+      <App />
+      <CssBaseline />
+    </ThemeProvider>
+  </QueryClientProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

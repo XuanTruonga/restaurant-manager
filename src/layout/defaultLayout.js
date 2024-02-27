@@ -1,11 +1,14 @@
 import { Box, Grid, Stack } from '@mui/material';
 import React from 'react';
-import { DASHBOARD } from '../utils/constants';
-import { theme } from '../theme';
-import MenuItem from './components/MenuItem';
+import { theme } from '../@Core/Theme/theme';
+import { DASHBOARD } from 'utils/constants/dashBoard';
 import Header from './components/Header';
+import MenuItem from './components/MenuItem';
+import { useLocation } from 'react-router-dom';
 
-const DefaultLayout = ({children}) => {
+const DefaultLayout = ({ children }) => {
+  const { pathname } = useLocation();
+
   return (
     <Box
       sx={{
@@ -28,16 +31,15 @@ const DefaultLayout = ({children}) => {
                 <Box
                   sx={{
                     overflow: 'hidden',
-                    backgroundColor: theme.palette.primary.main,
+                    backgroundColor: theme.palette.primary.bold,
                     borderRadius: '22px',
                     height: theme.restaurants.boxMenuHeight,
-                    overflowY: 'auto',
-                    pt: '4px'
+                    overflowY: 'auto'
                   }}>
                   {DASHBOARD.map((item) => {
                     return (
                       <Box key={item.id}>
-                        <MenuItem item={item} />
+                        <MenuItem item={item} pathname={pathname} />
                       </Box>
                     );
                   })}

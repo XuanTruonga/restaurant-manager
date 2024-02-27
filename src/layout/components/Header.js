@@ -1,9 +1,9 @@
 import { Box, Typography } from '@mui/material';
-import { theme } from '../../theme';
+import { theme } from '../../@Core/Theme/theme';
 import React from 'react';
-import { APP_BAR } from '../../utils/constants';
 import imgs from '../../assets/img';
 import { Link } from 'react-router-dom';
+import { APP_BAR } from 'utils/constants/appBar';
 
 const BoxSX = {
   display: 'flex',
@@ -65,6 +65,5 @@ const Header = () => {
     </Box>
   );
 };
-
 
 export default Header;
