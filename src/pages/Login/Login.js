@@ -1,13 +1,27 @@
 /* eslint-disable jsx-a11y/alt-text */
 import TitleLogo from '@Core/components/TitleLogo';
-import InputCustom from '@Core/customs/InputCustom';
-import { Box, Stack, Typography, styled } from '@mui/material';
+import { Box, Button, Stack, Typography, styled } from '@mui/material';
 import imgs from 'assets/img';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { theme } from '@Core/Theme/theme';
+import ControllerInput from '@Core/components/input/ControllerInput';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import validateFormLogin from './validateFormLogin';
+import ErrorMessageForm from '@Core/components/ErrorMessageForm';
 
 const Login = () => {
+  const [error, setError] = useState(false);
+  const { control, handleSubmit } = useForm({
+    resolver: yupResolver(validateFormLogin)
+  });
+  const onSubmit = (value) => {
+    console.log(value);
+    if (value) {
+      setError(true);
+    }
+  };
   return (
     <Stack>
       <WrapperLogin>
@@ -22,53 +36,61 @@ const Login = () => {
           }}>
           <Box>
             <TitleLogo />
-            <Typography variant='font_14_medium' sx={{ textAlign: 'center' }}>
+            <Typography sx={{ fontSize: theme.typography.font_14_medium, textAlign: 'center' }}>
               Đăng nhập
             </Typography>
           </Box>
           {/*  */}
-          <Box sx={{ p: '25px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            <InputCustom placeholder='Tên gian hàng' />
-            <InputCustom placeholder='Mật khẩu' />
-          </Box>
-          {/*  */}
-          <Box sx={{ display: 'flex', px: '25px' }}>
-            <Link>
-              <Typography
-                variant='font_14_base'
-                sx={{
-                  borderRight: '1px solid #ccc',
-                  pr: '12px',
-                  '&:hover': { color: theme.palette.secondary.main }
-                }}>
-                Quên mật khẩu?
-              </Typography>
-            </Link>
-            <Link to={'/dang-ky'}>
-              <Typography
-                variant='font_14_base'
-                sx={{
-                  pl: '12px',
-                  '&:hover': { color: theme.palette.secondary.main }
-                }}>
-                Đăng ký
-              </Typography>
-            </Link>
-          </Box>
-
-          <Typography
-            variant='font_16_semibold'
-            sx={{
-              p: '14px',
-              mt: '28px',
-              textAlign: 'center',
-              bgcolor: theme.palette.primary.main,
-              color: theme.palette.primary.contrastText,
-              cursor: 'pointer',
-              '&:hover': { backgroundColor: theme.palette.primary.dark }
-            }}>
-            Đăng nhập
-          </Typography>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Box sx={{ p: '25px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <ControllerInput control={control} name='account' placeholder='Tên đăng nhâp' />
+              <ControllerInput control={control} name='password' placeholder='Nhập mật khẩu' />
+            </Box>
+            {/*  */}
+            <Box sx={{ display: 'flex', px: '25px', mb: '26px' }}>
+              <Link>
+                <Typography
+                  sx={{
+                    fontSize: theme.typography.font_14_base,
+                    borderRight: '1px solid #ccc',
+                    pr: '12px',
+                    '&:hover': { color: theme.palette.secondary.main }
+                  }}>
+                  Quên mật khẩu?
+                </Typography>
+              </Link>
+              <Link to={'/dang-ky'}>
+                <Typography
+                  sx={{
+                    fontSize: theme.typography.font_14_base,
+                    pl: '12px',
+                    '&:hover': { color: theme.palette.secondary.main }
+                  }}>
+                  Đăng ký
+                </Typography>
+              </Link>
+            </Box>
+            <Box sx={{ textAlign: 'center' }}>
+              <ErrorMessageForm error={error} message='Tài khoản hoặc mật khẩu không chính xác' />
+            </Box>
+            <Button
+              type='submit'
+              sx={{
+                borderTopLeftRadius: '0px',
+                borderTopRightRadius: '0px',
+                width: '100%',
+                fontSize: theme.typography.font_16_semibold,
+                p: '14px',
+                mt: '6px',
+                textAlign: 'center',
+                bgcolor: theme.palette.primary.main,
+                color: theme.palette.primary.contrastText,
+                cursor: 'pointer',
+                '&:hover': { backgroundColor: theme.palette.primary.dark }
+              }}>
+              Đăng nhập
+            </Button>
+          </form>
         </Box>
       </WrapperLogin>
     </Stack>

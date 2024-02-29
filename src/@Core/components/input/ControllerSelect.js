@@ -1,30 +1,55 @@
-import { MenuItem, Select, Typography } from '@mui/material';
-import { theme } from 'flowbite-react';
-import React, { Fragment } from 'react';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { theme } from '@Core/Theme/theme';
+import React, { Fragment, useState } from 'react';
 import { Controller } from 'react-hook-form';
+import Required from '../Required';
+import ErrorMessageForm from '../ErrorMessageForm';
 
 const ControllerSelect = (props) => {
-  const { control, name, sx, label, placeholder } = props;
+  const { control, name, sx, label, placeholder, titleMenu, listMenu, path, required } = props;
+  const [value, setValue] = useState('');
+
   return (
     <Controller
       control={control}
       name={name}
-      render={({ field, fieldState: error }) => {
+      render={({ field: { onChange, onBlur }, fieldState: { error } }) => {
         return (
           <Fragment>
-            <Select {...field} placeholder={placeholder} labelId={name} sx={sx} size='small' label={label}>
-              <MenuItem value='' sx={{ fontSize: theme.typography.fontSize }}>
-                <em>Chọn tỉnh thành phố?</em>
-              </MenuItem>
-              {}
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-            {error && (
-              <Typography variant='font_12_base' sx={{ mt: '4px', ml: '6px', color: theme.palette.error.main }}>
-                {error?.message}
-              </Typography>
-            )}
+            <FormControl sx={{ minWidth: 120, width: '100%' }}>
+              <InputLabel
+                size='small'
+                sx={{ fontSize: theme.typography.fontSize, top: '1px' }}
+                id='demo-simple-select-helper-label'>
+                {label}
+                {required && <Required />}
+              </InputLabel>
+              <Select
+                {...onBlur}
+                placeholder={placeholder}
+                labelId={name}
+                sx={sx}
+                size='small'
+                label={label}
+                value={value}
+                onChange={(e) => {
+                  onChange(e.target.value);
+                  setValue(e.target.value);
+                }}>
+                <MenuItem value='' sx={{ fontSize: theme.typography.fontSize }}>
+                  <em>{titleMenu}</em>
+                </MenuItem>
+                {listMenu &&
+                  listMenu.map((item, index) => {
+                    return (
+                      <MenuItem key={index} value={item[path]}>
+                        {item[path]}
+                      </MenuItem>
+                    );
+                  })}
+              </Select>
+             <ErrorMessageForm error={error}/>
+            </FormControl>
           </Fragment>
         );
       }}

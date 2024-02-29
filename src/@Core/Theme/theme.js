@@ -10,6 +10,14 @@ export const theme = createTheme({
   },
   typography: typography,
   components: {
+    MuiTypography:{
+      styleOverrides:{
+        root:{
+          fontSize:'inherit'
+        }
+      }
+    }
+    ,
     MuiTextField: {
       defaultProps: {
         variant: 'outlined',
@@ -19,16 +27,20 @@ export const theme = createTheme({
         root: {
           borderWidth: '1px !important',
           outline: '1px !important',
-          '&.MuiInputBase-input': {
+          '.MuiInputLabel-root': {
             fontSize: '15px'
           },
-          '.MuiInputLabel-root': {
-            fontSize: '15px',
-            marginLeft: '5px'
-          },
+          '.MuiOutlinedInput-root': { fontSize: '15px' },
           '.MuiInputBase-input': {
             fontSize: '15px'
           }
+        }
+      }
+    },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          '&.MuiInputBase-root': { fontSize: '15px' }
         }
       }
     },
@@ -37,6 +49,11 @@ export const theme = createTheme({
         root: {
           '&.MuiMenuItem-root': { fontSize: '15px' }
         }
+      }
+    },
+    MuiMenu: {
+      styleOverrides: {
+        root: { '.MuiMenu-list': { maxHeight: '288px' } }
       }
     }
   }

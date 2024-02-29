@@ -1,4 +1,4 @@
-import Register from 'layout/Register/Register';
+import Register from 'pages/Register/Register';
 import Account from 'pages/Account/Account';
 import Bill from 'pages/Bill/Bill';
 import Cashier from 'pages/Cashier/Cashier';
