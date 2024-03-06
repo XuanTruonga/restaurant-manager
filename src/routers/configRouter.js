@@ -1,19 +1,22 @@
-import Register from 'pages/Register/Register';
-import Account from 'pages/Account/Account';
-import Bill from 'pages/Bill/Bill';
-import Cashier from 'pages/Cashier/Cashier';
-import DiningRoom from 'pages/DiningRoom/DiningRoom';
-import Eating from 'pages/Eating/Eating';
-import Introduce from 'pages/Introduce/Introduce';
-import Login from 'pages/Login/Login';
-import Payroll from 'pages/Payroll/Payroll';
-import Personnel from 'pages/Personnel/Personnel';
-import Receptionist from 'pages/Receptionist/Receptionist';
-import Timekeeping from 'pages/Timekeeping/Timekeeping';
-
 /* eslint-disable no-sparse-arrays */
+
+import Loaded from './components/Loaded';
+import { lazy } from 'react';
+
 const { default: DefaultLayout } = require('layout/DefaultLayout');
 const { pathName } = require('utils/constants/pathName');
+const Register = Loaded(lazy(() => import('pages/Register/Register')));
+const Bill = Loaded(lazy(() => import('pages/Bill/Bill')));
+const Account = Loaded(lazy(() => import('pages/DiningRoom/DiningRoom')));
+const Eating = Loaded(lazy(() => import('pages/Eating/Eating')));
+const Introduce = Loaded(lazy(() => import('pages/Introduce/Introduce')));
+const Login = Loaded(lazy(() => import('pages/Login/Login')));
+const Payroll = Loaded(lazy(() => import('pages/Payroll/Payroll')));
+const Personnel = Loaded(lazy(() => import('pages/Personnel/Personnel')));
+const Receptionist = Loaded(lazy(() => import('pages/Receptionist/Receptionist')));
+const Timekeeping = Loaded(lazy(() => import('pages/Timekeeping/Timekeeping')));
+const Cashier = Loaded(lazy(() => import('pages/Cashier/Cashier')));
+const DiningRoom = Loaded(lazy(() => import('pages/DiningRoom/DiningRoom')));
 
 export const configRouter = [
   {

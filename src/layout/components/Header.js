@@ -22,7 +22,7 @@ const BoxSX = {
 
 const Header = () => {
   return (
-    <Box backgroundColor='#fff'>
+    <Box backgroundColor='#fff' >
       <Box
         sx={{
           display: 'flex',
