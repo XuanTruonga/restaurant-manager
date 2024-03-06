@@ -177,6 +177,8 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
 
+
+
           <TableBody>
             {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
               return (
