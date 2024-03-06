@@ -106,9 +106,6 @@ const data = [
     numericalOrder: '1'
   },
   
-
-
-
   {
     diningRoom: 'HTA',
     note: 'ok ban oi',
@@ -133,8 +130,6 @@ const data = [
     status: 'đang hoạt động',
     numericalOrder: '1'
   },
-
-
 
   
   {
