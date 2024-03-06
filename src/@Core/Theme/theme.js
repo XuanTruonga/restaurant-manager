@@ -6,18 +6,18 @@ export const theme = createTheme({
   palette: palette,
   restaurants: {
     appBarHeight: '56px',
-    boxMenuHeight: '596px'
+    boxMenuHeight: '589px',
+    heightTable: '526px'
   },
   typography: typography,
   components: {
-    MuiTypography:{
-      styleOverrides:{
-        root:{
-          fontSize:'inherit'
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontSize: 'inherit'
         }
       }
-    }
-    ,
+    },
     MuiTextField: {
       defaultProps: {
         variant: 'outlined',
@@ -54,6 +54,14 @@ export const theme = createTheme({
     MuiMenu: {
       styleOverrides: {
         root: { '.MuiMenu-list': { maxHeight: '288px' } }
+      }
+    },
+    MuiTablePagination: {
+      styleOverrides: {
+        root: {
+          '& .MuiTablePagination-selectLabel': { fontSize: 'inherit' },
+          '& .MuiTablePagination-displayedRows': { fontSize: 'inherit' }
+        }
       }
     }
   }

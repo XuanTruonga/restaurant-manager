@@ -20,8 +20,7 @@ const DefaultLayout = ({ children }) => {
         sx={{
           backgroundColor: theme.palette.grey[200],
           borderRadius: '8px',
-          overflow: 'hidden',
-          height: '-webkit-fill-available'
+          overflow: 'hidden'
         }}>
         <Header />
         <Box sx={{ p: '14px 40px' }}>
@@ -47,7 +46,7 @@ const DefaultLayout = ({ children }) => {
               </Stack>
             </Grid>
             <Grid item xs={6} md={10}>
-              {children}
+              <Box sx={{ height: theme.restaurants.boxMenuHeight, mt: '6px' }}>{children}</Box>
             </Grid>
           </Grid>
         </Box>
