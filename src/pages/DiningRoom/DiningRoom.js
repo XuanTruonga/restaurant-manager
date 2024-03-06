@@ -108,31 +108,35 @@ const data = [
   
 
 
+
+  {
+    diningRoom: 'HTA',
+    note: 'ok ban oi',
+    area: 'khu vuc 1',
+    quantitySeats: '5',
+    status: 'đang hoạt động',
+    numericalOrder: '1'
+  },
+  {
+    diningRoom: 'HTA',
+    note: 'ok ban oi',
+    area: 'khu vuc 1',
+    quantitySeats: '5',
+    status: 'đang hoạt động',
+    numericalOrder: '1'
+  },
+  {
+    diningRoom: 'HTA',
+    note: 'ok ban oi',
+    area: 'khu vuc 1',
+    quantitySeats: '5',
+    status: 'đang hoạt động',
+    numericalOrder: '1'
+  },
+
+
+
   
-  {
-    diningRoom: 'HTA',
-    note: 'ok ban oi',
-    area: 'khu vuc 1',
-    quantitySeats: '5',
-    status: 'đang hoạt động',
-    numericalOrder: '1'
-  },
-  {
-    diningRoom: 'HTA',
-    note: 'ok ban oi',
-    area: 'khu vuc 1',
-    quantitySeats: '5',
-    status: 'đang hoạt động',
-    numericalOrder: '1'
-  },
-  {
-    diningRoom: 'HTA',
-    note: 'ok ban oi',
-    area: 'khu vuc 1',
-    quantitySeats: '5',
-    status: 'đang hoạt động',
-    numericalOrder: '1'
-  },
   {
     diningRoom: 'HTA',
     note: 'ok ban oi',
