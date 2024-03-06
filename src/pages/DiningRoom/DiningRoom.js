@@ -179,12 +179,7 @@ export default function StickyHeadTable() {
               ))}
             </TableRow>
           </TableHead>
-
-
-
-
-
-
+ <p></p>
 
 
 
