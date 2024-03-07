@@ -1,9 +1,7 @@
-/* eslint-disable no-sparse-arrays */
-
+import DefaultLayout from 'layout/DefaultLayout';
 import Loaded from './components/Loaded';
 import { lazy } from 'react';
 
-const { default: DefaultLayout } = require('layout/DefaultLayout');
 const { pathName } = require('utils/constants/pathName');
 const Register = Loaded(lazy(() => import('pages/Register/Register')));
 const Bill = Loaded(lazy(() => import('pages/Bill/Bill')));
