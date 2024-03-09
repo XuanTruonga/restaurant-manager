@@ -1,35 +1,10 @@
 import CoreTable from '@Core/components/table/CoreTable';
-import { createColumnHelper } from '@tanstack/react-table';
+import { columnsDinningRoom } from './utils/columnsDinningRoom';
+import { Fragment } from 'react';
+import BasicModal from 'components/Modal/BasicModal';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../redux/modalSlice';
 
-export const columnHelper = createColumnHelper();
-
-const columns = [
-  columnHelper.accessor('diningRoom', {
-    header: 'Tên phòng bàn',
-    minWidth: 150
-  }),
-  {
-    accessorKey: 'note',
-    header: 'Ghi chú',
-    minWidth: 250
-  },
-  columnHelper.accessor('area', {
-    header: 'Khu vực',
-    minWidth: 150
-  }),
-  columnHelper.accessor('quantitySeats', {
-    header: 'Số ghế',
-    minWidth: 100
-  }),
-  columnHelper.accessor('status', {
-    header: 'Trạng thái',
-    minWidth: 150
-  }),
-  columnHelper.accessor((row, index) => index + 1, {
-    header: 'STT',
-    minWidth: 100
-  })
-];
 const data = [
   {
     diningRoom: 'HTA',
@@ -72,7 +47,7 @@ const data = [
     numericalOrder: '1'
   },
   {
-    diningRoom: 'HTA',
+    diningRoom: 'HTB',
     note: 'ok ban oi',
     area: 'khu vuc 1',
     quantitySeats: '5',
@@ -80,7 +55,7 @@ const data = [
     numericalOrder: '1'
   },
   {
-    diningRoom: 'HTA',
+    diningRoom: 'HTC',
     note: 'ok ban oi',
     area: 'khu vuc 1',
     quantitySeats: '5',
@@ -88,7 +63,7 @@ const data = [
     numericalOrder: '1'
   },
   {
-    diningRoom: 'HTA',
+    diningRoom: 'HTD',
     note: 'ok ban oi',
     area: 'khu vuc 1',
     quantitySeats: '5',
@@ -97,7 +72,7 @@ const data = [
   },
 
   {
-    diningRoom: 'HTA',
+    diningRoom: 'HTE',
     note: 'ok ban oi',
     area: 'khu vuc 1',
     quantitySeats: '5',
@@ -105,7 +80,7 @@ const data = [
     numericalOrder: '1'
   },
   {
-    diningRoom: 'HTA',
+    diningRoom: 'HTF',
     note: 'ok ban oi',
     area: 'khu vuc 1',
     quantitySeats: '5',
@@ -113,9 +88,9 @@ const data = [
     numericalOrder: '1'
   },
   {
-    diningRoom: 'HTA',
+    diningRoom: 'HTG',
     note: 'ok ban oi',
-    area: 'khu vuc 1',
+    area: 'khu vuc 8',
     quantitySeats: '5',
     status: 'đang hoạt động',
     numericalOrder: '1'
@@ -132,7 +107,17 @@ const data = [
 ];
 
 const DiningRoom = () => {
-  return <CoreTable columns={columns} data={data} />;
+  const dispath = useDispatch();
+
+  const handleChange = (row) => {
+    dispath(openModal());
+  };
+  return (
+    <Fragment>
+      <CoreTable columns={columnsDinningRoom} data={data} onClick={handleChange} />
+      <BasicModal title={'Thêm phòng/bàn'} />
+    </Fragment>
+  );
 };
 
 export default DiningRoom;

@@ -1,9 +1,11 @@
 import { theme } from '@Core/Theme/theme';
 import { Skeleton, TableBody, TableCell, TableRow, styled } from '@mui/material';
-import { flexRender } from '@tanstack/react-table';
+import { createColumnHelper, flexRender } from '@tanstack/react-table';
+
+export const columnHelper = createColumnHelper();
 
 function CoreTableBody(props) {
-  const { table, isLoading } = props;
+  const { table, isLoading, onClick } = props;
 
   const renderTableBody = () => {
     const { rows } = table && table.getRowModel();
@@ -13,7 +15,7 @@ function CoreTableBody(props) {
         <TableRow key={index}>
           {row.getVisibleCells().map((cell, index) => (
             <TableCell key={index}>
-              <Skeleton variant='rectangular' width='100%' height={25} />
+              <Skeleton variant='rectangular' width='100%' height={15} />
             </TableCell>
           ))}
         </TableRow>
@@ -32,6 +34,7 @@ function CoreTableBody(props) {
 
     return rows.map((row, index) => (
       <StyleTableRow
+        onClick={() => onClick(row.original)}
         key={index}
         sx={{
           '&:hover': {

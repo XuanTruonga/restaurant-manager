@@ -9,19 +9,23 @@ import { RouterProvider } from 'react-router-dom';
 import GlobalStyle from 'components/GlobalStyle/GlobalStyle';
 import router from 'routers/routers';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import './index.css'
+import './index.css';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const queryClient = new QueryClient();
 root.render(
-  <QueryClientProvider client={queryClient}>
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <RouterProvider router={router} />
         <App />
         <CssBaseline />
       </ThemeProvider>
-  </QueryClientProvider>
+    </QueryClientProvider>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

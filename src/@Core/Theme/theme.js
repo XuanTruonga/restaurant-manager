@@ -6,8 +6,8 @@ export const theme = createTheme({
   palette: palette,
   restaurants: {
     appBarHeight: '56px',
-    boxMenuHeight: '589px',
-    heightTable: '526px'
+    boxMenuHeight: '620px',
+    heightTable: '530px'
   },
   typography: typography,
   components: {

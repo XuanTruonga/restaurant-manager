@@ -12,18 +12,15 @@ const DefaultLayout = ({ children }) => {
   return (
     <Box
       sx={{
-        padding: '24px',
         height: '100vh',
-        backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main} ,${theme.palette.primary.dark})`
+        overflow: 'hidden'
       }}>
       <Box
         sx={{
-          backgroundColor: theme.palette.grey[200],
-          borderRadius: '8px',
-          overflow: 'hidden'
+          backgroundColor: theme.palette.grey[200]
         }}>
         <Header />
-        <Box sx={{ p: '14px 40px' }}>
+        <Box sx={{ p: '20px 40px', height: '100vh' }}>
           <Grid container spacing={3}>
             <Grid item xs={6} md={2}>
               <Stack>
@@ -31,7 +28,7 @@ const DefaultLayout = ({ children }) => {
                   sx={{
                     overflow: 'hidden',
                     backgroundColor: theme.palette.primary.bold,
-                    borderRadius: '22px',
+                    borderRadius: '14px',
                     height: theme.restaurants.boxMenuHeight,
                     overflowY: 'auto'
                   }}>
@@ -46,7 +43,7 @@ const DefaultLayout = ({ children }) => {
               </Stack>
             </Grid>
             <Grid item xs={6} md={10}>
-              <Box sx={{ height: theme.restaurants.boxMenuHeight, mt: '6px' }}>{children}</Box>
+              <Box sx={{ height: theme.restaurants.boxMenuHeight }}>{children}</Box>
             </Grid>
           </Grid>
         </Box>
