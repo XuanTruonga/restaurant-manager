@@ -4,7 +4,7 @@ import TableRow from '@mui/material/TableRow';
 import { flexRender } from '@tanstack/react-table';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, styled } from '@mui/material';
 import { theme } from '@Core/Theme/theme';
 
 const CoreTableHeader = (props) => {
@@ -12,15 +12,13 @@ const CoreTableHeader = (props) => {
   const dataHeader = table.getHeaderGroups()[0].headers;
   return (
     <TableHead>
-      <TableRow>
-        {dataHeader.map((header) => {
+      <StyleTableRow>
+        {dataHeader.map((header, index) => {
           const cellColumn = header.column.columnDef;
           return (
-            <TableCell sx={{ bgcolor: theme.palette.primary.light }}>
+            <TableCell key={index} sx={{ bgcolor: theme.palette.primary.light, fontWeight: '700' }}>
               <Box
                 onClick={header.column.getToggleSortingHandler()}
-                key={cellColumn.id}
-                align={cellColumn.align}
                 style={{
                   backgroundColor: theme.palette.primary.light,
                   minWidth: cellColumn.minWidth,
@@ -42,9 +40,15 @@ const CoreTableHeader = (props) => {
             </TableCell>
           );
         })}
-      </TableRow>
+      </StyleTableRow>
     </TableHead>
   );
 };
+
+const StyleTableRow = styled(TableRow)(() => ({
+  '& .MuiTableCell-root': {
+    padding: '12px 15px'
+  }
+}));
 
 export default CoreTableHeader;

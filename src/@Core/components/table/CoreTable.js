@@ -3,61 +3,96 @@ import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
-import TablePagination from '@mui/material/TablePagination';
 import { theme } from '@Core/Theme/theme';
-import { getCoreRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
+import {
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable
+} from '@tanstack/react-table';
 import { useMemo } from 'react';
 import CoreTableBody from '@Core/components/table/CoreTableBody';
 import CoreTableHeader from '@Core/components/table/CoreTableHeader';
+import DebouncedInput from '../../../components/DebouncedInput/DebouncedInput';
+import { Box, MenuItem, Pagination, Select } from '@mui/material';
+import useSearchParamsHook from 'components/hook/useSearchParamsHook';
 
 export default function CoreTable(props) {
-  const { columns, data, isLoading } = props;
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const { columns, data, isLoading, isPagination = true, dataPagination, onClick } = props;
   const [sorting, setSorting] = React.useState();
+  const [filtering, setFiltering] = React.useState();
+  const [totalPage, setTotalPage] = React.useState(1);
+
   const finalColumn = useMemo(() => columns, []);
   const finalData = useMemo(() => data, []);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  const { setParams } = useSearchParamsHook();
 
   const tableInstance = useReactTable({
     columns: finalColumn,
     data: finalData,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    state: {
-      sorting: sorting
-    },
-    onSortingChange: setSorting
-  });
+    getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
 
+    state: {
+      sorting: sorting,
+      globalFilter: filtering
+    },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setFiltering
+  });
+  React.useEffect(() => {
+    if (!isLoading) {
+      setTotalPage(dataPagination?.total_page);
+    }
+  }, [isLoading]);
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+      <Box sx={{ p: '10px' }}>
+        <DebouncedInput value='' onChange={(value) => setFiltering(value)} placeholder={`Search... `} />
+      </Box>
       <TableContainer sx={{ maxHeight: theme.restaurants.heightTable }}>
         <Table stickyHeader>
           <CoreTableHeader table={tableInstance} />
-          <CoreTableBody table={tableInstance} isLoading={isLoading} />
+          <CoreTableBody table={tableInstance} isLoading={isLoading} onClick={onClick} />
         </Table>
       </TableContainer>
-      <TablePagination
-        sx={{ fontSize: theme.typography.font_14_base, color: theme.palette.grey[600], padding: '4px !important' }}
-        rowsPerPageOptions={[10, 15, 30]}
-        component='div'
-        count={data.length}
-        labelRowsPerPage='Số bản ghi:'
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        labelDisplayedRows={({ from, to, count }) => `Hiển thị ${from} - ${to} trên tổng số ${count} phòng/bàn`}
-      />
+      {isPagination && (
+        <Box
+          sx={() => ({
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            px: 1.5,
+            py: 1,
+            gap: 4,
+            backgroundColor: '#FFFFFF',
+            borderTop: '1px solid #D1D5DB'
+          })}>
+          <Box>
+            <Select
+              sx={{ width: 70, borderRadius: '12px', fontSize: '14px' }}
+              size='small'
+              variant='outlined'
+              value={dataPagination?.limit || 10}
+              onChange={(e) => {
+                setParams('limit', e.target.value);
+              }}>
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={20}>20</MenuItem>
+              <MenuItem value={30}>30</MenuItem>
+            </Select>
+          </Box>
+          <Pagination
+            onChange={(_, page) => setParams('page', String(page))}
+            count={totalPage}
+            page={dataPagination?.page}
+            siblingCount={1}
+          />
+        </Box>
+      )}
     </Paper>
   );
 }
