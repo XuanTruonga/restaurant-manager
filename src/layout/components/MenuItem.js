@@ -13,8 +13,8 @@ const MenuItem = (props) => {
           pathname === item.link ? { backgroundColor: theme.palette.primary.dark, borderBottom: '1px solid' } : {}
         }>
         <ItemMenu>
-          <Box sx={{ display: 'flex' }}>{<Icon />}</Box>
-          <Box>{item.name}</Box>
+          <Box sx={{ display: 'flex', height: '23px' }}>{<Icon />}</Box>
+          <Box sx={{ fontSize: theme.typography.font_14_medium, textWrap: 'nowrap' }}>{item.name}</Box>
         </ItemMenu>
       </Box>
     </Link>
@@ -24,7 +24,7 @@ const ItemMenu = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '8px',
-  padding: '16px',
+  padding: '11px',
   cursor: 'pointer',
   color: theme.palette.primary.contrastText,
   '&:hover': {

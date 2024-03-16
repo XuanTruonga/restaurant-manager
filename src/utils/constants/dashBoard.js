@@ -1,5 +1,4 @@
 import PersonIcon from '@mui/icons-material/Person';
-import ConnectedTvIcon from '@mui/icons-material/ConnectedTv';
 import BorderAllIcon from '@mui/icons-material/BorderAll';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -10,6 +9,7 @@ import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import { pathName } from './pathName';
 
+
 export const DASHBOARD = [
   {
     id: 1,
@@ -17,12 +17,12 @@ export const DASHBOARD = [
     icon: PersonIcon,
     link: pathName.receptionist
   },
-  {
-    id: 2,
-    name: 'Thu ngân',
-    icon: ConnectedTvIcon,
-    link: pathName.cashier
-  },
+  // {
+  //   id: 2,
+  //   name: 'Thu ngân',
+  //   icon: ConnectedTvIcon,
+  //   link: pathName.cashier
+  // },
   {
     id: 3,
     name: 'Phòng bàn',
@@ -51,7 +51,7 @@ export const DASHBOARD = [
     id: 7,
     name: 'Chấm công',
     icon: EventNoteIcon,
-    link:pathName.timekeeping
+    link: pathName.timekeeping
   },
   {
     id: 8,
@@ -63,7 +63,7 @@ export const DASHBOARD = [
     id: 9,
     name: 'Giới thiệu',
     icon: MapsHomeWorkIcon,
-    link:pathName.introduce
+    link: pathName.introduce
   },
   {
     id: 10,
@@ -72,5 +72,3 @@ export const DASHBOARD = [
     link: pathName.account
   }
 ];
-
-

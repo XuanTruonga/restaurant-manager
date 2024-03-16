@@ -3,7 +3,7 @@ import ControllerCheckBox from '@Core/components/input/ControllerCheckBox';
 import ControllerPassword from '@Core/components/input/ControllerPassword';
 import ControllerSelect from '@Core/components/input/ControllerSelect';
 import ControllerTextField from '@Core/components/input/ControllerTextField';
-import pathFormController from '@Core/utils/pathFormController';
+import pathFormController from 'utils/constants/pathFormController';
 import { Box, Typography, styled } from '@mui/material';
 import { Button } from 'flowbite-react';
 import React from 'react';
@@ -40,6 +40,7 @@ const FormRegister = (props) => {
           listMenu={data?.data?.results}
           path={pathFormController.province_name}
           required={true}
+          fontSize={theme.typography.fontSize}
         />
         <Box width='100%'>
           <ControllerTextField

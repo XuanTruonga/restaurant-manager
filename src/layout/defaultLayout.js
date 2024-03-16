@@ -1,10 +1,14 @@
-import { Box, Grid, Stack } from '@mui/material';
+import { Box, Container, Grid, Link } from '@mui/material';
 import React from 'react';
 import { theme } from '../@Core/Theme/theme';
 import { DASHBOARD } from 'utils/constants/dashBoard';
 import Header from './components/Header';
 import MenuItem from './components/MenuItem';
 import { useLocation } from 'react-router-dom';
+import ConnectedTvIcon from '@mui/icons-material/ConnectedTv';
+import color from '@Core/Theme/color';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 
 const DefaultLayout = ({ children }) => {
   const { pathname } = useLocation();
@@ -20,33 +24,43 @@ const DefaultLayout = ({ children }) => {
           backgroundColor: theme.palette.grey[200]
         }}>
         <Header />
-        <Box sx={{ p: '20px 40px', height: '100vh' }}>
-          <Grid container spacing={3}>
-            <Grid item xs={6} md={2}>
-              <Stack>
-                <Box
-                  sx={{
-                    overflow: 'hidden',
-                    backgroundColor: theme.palette.primary.bold,
-                    borderRadius: '14px',
-                    height: theme.restaurants.boxMenuHeight,
-                    overflowY: 'auto'
-                  }}>
-                  {DASHBOARD.map((item) => {
-                    return (
-                      <Box key={item.id}>
-                        <MenuItem item={item} pathname={pathname} />
-                      </Box>
-                    );
-                  })}
-                </Box>
-              </Stack>
-            </Grid>
-            <Grid item xs={6} md={10}>
-              <Box sx={{ height: theme.restaurants.boxMenuHeight }}>{children}</Box>
-            </Grid>
-          </Grid>
+        <Box sx={{ backgroundColor: theme.palette.primary.bold }}>
+          <Container maxWidth='lg' sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Box
+              sx={{
+                overflow: 'hidden',
+                display: 'flex'
+              }}>
+              {DASHBOARD.map((item) => {
+                return (
+                  <Box key={item.id}>
+                    <MenuItem item={item} pathname={pathname} />
+                  </Box>
+                );
+              })}
+            </Box>
+            <Link
+              href='/thu-ngan'
+              sx={{
+                display: 'flex',
+                px: 1,
+                backgroundColor: theme.palette.primary.dark,
+                borderRadius: '8px',
+                '&:hover': {
+                  opacity: 0.9
+                }
+              }}>
+              <Tooltip title='Thu ngân'>
+                <IconButton>
+                  <ConnectedTvIcon sx={{ color: color.while }} />
+                </IconButton>
+              </Tooltip>
+            </Link>
+          </Container>
         </Box>
+        <Container maxWidth='lg'>
+          <Box sx={{ p: '16px 0px', height: '100vh' }}>{children}</Box>
+        </Container>
       </Box>
     </Box>
   );

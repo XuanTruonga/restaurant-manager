@@ -1,14 +1,27 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { theme } from '@Core/Theme/theme';
+import { FormControl, InputLabel, MenuItem, Select, styled } from '@mui/material';
 import React, { Fragment, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import Required from '../Required';
 import ErrorMessageForm from '../ErrorMessageForm';
 
 const ControllerSelect = (props) => {
-  const { control, name, sx, label, placeholder, titleMenu, listMenu, path, required } = props;
+  const {
+    defaultValue = '',
+    control,
+    name,
+    fontSize,
+    label,
+    placeholder,
+    titleMenu,
+    listMenu,
+    path,
+    required,
+    variant,
+    sx,
+    colorAfterInput = false
+  } = props;
   const [value, setValue] = useState('');
-
+  const StyleFormControl = colorAfterInput ? FormControl : CustomFormControl;
   return (
     <Controller
       control={control}
@@ -16,11 +29,8 @@ const ControllerSelect = (props) => {
       render={({ field: { onChange, onBlur }, fieldState: { error } }) => {
         return (
           <Fragment>
-            <FormControl sx={{ minWidth: 120, width: '100%' }}>
-              <InputLabel
-                size='small'
-                sx={{ fontSize: theme.typography.fontSize, top: '1px' }}
-                id='demo-simple-select-helper-label'>
+            <StyleFormControl variant={variant} sx={{ minWidth: 120, width: '100%', fontSize: fontSize }}>
+              <InputLabel size='small' sx={{ fontSize: fontSize }} id='demo-simple-select-helper-label'>
                 {label}
                 {required && <Required />}
               </InputLabel>
@@ -31,30 +41,34 @@ const ControllerSelect = (props) => {
                 sx={sx}
                 size='small'
                 label={label}
-                value={value}
+                value={value || defaultValue}
                 onChange={(e) => {
                   onChange(e.target.value);
                   setValue(e.target.value);
                 }}>
-                <MenuItem value='' sx={{ fontSize: theme.typography.fontSize }}>
+                <MenuItem value='' sx={{ fontSize: fontSize }}>
                   <em>{titleMenu}</em>
                 </MenuItem>
                 {listMenu &&
                   listMenu.map((item, index) => {
                     return (
-                      <MenuItem key={index} value={item[path]}>
+                      <MenuItem key={index} value={item[path] || defaultValue} sx={{ fontSize: fontSize }}>
                         {item[path]}
                       </MenuItem>
                     );
                   })}
               </Select>
-             <ErrorMessageForm error={error}/>
-            </FormControl>
+              <ErrorMessageForm error={error} />
+            </StyleFormControl>
           </Fragment>
         );
       }}
     />
   );
 };
-
+const CustomFormControl = styled(FormControl)(({ theme }) => ({
+  '& .MuiInput-root::after': {
+    border: `1px solid ${theme.palette.secondary.main}`
+  }
+}));
 export default ControllerSelect;

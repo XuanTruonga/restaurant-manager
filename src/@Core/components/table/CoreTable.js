@@ -14,14 +14,21 @@ import {
 import { useMemo } from 'react';
 import CoreTableBody from '@Core/components/table/CoreTableBody';
 import CoreTableHeader from '@Core/components/table/CoreTableHeader';
-import DebouncedInput from '../../../components/DebouncedInput/DebouncedInput';
-import { Box, MenuItem, Pagination, Select } from '@mui/material';
+import { Box, MenuItem, Pagination, Select, Typography, styled } from '@mui/material';
 import useSearchParamsHook from 'components/hook/useSearchParamsHook';
 
 export default function CoreTable(props) {
-  const { columns, data, isLoading, isPagination = true, dataPagination, onClick } = props;
+  const {
+    columns,
+    data,
+    isLoading,
+    isPagination = true,
+    dataPagination,
+    onClick,
+    filtering,
+    setFiltering
+  } = props;
   const [sorting, setSorting] = React.useState();
-  const [filtering, setFiltering] = React.useState();
   const [totalPage, setTotalPage] = React.useState(1);
 
   const finalColumn = useMemo(() => columns, []);
@@ -43,6 +50,7 @@ export default function CoreTable(props) {
     onSortingChange: setSorting,
     onGlobalFilterChange: setFiltering
   });
+
   React.useEffect(() => {
     if (!isLoading) {
       setTotalPage(dataPagination?.total_page);
@@ -50,9 +58,6 @@ export default function CoreTable(props) {
   }, [isLoading]);
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <Box sx={{ p: '10px' }}>
-        <DebouncedInput value='' onChange={(value) => setFiltering(value)} placeholder={`Search... `} />
-      </Box>
       <TableContainer sx={{ maxHeight: theme.restaurants.heightTable }}>
         <Table stickyHeader>
           <CoreTableHeader table={tableInstance} />
@@ -71,21 +76,23 @@ export default function CoreTable(props) {
             backgroundColor: '#FFFFFF',
             borderTop: '1px solid #D1D5DB'
           })}>
-          <Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Typography sx={{ fontSize: theme.typography.font_14_medium }}>Số bản ghi:</Typography>
             <Select
-              sx={{ width: 70, borderRadius: '12px', fontSize: '14px' }}
+              sx={{ width: 70, borderRadius: '12px', fontSize: '14px !important' }}
               size='small'
               variant='outlined'
               value={dataPagination?.limit || 10}
               onChange={(e) => {
                 setParams('limit', e.target.value);
               }}>
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={30}>30</MenuItem>
+              <StyleMenuItem value={10}>10</StyleMenuItem>
+              <StyleMenuItem value={20}>20</StyleMenuItem>
+              <StyleMenuItem value={30}>30</StyleMenuItem>
             </Select>
           </Box>
-          <Pagination
+          <StylePagination
+            sx={{ fontSize: '14px !important' }}
             onChange={(_, page) => setParams('page', String(page))}
             count={totalPage}
             page={dataPagination?.page}
@@ -96,3 +103,14 @@ export default function CoreTable(props) {
     </Paper>
   );
 }
+const StyleMenuItem = styled(MenuItem)(() => ({
+  '&.MuiMenuItem-root': {
+    fontSize: '14px'
+  }
+}));
+
+const StylePagination = styled(Pagination)(() => ({
+  '& .MuiButtonBase-root': {
+    fontSize: '14px'
+  }
+}));

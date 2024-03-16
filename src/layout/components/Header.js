@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { theme } from '../../@Core/Theme/theme';
 import React from 'react';
 import imgs from '../../assets/img';
@@ -23,45 +23,46 @@ const BoxSX = {
 const Header = () => {
   return (
     <Box backgroundColor='#fff' borderBottom='1px solid #ccc'>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          m: '0 40px',
-          gap: '40px'
-        }}>
+      <Container maxWidth='lg'>
         <Box
           sx={{
-            color: theme.palette.primary.dark,
-            p: '8px 0px',
             display: 'flex',
             alignItems: 'center',
-            gap: '12px'
+            justifyContent: 'space-between',
+            gap: '40px'
           }}>
-          <img width='40px' src={imgs.logo} alt='logo'></img>
-          <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
-            Kiot Xuân Trường
-          </Typography>
-        </Box>
+          <Box
+            sx={{
+              color: theme.palette.primary.dark,
+              p: '8px 0px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px'
+            }}>
+            <img width='40px' src={imgs.logo} alt='logo'></img>
+            <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+              Kiot Xuân Trường
+            </Typography>
+          </Box>
 
-        <Box sx={{ display: 'flex' }}>
-          {APP_BAR.map((item) => {
-            return (
-              <Link to={item.link} key={item.id}>
-                <Box sx={BoxSX}>
-                  <Box display='flex'>{item.icon}</Box>
-                  <Typography>{item.name}</Typography>
-                </Box>
-              </Link>
-            );
-          })}
-          <Box sx={BoxSX}>
-            <Box display='flex'>0565442171</Box>
-            <Typography>Img</Typography>
+          <Box sx={{ display: 'flex' }}>
+            {APP_BAR.map((item) => {
+              return (
+                <Link to={item.link} key={item.id}>
+                  <Box sx={BoxSX}>
+                    <Box display='flex'>{item.icon}</Box>
+                    <Typography>{item.name}</Typography>
+                  </Box>
+                </Link>
+              );
+            })}
+            <Box sx={BoxSX}>
+              <Box display='flex'>0565442171</Box>
+              <Typography>Img</Typography>
+            </Box>
           </Box>
         </Box>
-      </Box>
+      </Container>
     </Box>
   );
 };
