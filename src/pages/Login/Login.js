@@ -43,8 +43,8 @@ const Login = () => {
           {/*  */}
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box sx={{ p: '25px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <ControllerInput control={control} name='account' placeholder='Tên đăng nhâp' />
-              <ControllerInput control={control} name='password' placeholder='Nhập mật khẩu' />
+              <ControllerInput control={control} name='account' placeholder='Tên đăng nhâp' sx={{ py: '12px' }} />
+              <ControllerInput control={control} name='password' placeholder='Nhập mật khẩu' sx={{ py: '12px' }} />
             </Box>
             {/*  */}
             <Box sx={{ display: 'flex', px: '25px', mb: '26px' }}>
@@ -73,23 +73,7 @@ const Login = () => {
             <Box sx={{ textAlign: 'center' }}>
               <ErrorMessageForm error={error} message='Tài khoản hoặc mật khẩu không chính xác' />
             </Box>
-            <Button
-              type='submit'
-              sx={{
-                borderTopLeftRadius: '0px',
-                borderTopRightRadius: '0px',
-                width: '100%',
-                fontSize: theme.typography.font_16_semibold,
-                p: '14px',
-                mt: '6px',
-                textAlign: 'center',
-                bgcolor: theme.palette.primary.main,
-                color: theme.palette.primary.contrastText,
-                cursor: 'pointer',
-                '&:hover': { backgroundColor: theme.palette.primary.dark }
-              }}>
-              Đăng nhập
-            </Button>
+            <StyleButtomLogin type='submit'>Đăng nhập</StyleButtomLogin>
           </form>
         </Box>
       </WrapperLogin>
@@ -103,6 +87,19 @@ const WrapperLogin = styled('div')(() => ({
   height: '100vh',
   display: 'flex',
   justifyContent: 'center'
+}));
+const StyleButtomLogin = styled(Button)(() => ({
+  borderTopLeftRadius: '0px',
+  borderTopRightRadius: '0px',
+  width: '100%',
+  fontSize: theme.typography.font_16_semibold,
+  padding: '14px',
+  marginTop: '6px',
+  textAlign: 'center',
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.primary.contrastText,
+  cursor: 'pointer',
+  '&:hover': { backgroundColor: theme.palette.primary.dark }
 }));
 
 export default Login;

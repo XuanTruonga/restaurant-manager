@@ -5,9 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@mui/material';
 import { theme } from './@Core/Theme/theme';
-import { RouterProvider } from 'react-router-dom';
-import GlobalStyle from 'components/GlobalStyle/GlobalStyle';
-import router from 'routers/routers';
+import GlobalStyle from 'components/GlobalStyle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './index.css';
 import { Provider } from 'react-redux';
@@ -20,7 +18,6 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <RouterProvider router={router} />
         <App />
         <CssBaseline />
       </ThemeProvider>

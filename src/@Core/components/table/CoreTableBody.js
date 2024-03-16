@@ -5,7 +5,7 @@ import { createColumnHelper, flexRender } from '@tanstack/react-table';
 export const columnHelper = createColumnHelper();
 
 function CoreTableBody(props) {
-  const { table, isLoading, onClick } = props;
+  const { table, isLoading } = props;
 
   const renderTableBody = () => {
     const { rows } = table && table.getRowModel();
@@ -34,17 +34,19 @@ function CoreTableBody(props) {
 
     return rows.map((row, index) => (
       <StyleTableRow
-        onClick={() => onClick(row.original)}
         key={index}
         sx={{
           '&:hover': {
-            bgcolor: theme.palette.secondary.light,
-            cursor: 'pointer',
+            bgcolor: theme.palette.grey[100],
             transition: theme.transitions.easing.easeIn
           }
         }}>
         {row.getVisibleCells().map((cell, index) => {
-          return <TableCell key={index}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>;
+          return (
+            <TableCell sx={{ fontSize: '14px' }} key={index}>
+              {flexRender(cell.column.columnDef.cell, cell.getContext())}
+            </TableCell>
+          );
         })}
       </StyleTableRow>
     ));
@@ -54,7 +56,7 @@ function CoreTableBody(props) {
 }
 const StyleTableRow = styled(TableRow)(() => ({
   '& .MuiTableCell-root': {
-    padding: '12px 15px'
+    padding: '9px 15px'
   }
 }));
 export default CoreTableBody;

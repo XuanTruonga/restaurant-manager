@@ -1,9 +1,13 @@
-import { Outlet } from 'react-router-dom';
+import CoreConfirmProvider from '@Core/components/confirm/comfirm';
+import { RouterProvider } from 'react-router-dom';
+import router from 'routers/routers';
 
 function App() {
   return (
     <div>
-      <Outlet />
+      <CoreConfirmProvider>
+        <RouterProvider router={router} />
+      </CoreConfirmProvider>
     </div>
   );
 }

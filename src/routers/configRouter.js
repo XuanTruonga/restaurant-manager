@@ -1,3 +1,4 @@
+// import DefaultLayout from 'layout/DefaultLayout';
 import DefaultLayout from 'layout/DefaultLayout';
 import Loaded from './components/Loaded';
 import { lazy } from 'react';

@@ -6,8 +6,9 @@ export const theme = createTheme({
   palette: palette,
   restaurants: {
     appBarHeight: '56px',
-    boxMenuHeight: '620px',
-    heightTable: '530px'
+    boxMenuHeight: '616px',
+    heightTable: '530px',
+    widthTitleInputControl: '22%'
   },
   typography: typography,
   components: {
@@ -15,6 +16,43 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           fontSize: 'inherit'
+        }
+      }
+    },
+    MuiCssBaseline: {
+      styleOverrides: {
+        scrollbarWidth: 'thin',
+        '&::-webkit-scrollbar': {
+          width: 6,
+          height: 6
+        },
+        '&::-webkit-scrollbar-track': {
+          padding: 6
+        },
+        '&::-webkit-scrollbar-thumb': {
+          borderRadius: 4,
+          backgroundColor: '#c1c1c1'
+        },
+        '&::-webkit-scrollbar-thumb:hover': {}
+      }
+    },
+
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          '& .MuiSelect-select': {
+            '&:focus': { backgroundColor: '#fff' }
+          },
+          fontSize: 'inherit'
+        }
+      }
+    },
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          '&.MuiContainer-maxWidthLg': {
+            maxWidth: '1280px'
+          }
         }
       }
     },
@@ -37,17 +75,18 @@ export const theme = createTheme({
         }
       }
     },
+
     MuiSelect: {
       styleOverrides: {
         root: {
-          '&.MuiInputBase-root': { fontSize: '15px' }
+          '&.MuiInputBase-root': { fontSize: 'inherit' }
         }
       }
     },
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          '&.MuiMenuItem-root': { fontSize: '15px' }
+          // '&.MuiMenuItem-root': { fontSize: 'inherit' }
         }
       }
     },
@@ -61,6 +100,45 @@ export const theme = createTheme({
         root: {
           '& .MuiTablePagination-selectLabel': { fontSize: 'inherit' },
           '& .MuiTablePagination-displayedRows': { fontSize: 'inherit' }
+        }
+      }
+    },
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          height: 'inherit'
+        }
+      }
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: ({ ownerState }) => {
+          if (ownerState.color === 'secondary') {
+            return {
+              backgroundColor: '#898c8d',
+              textTransform: 'none',
+              color: '#fff',
+              fontWeight: 'bold',
+              padding: '5px 15px',
+              '&:hover': { backgroundColor: '#686c6d' }
+            };
+          } else if (ownerState.color === 'primary') {
+            return {
+              backgroundColor: '#49a14b',
+              textTransform: 'none',
+              color: '#fff',
+              fontWeight: 'bold',
+              padding: '5px 15px',
+              '&:hover': { backgroundColor: '#368138' }
+            };
+          } else {
+            return {
+              textTransform: 'none',
+              color: '#fff',
+              fontWeight: 'bold',
+              padding: '5px 15px'
+            };
+          }
         }
       }
     }
