@@ -2,7 +2,7 @@ import middlewares from './Middleware';
 import createInstance from './Axios';
 
 class BaseService {
-  BASE_URL = import.meta.env.BASE_URL;
+  BASE_URL = process.env.REACT_APP_BASE_URL;
 
   BASE_ENDPOINT = '';
 
@@ -18,6 +18,7 @@ class BaseService {
     ...middlewares
   };
   constructor(props) {
+    this.BASE_ENDPOINT = props.baseEndpoint;
     this.setRequest();
   }
 
@@ -74,6 +75,13 @@ class BaseService {
   create = (data) => {
     return this.request.post(this.BASE_ENDPOINT, data);
   };
+  post(enpoint, data) {
+    return this.request.post(this.BASE_ENDPOINT + '/' + enpoint, data);
+  }
+
+  get(enpoint='', params = {}) {
+    return this.request.get(this.BASE_ENDPOINT + enpoint, params);
+  }
 
   /**
    * @param {Object} data

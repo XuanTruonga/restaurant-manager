@@ -19,16 +19,16 @@ export const CoreTableActionDelete = ({ callback = () => {}, content = '', btn }
   };
 
   return (
-    <Tooltip title='Xoá' sx={{ height: '21px' }}>
-      <IconButton color='error' size='small' onClick={handleDelete}>
-        {btn ? (
-          <Button variant='contained' color='error' size='small' startIcon={<DeleteIcon />}>
-            Xóa
-          </Button>
-        ) : (
+    <Tooltip title='Xoá' >
+      {btn ? (
+        <Button height={'100%'} onClick={handleDelete} variant='contained' color='error' size='small' startIcon={<DeleteIcon />}>
+          Xóa
+        </Button>
+      ) : (
+        <IconButton color='error' size='small' onClick={handleDelete}>
           <DeleteIcon />
-        )}
-      </IconButton>
+        </IconButton>
+      )}
     </Tooltip>
   );
 };
@@ -45,9 +45,9 @@ export const CoreTableActionEdit = ({ callback = () => {} }) => {
 
 export const CoreTableActionView = ({ callback = () => {} }) => {
   return (
-    <Tooltip title='Xem chi tiết' sx={{ height: '21px' }}>
-      <IconButton color='success' size='small' onClick={callback}>
-        <RemoveRedEyeIcon />
+    <Tooltip title='Xem chi tiết'>
+      <IconButton color='#000' size='small' onClick={callback}>
+        <RemoveRedEyeIcon sx={{ fontSize: '22px' }} />
       </IconButton>
     </Tooltip>
   );

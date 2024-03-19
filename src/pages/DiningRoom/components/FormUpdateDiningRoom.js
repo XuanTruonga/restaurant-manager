@@ -6,7 +6,7 @@ import { Box, Button, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Stack from '@mui/material/Stack';
-import RequireText from 'components/basic/RequireText';
+import RequireText from 'components/Basic/RequireText';
 import ControllerSelect from '@Core/components/input/ControllerSelect';
 import pathFormController from 'utils/constants/pathFormController';
 import AddIcon from '@mui/icons-material/Add';
@@ -16,7 +16,7 @@ import { openModalSecondary } from '../../../redux/SliceModalSecondary';
 import validateFormCreateDiningRoom from '../utils/validateCreateDiningRoom';
 import SaveIcon from '@mui/icons-material/Save';
 import { closeModalUpdate } from '../../../redux/SliceModalUpdate';
-import ButtomExitModal from 'components/modal/ButtomExitModal';
+import ButtomExitModal from 'components/Modal/ButtomExitModal';
 import { modalSelectorUpdate } from '../../../redux/selectors';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 

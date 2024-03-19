@@ -1,4 +1,45 @@
 const typography = {
+  text_s: {
+    fontSize: 13,
+    lineHeight: '18px'
+  },
+  text_m: {
+    fontSize: 14,
+    lineHeight: '20px'
+  },
+  text_l: {
+    fontSize: 15,
+    lineHeight: '22px'
+  },
+  text_xl: {
+    fontSize: 16,
+    lineHeight: '24px'
+  },
+  text_2xl: {
+    fontSize: 20,
+    lineHeight: '28px'
+  },
+  text_3xl: {
+    fontSize: 24,
+    lineHeight: '32px'
+  },
+  text_4xl: {
+    fontSize: 30,
+    lineHeight: '36px'
+  },
+  text_5xl: {
+    fontSize: 36,
+    lineHeight: '40px'
+  },
+  font_medium: {
+    fontWeight: 500
+  },
+  font_semibold: {
+    fontWeight: 600
+  },
+  font_bold: {
+    fontWeight: 700
+  },
   font_12_base: {
     fontSize: 12,
     fontWeight: 400

@@ -4,33 +4,28 @@ import ControllerPassword from '@Core/components/input/ControllerPassword';
 import ControllerSelect from '@Core/components/input/ControllerSelect';
 import ControllerTextField from '@Core/components/input/ControllerTextField';
 import pathFormController from 'utils/constants/pathFormController';
-import { Box, Typography, styled } from '@mui/material';
-import { Button } from 'flowbite-react';
+import { Box, Button, Link, Typography, styled } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import React from 'react';
+import { pathName } from 'utils/constants/pathName';
+import authService from 'services/authService';
+import ToastMessage from 'components/Basic/ToastMessage';
 
 const FormRegister = (props) => {
-  const { data, control, handleSubmit, onSubmit } = props;
-
+  const { data, control, handleSubmit } = props;
+  const handleRegister =  (value) => {
+    // await authService.register(value);
+    console.log(value);
+    ToastMessage('success', 'Đăng ký thành công');
+  };
   return (
-    <form style={{ width: '100%', display: 'flex', justifyContent: 'center' }} onSubmit={handleSubmit(onSubmit)}>
+    <form style={{ width: '100%', display: 'flex', justifyContent: 'center' }} onSubmit={handleSubmit(handleRegister)}>
       <WrapperFormRegister>
         <Box width='100%'>
-          <ControllerTextField
-            name='fullName'
-            control={control}
-            label='Nhập họ và tên'
-            fullWidth
-            required={true}
-          />
+          <ControllerTextField name='name' control={control} label='Nhập họ và tên' fullWidth required={true} />
         </Box>
         <Box width='100%'>
-          <ControllerTextField
-            name='telephone'
-            control={control}
-            label='Số điện thoại'
-            fullWidth
-            required={true}
-          />
+          <ControllerTextField name='phone' control={control} label='Số điện thoại' fullWidth required={true} />
         </Box>
         <ControllerSelect
           name='province'
@@ -43,13 +38,7 @@ const FormRegister = (props) => {
           fontSize={theme.typography.fontSize}
         />
         <Box width='100%'>
-          <ControllerTextField
-            name='stall_name'
-            control={control}
-            label='Tên gian hàng'
-            fullWidth
-            required={true}
-          />
+          <ControllerTextField name='username' control={control} label='Tên gian hàng' fullWidth required={true} />
         </Box>
         <Box width='100%'>
           <ControllerPassword control={control} name='password' required={true} label='Nhập mật khẩu' />
@@ -71,7 +60,20 @@ const FormRegister = (props) => {
             <Typography mt={'1px'}>của KiotViet</Typography>
           </Box>
         </Box>
-        <Button type='submit'>ok</Button>
+        <Box
+          sx={{
+            position: 'absolute',
+            bottom: 5,
+            left: 0
+          }}>
+          <Link href={pathName.login} underline='always' sx={{ display: 'flex', alignItems: 'center' }}>
+            <ArrowBackIcon sx={{ fontSize: theme.typography.fontSize }} />
+            Trở về
+          </Link>
+        </Box>
+        <Button type='submit' color='info' variant='contained' size='large'>
+          Đăng ký
+        </Button>
       </WrapperFormRegister>
     </form>
   );
@@ -82,6 +84,7 @@ const WrapperFormRegister = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: '20px'
+  gap: '20px',
+  position: 'absolute'
 }));
 export default FormRegister;

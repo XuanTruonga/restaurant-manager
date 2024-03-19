@@ -1,7 +1,7 @@
 import { theme } from '@Core/Theme/theme';
 import ControllerInput from '@Core/components/input/ControllerInput';
 import { Box, Stack, Typography } from '@mui/material';
-import RequireText from 'components/basic/RequireText';
+import RequireText from 'components/Basic/RequireText';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,7 +9,7 @@ import { Button } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import { closeModalSecondary } from '../../../redux/SliceModalSecondary';
 import * as yup from 'yup';
-import ButtomExitModal from 'components/modal/ButtomExitModal';
+import ButtomExitModal from 'components/Modal/ButtomExitModal';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 const styleFlex = {

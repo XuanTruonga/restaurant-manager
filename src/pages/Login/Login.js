@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/alt-text */
 import TitleLogo from '@Core/components/TitleLogo';
 import { Box, Button, Stack, Typography, styled } from '@mui/material';
@@ -10,18 +11,31 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import validateFormLogin from './validateFormLogin';
 import ErrorMessageForm from '@Core/components/ErrorMessageForm';
+import authService from 'services/authService';
+import { useMutation } from '@tanstack/react-query';
+import ToastMessage from 'components/Basic/ToastMessage';
+import CircularProgress from '@mui/material/CircularProgress';
+import ControllerPassword from '@Core/components/input/ControllerPassword';
+import UseAuth from 'components/Hook/useAuth';
 
 const Login = () => {
   const [error, setError] = useState(false);
+  const { setUser } = UseAuth();
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(validateFormLogin)
   });
-  const onSubmit = (value) => {
-    console.log(value);
-    if (value) {
+  const { mutate: handleSigin, isPending } = useMutation({
+    mutationFn: async (dataFormAuth) => await authService.sigin(dataFormAuth),
+    onSuccess: (data) => {
+      localStorage.setItem('authToken', JSON.stringify(data?.data?.token));
+      setUser(data);
+      ToastMessage('success', 'Đăng nhập thành công.');
+    },
+    onError: () => {
       setError(true);
     }
-  };
+  });
+
   return (
     <Stack>
       <WrapperLogin>
@@ -36,15 +50,13 @@ const Login = () => {
           }}>
           <Box>
             <TitleLogo />
-            <Typography sx={{ fontSize: theme.typography.font_14_medium, textAlign: 'center' }}>
-              Đăng nhập
-            </Typography>
+            <Typography sx={{ fontSize: theme.typography.font_14_medium, textAlign: 'center' }}>Đăng nhập</Typography>
           </Box>
           {/*  */}
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit((value) => handleSigin(value))}>
             <Box sx={{ p: '25px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <ControllerInput control={control} name='account' placeholder='Tên đăng nhâp' sx={{ py: '12px' }} />
-              <ControllerInput control={control} name='password' placeholder='Nhập mật khẩu' sx={{ py: '12px' }} />
+              <ControllerInput control={control} name='username' placeholder='Tên đăng nhâp' sx={{ py: '12px' }} />
+              <ControllerPassword control={control} name='password' placeholder='Nhập mật khẩu' outline={false} />
             </Box>
             {/*  */}
             <Box sx={{ display: 'flex', px: '25px', mb: '26px' }}>
@@ -73,7 +85,9 @@ const Login = () => {
             <Box sx={{ textAlign: 'center' }}>
               <ErrorMessageForm error={error} message='Tài khoản hoặc mật khẩu không chính xác' />
             </Box>
-            <StyleButtomLogin type='submit'>Đăng nhập</StyleButtomLogin>
+            <StyleButtomLogin type='submit'>
+              {isPending ? <CircularProgress size={30} sx={{ color: '#fff' }} /> : 'Đăng nhập'}
+            </StyleButtomLogin>
           </form>
         </Box>
       </WrapperLogin>
@@ -89,6 +103,7 @@ const WrapperLogin = styled('div')(() => ({
   justifyContent: 'center'
 }));
 const StyleButtomLogin = styled(Button)(() => ({
+  height: 55,
   borderTopLeftRadius: '0px',
   borderTopRightRadius: '0px',
   width: '100%',

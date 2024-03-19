@@ -15,7 +15,7 @@ import { useMemo } from 'react';
 import CoreTableBody from '@Core/components/table/CoreTableBody';
 import CoreTableHeader from '@Core/components/table/CoreTableHeader';
 import { Box, MenuItem, Pagination, Select, Typography, styled } from '@mui/material';
-import useSearchParamsHook from 'components/hook/useSearchParamsHook';
+import useSearchParamsHook from 'components/Hook/useSearchParamsHook';
 
 export default function CoreTable(props) {
   const {

@@ -56,7 +56,7 @@ function CoreTableBody(props) {
 }
 const StyleTableRow = styled(TableRow)(() => ({
   '& .MuiTableCell-root': {
-    padding: '9px 15px'
+    padding: '4px 15px'
   }
 }));
 export default CoreTableBody;

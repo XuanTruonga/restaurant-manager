@@ -1,4 +1,4 @@
-import { CoreTableActionDelete, CoreTableActionView } from '@Core/components/table/CoreTableAction';
+import { CoreTableActionView } from '@Core/components/table/CoreTableAction';
 import { columnHelper } from '@Core/components/table/CoreTableBody';
 import { Box, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
@@ -9,9 +9,6 @@ export const ColumnsDiningRoom = () => {
 
   const handleViewDetailDiningRoom = (value) => {
     dispath(openModalDetail(value));
-  };
-  const handleDeleteDiningRoom = (value) => {
-    // console.log(value);
   };
 
   return [
@@ -51,17 +48,13 @@ export const ColumnsDiningRoom = () => {
     columnHelper.accessor('', {
       header: 'Thao tác',
       enableGlobalFilter: false,
+
       minWidth: 80,
       cell: ({ row }) => {
         const subject = row?.original;
         return (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
             <CoreTableActionView callback={() => handleViewDetailDiningRoom(subject)} />
-            <CoreTableActionDelete
-              callback={handleDeleteDiningRoom(subject?._id)}
-              content='Bạn có muốn xoá phòng bàn này?'
-              isIcon={true}
-            />
           </Box>
         );
       }

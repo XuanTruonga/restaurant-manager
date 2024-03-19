@@ -55,7 +55,13 @@ const CoreConfirmProvider = (props) => {
   return (
     <ConfirmContext.Provider value={confirm}>
       {props.children}
-      <Dialog open={open} PaperComponent={StyledPaper} keepMounted onClose={handleClose} maxWidth='sm'>
+      <Dialog
+        open={open}
+        PaperComponent={StyledPaper}
+        keepMounted
+        onClose={handleClose}
+        maxWidth='sm'
+        sx={{ zIndex: 2000 }}>
         {configs?.title && (
           <DialogTitle
             className='text-center'
