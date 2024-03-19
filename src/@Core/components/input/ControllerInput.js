@@ -27,11 +27,7 @@ const ControllerInput = (props) => {
                 }}
               />
             )}
-            <StyleInput
-              fullWidth={fullWidth}
-              placeholder={placeholder}
-              {...field}
-              sx={{ py: '8px', fontSize: theme.typography.fontSize, flexGrow: '1', ...sx }}></StyleInput>
+            <StyleInput fullWidth={fullWidth} placeholder={placeholder} {...field} sx={{ ...sx }}></StyleInput>
             <ErrorMessageForm error={error} sx={{ mt: '4px' }} />
           </Box>
         );
@@ -40,6 +36,10 @@ const ControllerInput = (props) => {
   );
 };
 const StyleInput = styled(Input)(() => ({
+  fontSize: theme.typography.fontSize,
+  paddingTop: '8px',
+  paddingBottom: '8px',
+  flexGrow: '1',
   '& .MuiInput-input': {
     padding: '0'
   },

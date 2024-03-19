@@ -2,10 +2,10 @@ import { theme } from '@Core/Theme/theme';
 import { Typography } from '@mui/material';
 import React, { Fragment } from 'react';
 
-const ErrorMessageForm = ({ error, message ,sx}) => {
+const ErrorMessageForm = ({ error, message, sx }) => {
   return (
     <Fragment>
-      {error && (
+      {error?.message && (
         <Typography
           sx={{
             fontSize: theme.typography.font_12_base,

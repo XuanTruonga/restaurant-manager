@@ -22,9 +22,7 @@ const Register = () => {
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(validateFormRegister)
   });
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+
   return (
     <Grid container>
       <Grid item md={5}>
@@ -45,7 +43,7 @@ const Register = () => {
       <Grid item md={7}>
         <Box mt={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
           <TitleLogo />
-          <FormRegister data={data} control={control} handleSubmit={handleSubmit} onSubmit={onSubmit} />
+          <FormRegister data={data} control={control} handleSubmit={handleSubmit} />
         </Box>
       </Grid>
       <Grid></Grid>

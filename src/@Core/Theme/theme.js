@@ -21,6 +21,9 @@ export const theme = createTheme({
     },
     MuiCssBaseline: {
       styleOverrides: {
+        body: {
+          fontSize: 14
+        },
         scrollbarWidth: 'thin',
         '&::-webkit-scrollbar': {
           width: 6,
@@ -36,7 +39,26 @@ export const theme = createTheme({
         '&::-webkit-scrollbar-thumb:hover': {}
       }
     },
-
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          borderRadius: '4px',
+          '&.MuiPaper-root:before': {
+            position: 'unset'
+          },
+          '& .MuiAccordionDetails-root': {
+            paddingTop: 0
+          },
+          '& .MuiAccordionSummary-content': {
+            fontWeight: 600,
+            margin: '14px 0 !important'
+          },
+          '& .MuiButtonBase-root': {
+            minHeight: '40px !important'
+          }
+        }
+      }
+    },
     MuiFormControl: {
       styleOverrides: {
         root: {
@@ -83,13 +105,7 @@ export const theme = createTheme({
         }
       }
     },
-    MuiMenuItem: {
-      styleOverrides: {
-        root: {
-          // '&.MuiMenuItem-root': { fontSize: 'inherit' }
-        }
-      }
-    },
+
     MuiMenu: {
       styleOverrides: {
         root: { '.MuiMenu-list': { maxHeight: '288px' } }

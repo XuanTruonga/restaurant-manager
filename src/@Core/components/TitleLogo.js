@@ -8,7 +8,7 @@ const TitleLogo = () => {
   return (
     <Box sx={{ p: '16px', justifyContent: 'center', alignItems: 'center', display: 'flex', gap: '8px' }}>
       <img src={imgs.logo} width='40px'></img>
-      <Typography variant='font_20_bold' sx={{ color: theme.palette.primary.dark }}>
+      <Typography variant='font_20_bold' sx={{ color: theme.palette.primary.dark, fontSize: theme.typography.font_16_bold }}>
         Kiot Xuân Trường
       </Typography>
     </Box>

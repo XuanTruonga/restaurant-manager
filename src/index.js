@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './index.css';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import InitializedAuth from 'components/InitializedAuth/InitializedAuth';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const queryClient = new QueryClient();
@@ -18,7 +19,9 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <App />
+        <InitializedAuth>
+          <App />
+        </InitializedAuth>
         <CssBaseline />
       </ThemeProvider>
     </QueryClientProvider>

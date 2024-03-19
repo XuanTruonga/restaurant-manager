@@ -5,7 +5,7 @@ import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import Stack from '@mui/material/Stack';
-import RequireText from 'components/basic/RequireText';
+import RequireText from 'components/Basic/RequireText';
 import ControllerSelect from '@Core/components/input/ControllerSelect';
 import pathFormController from 'utils/constants/pathFormController';
 import AddIcon from '@mui/icons-material/Add';
@@ -15,7 +15,7 @@ import { openModalSecondary } from '../../../redux/SliceModalSecondary';
 import validateFormCreateDiningRoom from '../utils/validateCreateDiningRoom';
 import SaveIcon from '@mui/icons-material/Save';
 import { closeModalPrimary } from '../../../redux/SliceModalPrimary';
-import ButtomExitModal from 'components/modal/ButtomExitModal';
+import ButtomExitModal from 'components/Modal/ButtomExitModal';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 const styleFlex = {
@@ -103,12 +103,7 @@ const FormCreateDiningRoom = () => {
         </Box>
         <Box sx={styleFlex}>
           <Typography sx={styleTitleInput}>Ghi chú</Typography>
-          <ControllerInput
-            control={control}
-            name='note'
-            startIcon={BorderColorIcon}
-            sx={{ paddingLeft: '22px' }}
-          />
+          <ControllerInput control={control} name='note' startIcon={BorderColorIcon} sx={{ paddingLeft: '22px' }} />
         </Box>
 
         <Box sx={{ justifyContent: 'end', mt: 4, display: 'flex', gap: 2 }}>

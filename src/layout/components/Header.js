@@ -4,6 +4,8 @@ import React from 'react';
 import imgs from '../../assets/img';
 import { Link } from 'react-router-dom';
 import { APP_BAR } from 'utils/constants/appBar';
+import UseAuth from 'components/Hook/useAuth';
+import ToastMessage from 'components/Basic/ToastMessage';
 
 const BoxSX = {
   display: 'flex',
@@ -21,6 +23,12 @@ const BoxSX = {
 };
 
 const Header = () => {
+  const { user, logout } = UseAuth();
+  console.log(user);
+  const handleSignout = () => {
+    logout();
+    ToastMessage('success', 'Đăng xuất thành công.');
+  };
   return (
     <Box backgroundColor='#fff' borderBottom='1px solid #ccc'>
       <Container maxWidth='lg'>
@@ -45,7 +53,7 @@ const Header = () => {
             </Typography>
           </Box>
 
-          <Box sx={{ display: 'flex' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             {APP_BAR.map((item) => {
               return (
                 <Link to={item.link} key={item.id}>
@@ -57,9 +65,14 @@ const Header = () => {
               );
             })}
             <Box sx={BoxSX}>
-              <Box display='flex'>0565442171</Box>
-              <Typography>Img</Typography>
+              <Box display='flex'>{user?.user?.username}</Box>
+              <Typography sx={{ borderRadius: '50%', overflow: 'hidden', width: 20, height: 20 }}>
+                <img src='https://jbsoftware.ca/wp-content/uploads/web-design.jpg' alt='avatar' />
+              </Typography>
             </Box>
+            <Typography onClick={handleSignout} sx={{ ...BoxSX, textDecoration: 'underline', fontWeight: '500' }}>
+              Đăng xuất
+            </Typography>
           </Box>
         </Box>
       </Container>

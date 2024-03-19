@@ -1,22 +1,22 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ColumnsDiningRoom } from './utils/columnsDinningRoom';
-import { Box, Button, Grid, Stack, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import { openModalPrimary } from '../../redux/SliceModalPrimary';
 import CoreTable from '@Core/components/table/CoreTable';
 import FormCreateDiningRoom from './components/FormCreateDiningRoom';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import FormCreateAreaDiningRoom from './components/FormCreateAreaDiningRoom';
+import DetailDiningRoom from './components/DetailDiningRoom';
+import FormUpdateDiningRoom from './components/FormUpdateDiningRoom';
+import { theme } from '@Core/Theme/theme';
 import {
   BasicModalDetail,
   BasicModalPrimary,
   BasicModalSecondary,
   BasicModalUpdate
-} from 'components/modal/modal';
-import DetailDiningRoom from './components/DetailDiningRoom';
-import FormUpdateDiningRoom from './components/FormUpdateDiningRoom';
-import { theme } from '@Core/Theme/theme';
-import SearchInput from 'components/basic/SearchInput';
+} from 'components/Modal/Modal';
+import SidebarDiningRoom from './components/SidebarDiningRoom';
 
 const data = [
   {
@@ -127,11 +127,11 @@ const DiningRoom = () => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={2.5} md={2.5}>
-        <SearchInput />
+        <SidebarDiningRoom />
       </Grid>
       <Grid item xs={9.5} md={9.5}>
         <Box>
-          <Box sx={{ p: '4px 0px 10px 0px', display: 'flex', justifyContent: 'space-between' }}>
+          <Box sx={{ pb: '10px', display: 'flex', justifyContent: 'space-between' }}>
             {/* <DebouncedInput value='' onChange={(value) => setFiltering(value)} placeholder={`Search... `} /> */}
             <Typography sx={{ fontSize: theme.typography.font_26_base }}>Hàng hóa</Typography>
             <Box>

@@ -2,10 +2,10 @@ import Regex from '@Core/config/Regex';
 import * as yup from 'yup';
 
 const validateFormRegister = yup.object({
-  fullName: yup.string().min(5, 'tối thiểu là 5 ký tự').trim(),
-  telephone: yup.string().required('trường bắt buộc').matches(Regex.phoneVn, 'không đúng định dạng').trim(),
+  name: yup.string().min(5, 'tối thiểu là 5 ký tự').trim(),
+  phone: yup.string().required('trường bắt buộc').matches(Regex.phoneVn, 'không đúng định dạng').trim(),
   province: yup.string().required('trường bắt buộc'),
-  stall_name: yup.string().required('trường bắt buộc').min(8, 'tối thiểu 8 ký tự').trim(),
+  username: yup.string().required('trường bắt buộc').min(8, 'tối thiểu 8 ký tự').trim(),
   policy: yup
     .string()
     .required('vui lòng đọc điều khoản sử dụng')
