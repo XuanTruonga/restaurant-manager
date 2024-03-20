@@ -10,6 +10,9 @@ import Tabs from '@mui/material/Tabs';
 import Paper from '@mui/material/Paper';
 import { theme } from '@Core/Theme/theme';
 import { styled } from '@mui/material';
+import { FILTER } from 'pages/Cashier/utlis/constant';
+import ArticleIcon from '@mui/icons-material/Article';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 const HeaderFilters = ({ value, setValue }) => {
   const handleChange = (event, newValue) => {
@@ -19,8 +22,8 @@ const HeaderFilters = ({ value, setValue }) => {
     <Box sx={{ p: '0 16px', mr: '12px', display: 'flex', gap: 2, height: theme.restaurants.HeadCashierHeight, alignItems: 'center' }}>
       <Box sx={{ display: 'flex' }}>
         <StyleTabs value={value} onChange={handleChange}>
-          <Tab label='Thực đơn' />
-          <Tab label='Phòng bàn' />
+          <Tab iconPosition='start' icon={<AddPhotoAlternateIcon sx={{ fontSize: 15 }} />} label={FILTER.diningRoom} />
+          <Tab iconPosition='start' icon={<ArticleIcon sx={{ fontSize: 15 }} />} label={FILTER.menu} />
         </StyleTabs>
       </Box>
       <Box sx={{ height: theme.restaurants.HeadCashierHeight, pb: '2px', flex: '1' }}>
@@ -49,11 +52,12 @@ const HeaderFilters = ({ value, setValue }) => {
 
 const StyleTabs = styled(Tabs)(() => ({
   minHeight: 36,
-  '& .css-3um8n2-MuiButtonBase-root-MuiTab-root.Mui-selected': {
+  height: 36,
+  '& .css-kbw3qb-MuiButtonBase-root-MuiTab-root.Mui-selected': {
     backgroundColor: '#fff',
     color: 'blue'
   },
-  '& .css-3um8n2-MuiButtonBase-root-MuiTab-root': {
+  '& .MuiButtonBase-root': {
     backgroundColor: theme.palette.primary.bold,
     borderTopRightRadius: '16px',
     borderTopLeftRadius: '16px',
@@ -62,7 +66,8 @@ const StyleTabs = styled(Tabs)(() => ({
     fontSize: '13px',
     textTransform: 'unset',
     padding: '9px 12px',
-    minWidth: 0,
+    minWidth: 116,
+    height: 36,
     minHeight: 36,
     flexShrink: 1,
     textWrap: 'nowrap'
