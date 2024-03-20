@@ -9,6 +9,7 @@ import ConnectedTvIcon from '@mui/icons-material/ConnectedTv';
 import color from '@Core/Theme/color';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import { pathName } from 'utils/constants/pathName';
 
 const DefaultLayout = ({ children }) => {
   const { pathname } = useLocation();
@@ -40,7 +41,7 @@ const DefaultLayout = ({ children }) => {
               })}
             </Box>
             <Link
-              href='/thu-ngan'
+              href={pathName.cashier}
               sx={{
                 display: 'flex',
                 px: 1,
