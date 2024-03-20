@@ -16,8 +16,8 @@ import PrivateRouter from './components/PrivateRouter';
 import Login from 'pages/Login/Login';
 import { pathName } from 'utils/constants/pathName';
 import Register from 'pages/Register/Register';
+import DefaultLayout from 'layout/defaultLayout';
 
-const { default: DefaultLayout } = require('layout/DefaultLayout');
 
 const routers = [
   {

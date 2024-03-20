@@ -13,10 +13,11 @@ import ToastMessage from 'components/Basic/ToastMessage';
 
 const FormRegister = (props) => {
   const { data, control, handleSubmit } = props;
-  const handleRegister =  (value) => {
-    // await authService.register(value);
-    console.log(value);
-    ToastMessage('success', 'Đăng ký thành công');
+  const handleRegister = async (value) => {
+    try {
+      await authService.register(value);
+      ToastMessage('success', 'Đăng ký thành công');
+    } catch (error) {}
   };
   return (
     <form style={{ width: '100%', display: 'flex', justifyContent: 'center' }} onSubmit={handleSubmit(handleRegister)}>

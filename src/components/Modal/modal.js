@@ -1,16 +1,11 @@
 import * as React from 'react';
-import {
-  modalSelectorDetail,
-  modalSelectorPrimary,
-  modalSelectorSecondary,
-  modalSelectorUpdate
-} from '../../redux/selectors';
+import { modalSelectorDetail, modalSelectorPrimary, modalSelectorSecondary, modalSelectorUpdate } from '../../redux/selectors';
 import { closeModalDetail } from '../../redux/SliceModalDetail';
-import BasicModal from './BasicModal';
 import { useSelector } from 'react-redux';
 import { closeModalPrimary } from '../../redux/SliceModalPrimary';
 import { closeModalSecondary } from '../../redux/SliceModalSecondary';
 import { closeModalUpdate } from '../../redux/SliceModalUpdate';
+import BasicModal from './BasicModal';
 
 export function BasicModalDetail(props) {
   const { title, width, children } = props;
@@ -37,13 +32,7 @@ export function BasicModalSecondary(props) {
   const { status } = useSelector(modalSelectorSecondary);
   return (
     <div>
-      <BasicModal
-        status={status}
-        title={title}
-        width={width}
-        closeModal={closeModalSecondary}
-        children={children}
-      />
+      <BasicModal status={status} title={title} width={width} closeModal={closeModalSecondary} children={children} />
     </div>
   );
 }

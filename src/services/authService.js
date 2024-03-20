@@ -15,7 +15,7 @@ class UserService extends BaseService {
     this.setRequest();
   }
   sigin(data) {
-    return this.post(data, authEndPoint.sigin);
+    return this.post(authEndPoint.sigin, data);
   }
   verifyToken() {
     return this.get(authEndPoint.verifyToken);
@@ -24,7 +24,7 @@ class UserService extends BaseService {
     return this.get();
   }
   register(data) {
-    return this.create(data);
+    return this.post(authEndPoint.create, data);
   }
 }
 const authService = new UserService({ baseEndpoint: authEndPoint.base });
