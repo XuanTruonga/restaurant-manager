@@ -24,7 +24,7 @@ class UserService extends BaseService {
     return this.get();
   }
   register(data) {
-    return this.create(data);
+    return this.post(authEndPoint.create, data);
   }
 }
 const authService = new UserService({ baseEndpoint: authEndPoint.base });
