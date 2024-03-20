@@ -8,7 +8,8 @@ export const theme = createTheme({
     appBarHeight: '56px',
     boxMenuHeight: '616px',
     heightTable: '530px',
-    widthTitleInputControl: '22%'
+    widthTitleInputControl: '22%',
+    HeadCashierHeight:'36px'
   },
   typography: typography,
   components: {

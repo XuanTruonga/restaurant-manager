@@ -1,4 +1,4 @@
-import LazyLoadingFullScreen from 'components/Customs/LoadingFullScreen';
+import LazyLoadingFullScreen from 'components/Basic/LoadingFullScreen';
 import React, { Suspense } from 'react';
 
 const Loaded = (Component) => (props) => {

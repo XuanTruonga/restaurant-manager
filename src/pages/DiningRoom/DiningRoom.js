@@ -11,7 +11,7 @@ import DetailDiningRoom from './components/DetailDiningRoom';
 import FormUpdateDiningRoom from './components/FormUpdateDiningRoom';
 import { theme } from '@Core/Theme/theme';
 import SidebarDiningRoom from './components/SidebarDiningRoom';
-import { BasicModalDetail, BasicModalPrimary, BasicModalSecondary, BasicModalUpdate } from 'components/Modal/modal';
+import { BasicModalDetail, BasicModalPrimary, BasicModalSecondary, BasicModalUpdate } from 'components/Modal/Modal';
 
 const data = [
   {
