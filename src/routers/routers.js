@@ -2,13 +2,11 @@ import { Typography } from '@mui/material';
 import Cashier from 'pages/Cashier/Cashier';
 import accountRouter from './account.router';
 import billRouter from './bill.router';
-import cashierRouter from './cashier.router';
 import diningRoomRouter from './diningRoom.router';
 import eatingRouter from './eating.router';
 import introduceRouter from './introduce.router';
 import payrollRouter from './payroll.router';
 import personnelRouter from './personnel.router';
-import receptionistRouter from './receptionist.router';
 import timekeepingRouter from './timekeeping.router';
 import { useRoutes } from 'react-router-dom';
 import PublicRouter from './components/PublicRouter';
@@ -17,7 +15,7 @@ import Login from 'pages/Login/Login';
 import { pathName } from 'utils/constants/pathName';
 import Register from 'pages/Register/Register';
 import DefaultLayout from 'layout/defaultLayout';
-
+import Receptionist from 'pages/Receptionist/Receptionist';
 
 const routers = [
   {
@@ -30,17 +28,15 @@ const routers = [
     children: [
       {
         index: true,
-        element: <Cashier />
+        element: <Receptionist />
       },
       accountRouter,
       billRouter,
-      cashierRouter,
       diningRoomRouter,
       eatingRouter,
       introduceRouter,
       payrollRouter,
       personnelRouter,
-      receptionistRouter,
       timekeepingRouter
     ]
   },
@@ -50,6 +46,14 @@ const routers = [
       <PublicRouter>
         <Login />
       </PublicRouter>
+    )
+  },
+  {
+    path: pathName.cashier,
+    element: (
+      <PrivateRouter>
+        <Cashier />
+      </PrivateRouter>
     )
   },
   {
