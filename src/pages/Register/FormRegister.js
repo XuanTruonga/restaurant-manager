@@ -13,7 +13,7 @@ import ToastMessage from 'components/Basic/ToastMessage';
 
 const FormRegister = (props) => {
   const { data, control, handleSubmit } = props;
-  const handleRegister =  (value) => {
+  const handleRegister = (value) => {
     // await authService.register(value);
     console.log(value);
     ToastMessage('success', 'Đăng ký thành công');

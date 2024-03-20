@@ -23,10 +23,10 @@ const BoxSX = {
 };
 
 const Header = () => {
-  const { user, logout } = UseAuth();
-  console.log(user);
+  const { user, logout, isAuthenticated, isInitialized } = UseAuth();
   const handleSignout = () => {
     logout();
+    console.log(isAuthenticated, isInitialized);
     ToastMessage('success', 'Đăng xuất thành công.');
   };
   return (

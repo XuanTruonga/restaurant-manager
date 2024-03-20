@@ -19,7 +19,6 @@ const SliceAuth = createSlice({
     },
     actionLogout: (state, _) => {
       state.isAuthenticated = false;
-      state.isInitialized = false;
       state.user = null;
       localStorage.removeItem('authToken');
     }
@@ -33,7 +32,6 @@ const SliceAuth = createSlice({
     });
 
     builder.addCase(getCurrentUser.rejected, (state) => {
-      console.log(2);
       state.isAuthenticated = false;
       state.isInitialized = true;
     });

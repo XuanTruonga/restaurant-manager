@@ -5,7 +5,7 @@ import React, { Fragment } from 'react';
 const ErrorMessageForm = ({ error, message, sx }) => {
   return (
     <Fragment>
-      {error?.message && (
+      {error && (
         <Typography
           sx={{
             fontSize: theme.typography.font_12_base,
