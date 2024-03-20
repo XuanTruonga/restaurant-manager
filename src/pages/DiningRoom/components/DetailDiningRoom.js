@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { modalSelectorDetail } from '../../../redux/selectors';
 import color from '@Core/Theme/color';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import { closeModalDetail } from '../../../redux/SliceModalDetail';
 import { openModalUpdate } from '../../../redux/SliceModalUpdate';

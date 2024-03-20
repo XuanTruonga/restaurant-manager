@@ -1,5 +1,5 @@
 import CoreConfirmProvider from '@Core/components/confirm/comfirm';
-import LazyLoadingFullScreen from 'components/Customs/LoadingFullScreen';
+import LazyLoadingFullScreen from 'components/Basic/LoadingFullScreen';
 import UseAuth from 'components/Hook/useAuth';
 import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';

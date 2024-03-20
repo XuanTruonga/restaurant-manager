@@ -9,7 +9,6 @@ import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import { pathName } from './pathName';
 
-
 export const DASHBOARD = [
   {
     id: 1,
@@ -17,12 +16,7 @@ export const DASHBOARD = [
     icon: PersonIcon,
     link: pathName.receptionist
   },
-  // {
-  //   id: 2,
-  //   name: 'Thu ngân',
-  //   icon: ConnectedTvIcon,
-  //   link: pathName.cashier
-  // },
+
   {
     id: 3,
     name: 'Phòng bàn',
