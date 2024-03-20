@@ -56,14 +56,10 @@ const ModalDetailAreaDiningRoom = ({ modalDetailArea, setModalUpdateArea, dataAr
             <Typography>{dataArea?.note}</Typography>
           </Box>
           <Box sx={{ justifyContent: 'end', mt: 4, display: 'flex', gap: 2, alignItems: 'center' }}>
-            <Button
-              onClick={() => setModalUpdateArea(true)}
-              variant='contained'
-              size='small'
-              startIcon={<SaveIcon />}>
+            <Button onClick={() => setModalUpdateArea(true)} variant='contained' size='small' startIcon={<SaveIcon />}>
               Cập nhập
             </Button>
-            <CoreTableActionDelete btn={true} />
+            <CoreTableActionDelete btn={true} content='Vui lòng xác nhận xóa.' />
           </Box>
         </Box>
       </Box>
