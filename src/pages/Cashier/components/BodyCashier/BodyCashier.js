@@ -1,13 +1,25 @@
-import color from '@Core/Theme/color';
 import { theme } from '@Core/Theme/theme';
-import { Box, styled } from '@mui/material';
-import React from 'react';
+import { styled } from '@mui/material';
+import React, { useState } from 'react';
+import BodyCashierLeft from './BodyCashierLeft';
+import BodyCashierRight from './BodyCashierRight';
+import { FILTER_STATUS } from 'pages/Cashier/utlis/constant';
 
 const BodyCashier = () => {
+  const [valueArea, setValueArea] = useState({ name: 'all', data: {} });
+  const [statusDiningRoom, setStatusDiningRoom] = useState({ name: FILTER_STATUS.all, data: {} });
+  const [valueDiningRoom, setValueDiningRoom] = useState({ name: null, data: {} });
   return (
     <WrapperBodyCashier>
-      <Box sx={{ backgroundColor: color.while, width: '50%', height: '100%', borderRadius: '18px' }}>s</Box>
-      <Box sx={{ backgroundColor: color.while, width: '50%', height: '100%', borderRadius: '18px' }}>s</Box>
+      <BodyCashierLeft
+        valueArea={valueArea}
+        setValueArea={setValueArea}
+        statusDiningRoom={statusDiningRoom}
+        setStatusDiningRoom={setStatusDiningRoom}
+        valueDiningRoom={valueDiningRoom}
+        setValueDiningRoom={setValueDiningRoom}
+      />
+      <BodyCashierRight />
     </WrapperBodyCashier>
   );
 };
@@ -15,6 +27,7 @@ const BodyCashier = () => {
 export default BodyCashier;
 
 const WrapperBodyCashier = styled('div')(() => ({
+  fontSize: 13,
   display: 'flex',
   gap: '20px',
   flexDirection: 'row',
