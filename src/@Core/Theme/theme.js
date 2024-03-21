@@ -9,7 +9,8 @@ export const theme = createTheme({
     boxMenuHeight: '616px',
     heightTable: '530px',
     widthTitleInputControl: '22%',
-    HeadCashierHeight:'36px'
+    HeadCashierHeight: '36px',
+    BodyCashierHeight: '34px',
   },
   typography: typography,
   components: {
