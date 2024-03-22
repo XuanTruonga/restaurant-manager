@@ -21,6 +21,7 @@ const styleFlex = {
 };
 
 const FormCreateAreaDiningRoom = () => {
+  const a = ''
   const validateCreateAreaDiningRoom = yup.object({
     area_name: yup.string().required('trường bắt buộc').trim(),
     note: yup.string().trim()
