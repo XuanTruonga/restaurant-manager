@@ -18,6 +18,7 @@ import { closeModalPrimary } from '../../../redux/SliceModalPrimary';
 import ButtomExitModal from 'components/Modal/ButtomExitModal';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 
+
 const styleFlex = {
   display: 'flex',
   alignItems: 'center',
@@ -45,19 +46,13 @@ const styleControlSelect = {
   }
 };
 
-const areas = [
-  { area_name: 'HTA', id: '1' },
-  { area_name: 'HTB', id: '2' },
-  { area_name: 'HTC', id: '3' },
-  { area_name: 'HTE', id: '4' }
-];
-
-const FormCreateDiningRoom = () => {
+const FormCreateDiningRoom = ({dataArea}) => {
   const dispath = useDispatch();
 
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(validateFormCreateDiningRoom)
   });
+
   const onSubmit = (value) => {
     console.log(value);
   };
@@ -76,7 +71,7 @@ const FormCreateDiningRoom = () => {
               name='area'
               control={control}
               path={pathFormController.area_name}
-              listMenu={areas}
+              listMenu={dataArea}
               titleMenu='Lựa chọn khu vực?'
               fontSize={theme.typography.font_14_base}
               sx={{ py: '2px' }}

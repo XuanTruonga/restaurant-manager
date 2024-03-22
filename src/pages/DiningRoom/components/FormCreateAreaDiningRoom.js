@@ -11,6 +11,9 @@ import { closeModalSecondary } from '../../../redux/SliceModalSecondary';
 import * as yup from 'yup';
 import ButtomExitModal from 'components/Modal/ButtomExitModal';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import areaService from 'services/areaService';
+import ToastMessage from 'components/Basic/ToastMessage';
+import { useDispatch } from 'react-redux';
 
 const styleFlex = {
   display: 'flex',
@@ -21,35 +24,34 @@ const styleFlex = {
 };
 
 const FormCreateAreaDiningRoom = () => {
+  const dispatch = useDispatch()
   const validateCreateAreaDiningRoom = yup.object({
-    area_name: yup.string().required('trường bắt buộc').trim(),
+    name: yup.string().required('trường bắt buộc').trim(),
     note: yup.string().trim()
   });
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(validateCreateAreaDiningRoom)
   });
-  const onSubmit = (value) => {
-    console.log(value);
+  const onSubmitAddArea = async (value) => {
+    try {
+      await areaService.add(value);
+      ToastMessage('success', 'Thêm khu vực thành công');
+      dispatch(closeModalSecondary())
+    } catch (error) {
+      ToastMessage('error', 'Thêm khu vực thất bại');
+    }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmitAddArea)}>
       <Stack>
         <Box sx={styleFlex}>
           <RequireText title='Tên khu vực' sx={{ width: theme.restaurants.widthTitleInputControl }} />
-          <ControllerInput control={control} name='area_name' />
+          <ControllerInput control={control} name='name' />
         </Box>
 
         <Box sx={styleFlex}>
-          <Typography
-            sx={{ fontWeight: '700', textWrap: 'nowrap', width: theme.restaurants.widthTitleInputControl }}>
-            Ghi chú
-          </Typography>
-          <ControllerInput
-            control={control}
-            name='note'
-            startIcon={BorderColorIcon}
-            sx={{ paddingLeft: '22px' }}
-          />
+          <Typography sx={{ fontWeight: '700', textWrap: 'nowrap', width: theme.restaurants.widthTitleInputControl }}>Ghi chú</Typography>
+          <ControllerInput control={control} name='note' startIcon={BorderColorIcon} sx={{ paddingLeft: '22px' }} />
         </Box>
 
         <Box sx={{ justifyContent: 'end', mt: 4, display: 'flex', gap: 2 }}>
