@@ -19,7 +19,6 @@ const Cashier = () => {
 const WrapperCashier = styled('div')(() => ({
   height: '100vh',
   padding: '0 24px 34px',
-  position: 'relative',
   fontSize: theme.typography.text_m,
   backgroundColor: '#00408C'
 }));
