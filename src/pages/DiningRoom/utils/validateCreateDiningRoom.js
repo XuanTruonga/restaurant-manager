@@ -1,9 +1,9 @@
 import * as yup from 'yup';
 
 const validateFormCreateDiningRoom = yup.object({
-  diningRoom: yup.string().required('trường bắt buộc').trim(),
-  area: yup.string().trim(),
-  quantitySeats: yup.string().trim(),
+  name: yup.string().required('trường bắt buộc').trim(),
+  area: yup.string().required('trường bắt buộc').trim(),
+  seat: yup.string().trim(),
   note: yup.string().trim()
 });
 
