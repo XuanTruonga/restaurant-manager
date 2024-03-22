@@ -24,7 +24,7 @@ const styleFlex = {
 };
 
 const FormCreateAreaDiningRoom = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const validateCreateAreaDiningRoom = yup.object({
     name: yup.string().required('trường bắt buộc').trim(),
     note: yup.string().trim()
@@ -36,7 +36,7 @@ const FormCreateAreaDiningRoom = () => {
     try {
       await areaService.add(value);
       ToastMessage('success', 'Thêm khu vực thành công');
-      dispatch(closeModalSecondary())
+      dispatch(closeModalSecondary());
     } catch (error) {
       ToastMessage('error', 'Thêm khu vực thất bại');
     }
