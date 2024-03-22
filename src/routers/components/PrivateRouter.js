@@ -4,7 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 const PrivateRouter = ({ children }) => {
   const { isAuthenticated, isInitialized } = UseAuth();
-  if (!isAuthenticated && isInitialized) {
+  if (isAuthenticated && isInitialized) {
     return children || <Outlet />;
   }
   return <Navigate to={'dang-nhap'} />;

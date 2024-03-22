@@ -12,6 +12,8 @@ import FormUpdateDiningRoom from './components/FormUpdateDiningRoom';
 import { theme } from '@Core/Theme/theme';
 import SidebarDiningRoom from './components/SidebarDiningRoom';
 import { BasicModalDetail, BasicModalPrimary, BasicModalSecondary, BasicModalUpdate } from 'components/Modal/Modal';
+import areaService from 'services/areaService';
+import { useQuery } from '@tanstack/react-query';
 
 const data = [
   {
@@ -115,14 +117,22 @@ const data = [
 ];
 
 const DiningRoom = () => {
+  const dispath = useDispatch();
   const [filtering, setFiltering] = useState();
 
-  const dispath = useDispatch();
-
+  const { data: dataArea } = useQuery({
+    queryKey: ['getAllArea'],
+    queryFn: async () => {
+      try {
+        const res = await areaService.getAll();
+        return res.data;
+      } catch (error) {}
+    }
+  });
   return (
     <Grid container spacing={3}>
       <Grid item xs={2.5} md={2.5}>
-        <SidebarDiningRoom />
+        <SidebarDiningRoom dataArea={dataArea} />
       </Grid>
       <Grid item xs={9.5} md={9.5}>
         <Box>
@@ -143,7 +153,7 @@ const DiningRoom = () => {
           </Box>
           <CoreTable columns={ColumnsDiningRoom()} data={data} filtering={filtering} setFiltering={setFiltering} />
           <BasicModalPrimary title={'Thêm phòng/bàn.'}>
-            <FormCreateDiningRoom />
+            <FormCreateDiningRoom dataArea={dataArea} />
           </BasicModalPrimary>
           <BasicModalSecondary title='Thêm khu vực.' width={'480px'}>
             <FormCreateAreaDiningRoom />

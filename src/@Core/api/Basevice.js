@@ -63,8 +63,8 @@ class BaseService {
    * @param {string} id
    * @returns
    */
-  find = (id) => {
-    const url = `${this.BASE_ENDPOINT}/${id}`;
+  find = (enpoint, id) => {
+    const url = `${this.BASE_ENDPOINT}/${enpoint}/${id}`;
     return this.request.get(url);
   };
 
@@ -75,11 +75,11 @@ class BaseService {
   create = (data) => {
     return this.request.post(this.BASE_ENDPOINT, data);
   };
-  post(enpoint, data) {
+  post(enpoint ='', data) {
     return this.request.post(this.BASE_ENDPOINT + '/' + enpoint, data);
   }
 
-  get(enpoint='', params = {}) {
+  get(enpoint = '', params = {}) {
     return this.request.get(this.BASE_ENDPOINT + enpoint, params);
   }
 
@@ -87,9 +87,9 @@ class BaseService {
    * @param {Object} data
    * @returns
    */
-  update = (data, id, method = 'put') => {
+  update = (enpoint = '', id, data, method = 'post') => {
     if (id) {
-      return this.request[method](`${this.BASE_ENDPOINT}/${id}`, data);
+      return this.request[method](`${this.BASE_ENDPOINT}/${enpoint}/${id}`, data);
     }
     return this.request[method](`${this.BASE_ENDPOINT}/${data[this.PRIMARY_KEY]}`, data);
   };
@@ -109,8 +109,8 @@ class BaseService {
    * @param {string} id
    * @returns
    */
-  delete = (id) => {
-    return this.request.delete(this.BASE_ENDPOINT + '/' + id);
+  delete = (enpoint = '', id) => {
+    return this.request.delete(this.BASE_ENDPOINT + '/' + enpoint + '/' + id);
   };
 }
 

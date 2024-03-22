@@ -29,17 +29,13 @@ const CoreConfirmProvider = (props) => {
     setOpen(false);
   };
 
-  const hanldeOk = async () => {
-    if (configs?.callback) {
+  const hanldeOk = () => {
+    if (configs?.onOk) {
       setLoading(true);
-      try {
-        await configs.callback();
-      } catch (error) {
-        console.error('Error during callback:', error);
-      }
-      setLoading(false);
-      handleClose();
+      configs.onOk();
     }
+    setLoading(false);
+    handleClose();
   };
 
   return (

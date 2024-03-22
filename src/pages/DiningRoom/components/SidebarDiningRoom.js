@@ -12,7 +12,7 @@ import FormControl from '@mui/material/FormControl';
 import { statusDingingRoom } from '../utils/statusDiningRoom';
 import SideBarArea from './SideBarArea';
 
-const SidebarDiningRoom = () => {
+const SidebarDiningRoom = ({dataArea}) => {
   const [selectedValue, setSelectedValue] = React.useState('Đang hoạt động');
   const handleChangeRadio = (e) => {
     setSelectedValue(e.target.value);
@@ -20,7 +20,7 @@ const SidebarDiningRoom = () => {
   console.log(selectedValue);
   return (
     <Box sx={{ minWidth: 186 }}>
-      <SideBarArea />
+      <SideBarArea dataArea={dataArea}/>
       <SearchInput placeholder='Theo tên phòng/bàn' />
       <Accordion sx={{ mb: '18px' }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1-content' id='panel1-header'>
