@@ -14,6 +14,7 @@ import SidebarDiningRoom from './components/SidebarDiningRoom';
 import { BasicModalDetail, BasicModalPrimary, BasicModalSecondary, BasicModalUpdate } from 'components/Modal/Modal';
 import areaService from 'services/areaService';
 import { useQuery } from '@tanstack/react-query';
+import { useCallApi } from 'useContext/ContextCallApi';
 
 const data = [
   {
@@ -118,10 +119,11 @@ const data = [
 
 const DiningRoom = () => {
   const dispath = useDispatch();
+  const { api } = useCallApi();
   const [filtering, setFiltering] = useState();
 
   const { data: dataArea } = useQuery({
-    queryKey: ['getAllArea'],
+    queryKey: ['getAllArea', api],
     queryFn: async () => {
       try {
         const res = await areaService.getAll();

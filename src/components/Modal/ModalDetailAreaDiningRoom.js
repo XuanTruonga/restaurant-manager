@@ -10,6 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { CoreTableActionDelete } from '@Core/components/table/CoreTableAction';
 import areaService from 'services/areaService';
 import ToastMessage from 'components/Basic/ToastMessage';
+import { useCallApi } from 'useContext/ContextCallApi';
 
 const style = {
   position: 'absolute',
@@ -36,11 +37,15 @@ const styleFlex = {
   mt: '12px'
 };
 
-const ModalDetailAreaDiningRoom = ({ modalDetailArea, setModalUpdateArea, areaItem, setModalDetailArea }) => {
+const ModalDetailAreaDiningRoom = ({ modalDetailArea, setModalUpdateArea, areaItem, setModalDetailArea, setValueArea }) => {
+  const { callApi } = useCallApi();
   const handleDeleteArea = () => {
     try {
       areaService.remove(areaItem.id);
       ToastMessage('success', 'Xóa khu vực thành công');
+      setModalDetailArea(false);
+      setValueArea('all');
+      callApi();
     } catch (error) {
       ToastMessage('error', 'Xóa khu vực thất bại');
     }

@@ -90,6 +90,7 @@ const SideBarArea = ({ dataArea }) => {
         setModalUpdateArea={setModalUpdateArea}
         setModalDetailArea={setModalDetailArea}
         areaItem={areaItem}
+        setValueArea={setValueArea}
       />
       <ModalUpdateAreaDiningRoom
         setModalDetailArea={setModalDetailArea}
