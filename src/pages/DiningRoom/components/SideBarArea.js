@@ -12,12 +12,6 @@ import { openModalSecondary } from '../../../redux/SliceModalSecondary';
 import ModalDetailAreaDiningRoom from 'components/Modal/ModalDetailAreaDiningRoom';
 import ModalUpdateAreaDiningRoom from 'components/Modal/ModalUpdateAreaDiningRoom';
 
-const areas = [
-  { area_name: 'HTA', id: '1' },
-  { area_name: 'HTB', id: '2' },
-  { area_name: 'HTC', id: '3' },
-  { area_name: 'HTE', id: '4' }
-];
 const styleWrapper = {
   borderRadius: 1,
   bgcolor: color.while,
@@ -26,12 +20,12 @@ const styleWrapper = {
   boxShadow: theme.shadows[2]
 };
 
-const SideBarArea = () => {
+const SideBarArea = ({ dataArea }) => {
   const font_14 = theme.typography.text_m;
   const [valueArea, setValueArea] = useState('all');
   const [modalUpdateArea, setModalUpdateArea] = useState(false);
   const [modalDetailArea, setModalDetailArea] = useState(false);
-  const [dataArea, setDataArea] = useState({});
+  const [areaItem, setAreaItem] = useState({});
   const dispath = useDispatch();
   return (
     <Box sx={styleWrapper}>
@@ -54,18 +48,16 @@ const SideBarArea = () => {
       </Box>
       <Box sx={{}}>
         <Box sx={{ display: 'flex' }}>
-          <CustomFormControl
-            variant='standard'
-            sx={{ minWidth: 120, width: '100%', fontSize: font_14, display: 'flex' }}>
+          <CustomFormControl variant='standard' sx={{ minWidth: 120, width: '100%', fontSize: font_14, display: 'flex' }}>
             <Select size='small' value={valueArea} onChange={(e) => setValueArea(e.target.value)}>
               <MenuItem value='all' sx={{ fontSize: font_14 }}>
                 Tất cả
               </MenuItem>
-              {areas &&
-                areas.map((item, index) => {
+              {dataArea &&
+                dataArea.map((item, index) => {
                   return (
                     <MenuItem
-                      onClick={() => setDataArea(item)}
+                      onClick={() => setAreaItem(item)}
                       key={index}
                       value={item[pathFormController.area_name]}
                       sx={{ fontSize: font_14 }}>
@@ -97,12 +89,13 @@ const SideBarArea = () => {
         modalDetailArea={modalDetailArea}
         setModalUpdateArea={setModalUpdateArea}
         setModalDetailArea={setModalDetailArea}
-        dataArea={dataArea}
+        areaItem={areaItem}
       />
       <ModalUpdateAreaDiningRoom
+        setModalDetailArea={setModalDetailArea}
         setModalUpdateArea={setModalUpdateArea}
         modalUpdateArea={modalUpdateArea}
-        dataArea={dataArea}
+        areaItem={areaItem}
       />
     </Box>
   );

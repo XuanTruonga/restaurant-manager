@@ -1,16 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  Paper,
-  Typography,
-  styled
-} from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Paper, Typography, styled } from '@mui/material';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import { createContext, useCallback, useContext, useState } from 'react';
 import BlockIcon from '@mui/icons-material/Block';
@@ -39,33 +29,21 @@ const CoreConfirmProvider = (props) => {
     setOpen(false);
   };
 
-  const hanldeOk = async () => {
-    if (configs?.callback) {
+  const hanldeOk = () => {
+    if (configs?.onOk) {
       setLoading(true);
-      try {
-        await configs.callback();
-      } catch (error) {
-        console.error('Error during callback:', error);
-      }
-      setLoading(false);
-      handleClose();
+      configs.onOk();
     }
+    setLoading(false);
+    handleClose();
   };
 
   return (
     <ConfirmContext.Provider value={confirm}>
       {props.children}
-      <Dialog
-        open={open}
-        PaperComponent={StyledPaper}
-        keepMounted
-        onClose={handleClose}
-        maxWidth='sm'
-        sx={{ zIndex: 2000 }}>
+      <Dialog open={open} PaperComponent={StyledPaper} keepMounted onClose={handleClose} maxWidth='sm' sx={{ zIndex: 2000 }}>
         {configs?.title && (
-          <DialogTitle
-            className='text-center'
-            sx={{ '& .MuiTypography-root ': { fontSize: '15px', fontWeight: '600' } }}>
+          <DialogTitle className='text-center' sx={{ '& .MuiTypography-root ': { fontSize: '15px', fontWeight: '600' } }}>
             {configs?.title}
           </DialogTitle>
         )}
@@ -77,12 +55,7 @@ const CoreConfirmProvider = (props) => {
         )}
         <Divider sx={{ margin: '10px' }} />
         <DialogActions sx={{ gap: 1 }}>
-          <Button
-            onClick={handleClose}
-            variant='contained'
-            size='small'
-            color='secondary'
-            startIcon={<BlockIcon />}>
+          <Button onClick={handleClose} variant='contained' size='small' color='secondary' startIcon={<BlockIcon />}>
             Bỏ qua
           </Button>
           <LoadingButton
@@ -105,5 +78,7 @@ const StyledPaper = styled(Paper)`
   padding: 6px;
   min-width: 25rem;
   max-width: 100%;
+  position: absolute !important;
+  top: 60px;
 `;
 export default CoreConfirmProvider;

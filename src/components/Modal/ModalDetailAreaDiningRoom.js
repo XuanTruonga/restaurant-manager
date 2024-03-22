@@ -8,6 +8,8 @@ import { Button } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import { CoreTableActionDelete } from '@Core/components/table/CoreTableAction';
+import areaService from 'services/areaService';
+import ToastMessage from 'components/Basic/ToastMessage';
 
 const style = {
   position: 'absolute',
@@ -34,7 +36,15 @@ const styleFlex = {
   mt: '12px'
 };
 
-const ModalDetailAreaDiningRoom = ({ modalDetailArea, setModalUpdateArea, dataArea, setModalDetailArea }) => {
+const ModalDetailAreaDiningRoom = ({ modalDetailArea, setModalUpdateArea, areaItem, setModalDetailArea }) => {
+  const handleDeleteArea = () => {
+    try {
+      areaService.remove(areaItem.id);
+      ToastMessage('success', 'Xóa khu vực thành công');
+    } catch (error) {
+      ToastMessage('error', 'Xóa khu vực thất bại');
+    }
+  };
   return (
     <Modal open={modalDetailArea}>
       <Box sx={{ ...style }}>
@@ -49,21 +59,17 @@ const ModalDetailAreaDiningRoom = ({ modalDetailArea, setModalUpdateArea, dataAr
           </Box>
           <Box sx={styleFlex}>
             <Typography sx={styleTypography}>Tên phòng bàn:</Typography>
-            <Typography sx={{ fontWeight: 'bold' }}>{dataArea?.area_name}</Typography>
+            <Typography sx={{ fontWeight: 'bold' }}>{areaItem?.name}</Typography>
           </Box>
           <Box sx={{ ...styleFlex, minHeight: '50px' }}>
             <Typography sx={styleTypography}>Ghi chú:</Typography>
-            <Typography>{dataArea?.note}</Typography>
+            <Typography>{areaItem?.note}</Typography>
           </Box>
           <Box sx={{ justifyContent: 'end', mt: 4, display: 'flex', gap: 2, alignItems: 'center' }}>
-            <Button
-              onClick={() => setModalUpdateArea(true)}
-              variant='contained'
-              size='small'
-              startIcon={<SaveIcon />}>
+            <Button onClick={() => setModalUpdateArea(true)} variant='contained' size='small' startIcon={<SaveIcon />}>
               Cập nhập
             </Button>
-            <CoreTableActionDelete btn={true} />
+            <CoreTableActionDelete btn={true} content='Vui lòng xác nhận xóa.' callback={handleDeleteArea} />
           </Box>
         </Box>
       </Box>

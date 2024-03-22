@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { modalSelectorDetail } from '../../../redux/selectors';
 import color from '@Core/Theme/color';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import { closeModalDetail } from '../../../redux/SliceModalDetail';
 import { openModalUpdate } from '../../../redux/SliceModalUpdate';
+import { CoreTableActionDelete } from '@Core/components/table/CoreTableAction';
 
 const styleBox = { display: 'flex', gap: 3, boderBottom: `1px solid ${color.gray1}`, py: '8px' };
 const styleTypography = {
@@ -71,9 +71,7 @@ const DetailDiningRoom = () => {
             Cho phép hoạt động
           </Button>
         )}
-        <Button variant='contained' color='error' size='small' startIcon={<DeleteIcon />}>
-          Xóa
-        </Button>
+        <CoreTableActionDelete btn={true} content='Vui lòng xác nhận xóa.' />
       </Box>
     </Stack>
   );
