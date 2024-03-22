@@ -17,6 +17,8 @@ import SaveIcon from '@mui/icons-material/Save';
 import { closeModalPrimary } from '../../../redux/SliceModalPrimary';
 import ButtomExitModal from 'components/Modal/ButtomExitModal';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import diningRoomService from 'services/diningRoomService';
+import ToastMessage from 'components/Basic/ToastMessage';
 
 const FormCreateDiningRoom = ({ dataArea }) => {
   const dispath = useDispatch();
@@ -28,11 +30,19 @@ const FormCreateDiningRoom = ({ dataArea }) => {
   } = useForm({
     resolver: yupResolver(validateFormCreateDiningRoom)
   });
-  const onSubmit = (value) => {
-    console.log(value);
+  const onSubmitAddDiningRoom = async (value) => {
+    const area = dataArea.find((item) => value.areaId === item.name);
+    const newValue = { ...value, areaId: area.id };
+    try {
+      diningRoomService.add(newValue);
+      ToastMessage('success', 'thêm phòng/bàn thành công');
+      dispath(closeModalPrimary())
+    } catch (error) {
+      ToastMessage('success', 'thêm phòng/bàn thất bại');
+    }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmitAddDiningRoom)}>
       <Stack>
         <Box sx={styleFlex}>
           <RequireText title='Tên phòng bàn' sx={{ width: theme.restaurants.widthTitleInputControl }} />
@@ -43,11 +53,16 @@ const FormCreateDiningRoom = ({ dataArea }) => {
           <Box
             flexGrow={1}
             sx={
-              errors?.area?.message
+              errors?.areaId?.message
                 ? {
                     ...styleControlSelect,
                     '&:after': {
-                      bottom: '31%'
+                      bottom: '31%',
+                      borderBottom: '1px solid #949494',
+                      left: '0',
+                      content: '""',
+                      position: 'absolute',
+                      right: '0'
                     }
                   }
                 : { ...styleControlSelect }
@@ -63,7 +78,7 @@ const FormCreateDiningRoom = ({ dataArea }) => {
               sx={{ py: '2px' }}
             />
             <Box onClick={() => dispath(openModalSecondary())}>
-              <AddIcon sx={errors?.area?.message ? { ...styleAddIcon, mb: '-1px' } : { ...styleAddIcon }} />
+              <AddIcon sx={errors?.areaId?.message ? { ...styleAddIcon, mb: '-1px' } : { ...styleAddIcon }} />
             </Box>
           </Box>
         </Box>
