@@ -12,15 +12,15 @@ import FormControl from '@mui/material/FormControl';
 import { statusDingingRoom } from '../utils/statusDiningRoom';
 import SideBarArea from './SideBarArea';
 
-const SidebarDiningRoom = ({dataArea}) => {
-  const [selectedValue, setSelectedValue] = React.useState('Đang hoạt động');
+const SidebarDiningRoom = ({ dataArea }) => {
+  const [selectedValue, setSelectedValue] = React.useState(statusDingingRoom.active);
   const handleChangeRadio = (e) => {
     setSelectedValue(e.target.value);
   };
   console.log(selectedValue);
   return (
     <Box sx={{ minWidth: 186 }}>
-      <SideBarArea dataArea={dataArea}/>
+      <SideBarArea dataArea={dataArea} />
       <SearchInput placeholder='Theo tên phòng/bàn' />
       <Accordion sx={{ mb: '18px' }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1-content' id='panel1-header'>
@@ -28,24 +28,24 @@ const SidebarDiningRoom = ({dataArea}) => {
         </AccordionSummary>
         <AccordionDetails>
           <FormControl>
-            <RadioGroup aria-labelledby='demo-radio-buttons-group-label' defaultValue={'Đang hoạt động'}>
+            <RadioGroup aria-labelledby='demo-radio-buttons-group-label' defaultValue={statusDingingRoom.active}>
               <FormControlLabel
                 value={statusDingingRoom.active}
                 onChange={handleChangeRadio}
                 control={<Radio size='small' color='success' />}
-                label='Đang hoạt động'
+                label={statusDingingRoom.active}
               />
               <FormControlLabel
                 value={statusDingingRoom.shutDown}
                 onChange={handleChangeRadio}
                 control={<Radio size='small' color='success' />}
-                label='Ngừng hoạt động'
+                label={statusDingingRoom.shutDown}
               />
               <FormControlLabel
                 value={statusDingingRoom.all}
                 onChange={handleChangeRadio}
                 control={<Radio size='small' color='success' />}
-                label='Tất cả'
+                label={statusDingingRoom.all}
               />
             </RadioGroup>
           </FormControl>

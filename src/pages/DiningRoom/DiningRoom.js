@@ -10,38 +10,16 @@ import FormUpdateDiningRoom from './components/FormUpdateDiningRoom';
 import { theme } from '@Core/Theme/theme';
 import SidebarDiningRoom from './components/SidebarDiningRoom';
 import { BasicModalDetail, BasicModalPrimary, BasicModalSecondary, BasicModalUpdate } from 'components/Modal/Modal';
-import areaService from 'services/areaService';
-import { useQuery } from '@tanstack/react-query';
-import { useCallApi } from 'useContext/ContextCallApi';
-import diningRoomService from 'services/diningRoomService';
 import { columnHelper } from '@Core/components/table/CoreTableBody';
 import { statusDingingRoom } from './utils/statusDiningRoom';
 import { CoreTableActionView } from '@Core/components/table/CoreTableAction';
 import { openModalDetail } from '../../redux/SliceModalDetail';
+import UseDinningRoom from './utils/useDinningRoom';
 
 const DiningRoom = () => {
-  const { api } = useCallApi();
+  const { dataArea, dataDiningRoom } = UseDinningRoom();
   const dispath = useDispatch();
 
-  const { data: dataDiningRoom } = useQuery({
-    queryKey: ['getAllDiningRoom'],
-    queryFn: async () => {
-      try {
-        const res = await diningRoomService.getAll();
-        return res.data;
-      } catch (error) {}
-    }
-  });
-
-  const { data: dataArea } = useQuery({
-    queryKey: ['getAllArea', api],
-    queryFn: async () => {
-      try {
-        const res = await areaService.getAll();
-        return res.data;
-      } catch (error) {}
-    }
-  });
   const handleViewDetailDiningRoom = (value) => {
     dispath(openModalDetail(value));
   };

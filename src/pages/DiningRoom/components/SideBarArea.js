@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { openModalSecondary } from '../../../redux/SliceModalSecondary';
 import ModalDetailAreaDiningRoom from 'components/Modal/ModalDetailAreaDiningRoom';
 import ModalUpdateAreaDiningRoom from 'components/Modal/ModalUpdateAreaDiningRoom';
+import UseDinningRoom from '../utils/useDinningRoom';
 
 const styleWrapper = {
   borderRadius: 1,
@@ -21,12 +22,19 @@ const styleWrapper = {
 };
 
 const SideBarArea = ({ dataArea }) => {
-  const font_14 = theme.typography.text_m;
+  const dispath = useDispatch();
+  const { setDataDiningRoom } = UseDinningRoom();
   const [valueArea, setValueArea] = useState('all');
   const [modalUpdateArea, setModalUpdateArea] = useState(false);
   const [modalDetailArea, setModalDetailArea] = useState(false);
   const [areaItem, setAreaItem] = useState({});
-  const dispath = useDispatch();
+
+  const handleFilterArea = (e) => {
+    const areaId = String(e.target.value);
+    setValueArea(areaId);
+    setDataDiningRoom();
+  };
+
   return (
     <Box sx={styleWrapper}>
       <Box sx={{ marginBottom: '18px', position: 'relative' }}>
@@ -48,9 +56,9 @@ const SideBarArea = ({ dataArea }) => {
       </Box>
       <Box sx={{}}>
         <Box sx={{ display: 'flex' }}>
-          <CustomFormControl variant='standard' sx={{ minWidth: 120, width: '100%', fontSize: font_14, display: 'flex' }}>
-            <Select size='small' value={valueArea} onChange={(e) => setValueArea(e.target.value)}>
-              <MenuItem value='all' sx={{ fontSize: font_14 }}>
+          <CustomFormControl variant='standard' sx={{ minWidth: 120, width: '100%', fontSize: theme.typography.text_m, display: 'flex' }}>
+            <Select size='small' value={valueArea} onChange={handleFilterArea}>
+              <MenuItem value='all' sx={{ fontSize: theme.typography.text_m }}>
                 Tất cả
               </MenuItem>
               {dataArea &&
@@ -59,8 +67,8 @@ const SideBarArea = ({ dataArea }) => {
                     <MenuItem
                       onClick={() => setAreaItem(item)}
                       key={index}
-                      value={item[pathFormController.area_name]}
-                      sx={{ fontSize: font_14 }}>
+                      value={item[pathFormController.area_id]}
+                      sx={{ fontSize: theme.typography.text_m }}>
                       {item[pathFormController.area_name]}
                     </MenuItem>
                   );
