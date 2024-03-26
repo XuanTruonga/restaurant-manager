@@ -21,12 +21,17 @@ const styleWrapper = {
 };
 
 const SideBarArea = ({ dataArea }) => {
-  const font_14 = theme.typography.text_m;
+  const dispath = useDispatch();
   const [valueArea, setValueArea] = useState('all');
   const [modalUpdateArea, setModalUpdateArea] = useState(false);
   const [modalDetailArea, setModalDetailArea] = useState(false);
   const [areaItem, setAreaItem] = useState({});
-  const dispath = useDispatch();
+
+  const handleFilterArea = (e) => {
+    const areaId = String(e.target.value);
+    setValueArea(areaId);
+  };
+
   return (
     <Box sx={styleWrapper}>
       <Box sx={{ marginBottom: '18px', position: 'relative' }}>
@@ -48,19 +53,20 @@ const SideBarArea = ({ dataArea }) => {
       </Box>
       <Box sx={{}}>
         <Box sx={{ display: 'flex' }}>
-          <CustomFormControl variant='standard' sx={{ minWidth: 120, width: '100%', fontSize: font_14, display: 'flex' }}>
-            <Select size='small' value={valueArea} onChange={(e) => setValueArea(e.target.value)}>
-              <MenuItem value='all' sx={{ fontSize: font_14 }}>
+          <CustomFormControl variant='standard' sx={{ minWidth: 120, width: '100%', fontSize: theme.typography.text_m, display: 'flex' }}>
+            <Select size='small' value={valueArea} onChange={handleFilterArea}>
+              <MenuItem value='all' sx={{ fontSize: theme.typography.text_m }}>
                 Tất cả
               </MenuItem>
               {dataArea &&
                 dataArea.map((item, index) => {
+                  console.log(item[pathFormController.area_id]);
                   return (
                     <MenuItem
                       onClick={() => setAreaItem(item)}
                       key={index}
-                      value={item[pathFormController.area_name]}
-                      sx={{ fontSize: font_14 }}>
+                      value={item[pathFormController.area_id]}
+                      sx={{ fontSize: theme.typography.text_m }}>
                       {item[pathFormController.area_name]}
                     </MenuItem>
                   );
@@ -90,6 +96,7 @@ const SideBarArea = ({ dataArea }) => {
         setModalUpdateArea={setModalUpdateArea}
         setModalDetailArea={setModalDetailArea}
         areaItem={areaItem}
+        setValueArea={setValueArea}
       />
       <ModalUpdateAreaDiningRoom
         setModalDetailArea={setModalDetailArea}

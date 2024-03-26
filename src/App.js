@@ -4,6 +4,7 @@ import UseAuth from 'components/Hook/useAuth';
 import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Routers from 'routers/routers';
+import CallApiProvider from 'useContext/ContextCallApi';
 
 function App() {
   const { isInitialized } = UseAuth();
@@ -12,12 +13,14 @@ function App() {
   }
   return (
     <div>
-      <CoreConfirmProvider>
-        <BrowserRouter>
-          <Routers />
-        </BrowserRouter>
-      </CoreConfirmProvider>
-      <ToastContainer />
+      <CallApiProvider>
+        <CoreConfirmProvider>
+          <BrowserRouter>
+            <Routers />
+          </BrowserRouter>
+        </CoreConfirmProvider>
+        <ToastContainer />
+      </CallApiProvider>
     </div>
   );
 }

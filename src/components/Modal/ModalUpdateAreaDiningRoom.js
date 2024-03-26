@@ -16,10 +16,10 @@ import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import areaService from 'services/areaService';
 import ToastMessage from 'components/Basic/ToastMessage';
-import { useDispatch } from 'react-redux';
+import { useCallApi } from 'useContext/ContextCallApi';
 
 const ModalUpdateAreaDiningRoom = ({ modalUpdateArea, areaItem, setModalUpdateArea, setModalDetailArea }) => {
-  const dispatch = useDispatch();
+  const { callApi } = useCallApi();
   const validateUpdateAreaDiningRoom = yup.object({
     name: yup.string().required('trường bắt buộc').trim(),
     note: yup.string().trim()
@@ -36,6 +36,7 @@ const ModalUpdateAreaDiningRoom = ({ modalUpdateArea, areaItem, setModalUpdateAr
     try {
       await areaService.edit(areaItem.id, value);
       ToastMessage('success', 'Sửa khu vực thành công');
+      callApi();
       setModalUpdateArea(false);
       setModalDetailArea(false);
     } catch (error) {

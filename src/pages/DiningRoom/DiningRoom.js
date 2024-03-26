@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ColumnsDiningRoom } from './utils/columnsDinningRoom';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { openModalPrimary } from '../../redux/SliceModalPrimary';
 import CoreTable from '@Core/components/table/CoreTable';
@@ -12,123 +10,76 @@ import FormUpdateDiningRoom from './components/FormUpdateDiningRoom';
 import { theme } from '@Core/Theme/theme';
 import SidebarDiningRoom from './components/SidebarDiningRoom';
 import { BasicModalDetail, BasicModalPrimary, BasicModalSecondary, BasicModalUpdate } from 'components/Modal/Modal';
-import areaService from 'services/areaService';
-import { useQuery } from '@tanstack/react-query';
-
-const data = [
-  {
-    diningRoom: 'HTA',
-    note: 'ok ban oi',
-    area: 'HTB',
-    quantitySeats: '5',
-    status: false,
-    numericalOrder: '1'
-  },
-  {
-    diningRoom: 'HTA',
-    note: 'ok ban oi',
-    area: 'HTA',
-    quantitySeats: '5',
-    status: true,
-    numericalOrder: '1'
-  },
-  {
-    diningRoom: 'HTA',
-    note: 'ok ban oi',
-    area: 'HTD',
-    quantitySeats: '5',
-    status: true,
-    numericalOrder: '1'
-  },
-  {
-    diningRoom: 'HTA',
-    note: 'ok ban oi',
-    area: 'HTB',
-    quantitySeats: '5',
-    status: true,
-    numericalOrder: '1'
-  },
-  {
-    diningRoom: 'HTA',
-    note: 'ok ban oi',
-    area: 'HTC',
-    quantitySeats: '5',
-    status: true,
-    numericalOrder: '1'
-  },
-  {
-    diningRoom: 'HTB',
-    note: 'ok ban oi',
-    area: 'HTA',
-    quantitySeats: '5',
-    status: true,
-    numericalOrder: '1'
-  },
-  {
-    diningRoom: 'HTC',
-    note: 'ok ban oi',
-    area: '',
-    quantitySeats: '5',
-    status: false,
-    numericalOrder: '1'
-  },
-  {
-    diningRoom: 'HTD',
-    note: 'ok ban oi',
-    area: 'HTC',
-    quantitySeats: '5',
-    status: false,
-    numericalOrder: '1'
-  },
-
-  {
-    diningRoom: 'HTE',
-    note: 'ok ban oi',
-    area: 'HTB',
-    quantitySeats: '5',
-    status: true,
-    numericalOrder: '1'
-  },
-  {
-    diningRoom: 'HTF',
-    note: 'ok ban oi',
-    area: 'HTD',
-    quantitySeats: '5',
-    status: true,
-    numericalOrder: '1'
-  },
-  {
-    diningRoom: 'HTG',
-    note: 'ok ban oi',
-    area: 'HTA',
-    quantitySeats: '5',
-    status: true,
-    numericalOrder: '1'
-  },
-
-  {
-    diningRoom: 'HTA',
-    note: 'ok ban oi',
-    area: 'HTC',
-    quantitySeats: '5',
-    status: true,
-    numericalOrder: '1'
-  }
-];
+import { columnHelper } from '@Core/components/table/CoreTableBody';
+import { statusDingingRoom } from './utils/statusDiningRoom';
+import { CoreTableActionView } from '@Core/components/table/CoreTableAction';
+import { openModalDetail } from '../../redux/SliceModalDetail';
+import UseDinningRoom from './utils/useDinningRoom';
 
 const DiningRoom = () => {
+  const { dataArea, dataDiningRoom } = UseDinningRoom();
   const dispath = useDispatch();
-  const [filtering, setFiltering] = useState();
 
-  const { data: dataArea } = useQuery({
-    queryKey: ['getAllArea'],
-    queryFn: async () => {
-      try {
-        const res = await areaService.getAll();
-        return res.data;
-      } catch (error) {}
-    }
-  });
+  const handleViewDetailDiningRoom = (value) => {
+    dispath(openModalDetail(value));
+  };
+  const columnDiningRoom = [
+    columnHelper.accessor((_, index) => index + 1, {
+      header: 'Stt',
+      minWidth: 50
+    }),
+    columnHelper.accessor('name', {
+      header: 'Tên phòng bàn',
+      minWidth: 120
+    }),
+    {
+      accessorKey: 'note',
+      header: 'Ghi chú',
+      minWidth: 200
+    },
+    columnHelper.accessor('areaId', {
+      header: 'Khu vực',
+      minWidth: 100,
+      cell: ({ cell }) => {
+        const areaId = Number(cell.getValue());
+        const areaItem = dataArea?.find((area) => {
+          return areaId === area.id;
+        });
+        return <Typography>{areaItem?.name}</Typography>;
+      }
+    }),
+    columnHelper.accessor('seat', {
+      header: 'Số ghế',
+      enableGlobalFilter: false,
+      minWidth: 70
+    }),
+    columnHelper.accessor('status', {
+      header: 'Trạng thái',
+      minWidth: 120,
+      cell: ({ row }) => {
+        return !row.original.status ? (
+          <Typography>{statusDingingRoom.active}</Typography>
+        ) : (
+          <Typography>{statusDingingRoom.shutDown}</Typography>
+        );
+      }
+    }),
+    columnHelper.accessor('', {
+      header: 'Thao tác',
+      enableGlobalFilter: false,
+
+      minWidth: 80,
+      cell: ({ row }) => {
+        const subject = row?.original;
+        return (
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
+            <CoreTableActionView callback={() => handleViewDetailDiningRoom(subject)} />
+          </Box>
+        );
+      }
+    })
+  ];
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={2.5} md={2.5}>
@@ -137,7 +88,6 @@ const DiningRoom = () => {
       <Grid item xs={9.5} md={9.5}>
         <Box>
           <Box sx={{ pb: '10px', display: 'flex', justifyContent: 'space-between' }}>
-            {/* <DebouncedInput value='' onChange={(value) => setFiltering(value)} placeholder={`Search... `} /> */}
             <Typography sx={{ fontSize: theme.typography.font_26_base }}>Hàng hóa</Typography>
             <Box>
               <Button
@@ -151,7 +101,7 @@ const DiningRoom = () => {
               </Button>
             </Box>
           </Box>
-          <CoreTable columns={ColumnsDiningRoom()} data={data} filtering={filtering} setFiltering={setFiltering} />
+          {dataDiningRoom?.length > 0 && <CoreTable columns={columnDiningRoom} data={dataDiningRoom} />}
           <BasicModalPrimary title={'Thêm phòng/bàn.'}>
             <FormCreateDiningRoom dataArea={dataArea} />
           </BasicModalPrimary>

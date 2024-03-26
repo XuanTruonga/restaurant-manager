@@ -11,14 +11,105 @@ import ControllerSelect from '@Core/components/input/ControllerSelect';
 import pathFormController from 'utils/constants/pathFormController';
 import AddIcon from '@mui/icons-material/Add';
 import color from '@Core/Theme/color';
-import { useDispatch, useSelector } from 'react-redux';
-import { openModalSecondary } from '../../../redux/SliceModalSecondary';
 import validateFormCreateDiningRoom from '../utils/validateCreateDiningRoom';
 import SaveIcon from '@mui/icons-material/Save';
-import { closeModalUpdate } from '../../../redux/SliceModalUpdate';
 import ButtomExitModal from 'components/Modal/ButtomExitModal';
-import { modalSelectorUpdate } from '../../../redux/selectors';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import UseDinningRoom from '../utils/useDinningRoom';
+import areaService from 'services/areaService';
+import { useQuery } from '@tanstack/react-query';
+import useModal from 'components/Hook/useModal';
+import { onSubmitUpdateDiningRoom } from '../utils/handleDiningRoom';
+
+const FormUpdateDiningRoom = () => {
+  const { dataModalUpdate, offModalUpdate, onModalSecondary: onModalAddArea } = useModal();
+  const { dataArea } = UseDinningRoom();
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validateFormCreateDiningRoom)
+  });
+
+  const { data: areaItem } = useQuery({
+    queryKey: ['getAreaItem'],
+    queryFn: async () => {
+      try {
+        const res = await areaService.getOne(dataModalUpdate?.areaId);
+        return res.data;
+      } catch (error) {}
+      return true;
+    }
+  });
+  useEffect(() => {
+    setValue('seat', dataModalUpdate?.seat);
+    setValue('note', dataModalUpdate?.note);
+    setValue('name', dataModalUpdate?.name);
+    setValue('areaId', areaItem?.name);
+  }, [dataModalUpdate]);
+  return (
+    <form onSubmit={handleSubmit((value) => onSubmitUpdateDiningRoom(value, dataModalUpdate, offModalUpdate))}>
+      <Stack>
+        <Box sx={styleFlex}>
+          <RequireText title='Tên phòng bàn' sx={{ width: theme.restaurants.widthTitleInputControl }} />
+          <ControllerInput control={control} name='name' />
+        </Box>
+        <Box sx={styleFlex}>
+          <Typography sx={styleTitleInput}>Khu vực</Typography>
+          <Box
+            flexGrow={1}
+            sx={
+              errors?.areaId?.message
+                ? {
+                    ...styleControlSelect,
+                    '&:after': {
+                      bottom: '31%',
+                      borderBottom: '1px solid #949494',
+                      left: '0',
+                      content: '""',
+                      position: 'absolute',
+                      right: '0'
+                    }
+                  }
+                : { ...styleControlSelect }
+            }>
+            <ControllerSelect
+              defaultValue={areaItem?.name}
+              variant='standard'
+              name='areaId'
+              control={control}
+              path={pathFormController.area_name}
+              listMenu={dataArea}
+              titleMenu='Lựa chọn khu vực?'
+              fontSize={theme.typography.font_14_base}
+              sx={{ py: '2px' }}
+            />
+            <Box onClick={() => onModalAddArea()}>
+              <AddIcon sx={errors?.areaId?.message ? { ...styleAddIcon, mb: '-1px' } : { ...styleAddIcon }} />
+            </Box>
+          </Box>
+        </Box>
+        <Box sx={styleFlex}>
+          <Typography sx={styleTitleInput}>Số ghế</Typography>
+          <ControllerInput control={control} name='seat' />
+        </Box>
+        <Box sx={styleFlex}>
+          <Typography sx={styleTitleInput}>Ghi chú</Typography>
+          <ControllerInput control={control} name='note' startIcon={BorderColorIcon} sx={{ paddingLeft: '24px' }} />
+        </Box>
+        <Box sx={{ justifyContent: 'end', mt: 4, display: 'flex', gap: 2 }}>
+          <Button type='submit' variant='contained' size='small' startIcon={<SaveIcon />}>
+            Lưu
+          </Button>
+          <ButtomExitModal closeModal={offModalUpdate} />
+        </Box>
+      </Stack>
+    </form>
+  );
+};
+export default FormUpdateDiningRoom;
 
 const styleFlex = {
   display: 'flex',
@@ -46,90 +137,13 @@ const styleControlSelect = {
     right: '0'
   }
 };
-
-const areas = [
-  { area_name: 'HTA', id: '1' },
-  { area_name: 'HTB', id: '2' },
-  { area_name: 'HTC', id: '3' },
-  { area_name: 'HTD', id: '4' }
-];
-
-const FormUpdateDiningRoom = () => {
-  const dispath = useDispatch();
-  const { data } = useSelector(modalSelectorUpdate);
-
-  const { control, handleSubmit, setValue } = useForm({
-    resolver: yupResolver(validateFormCreateDiningRoom)
-  });
-  const onSubmit = (value) => {
-    console.log(value);
-  };
-
-  useEffect(() => {
-    setValue('quantitySeats', data.quantitySeats);
-    setValue('note', data.note);
-    setValue('diningRoom', data.diningRoom);
-  }, [data]);
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack>
-        <Box sx={styleFlex}>
-          <RequireText title='Tên phòng bàn' sx={{ width: theme.restaurants.widthTitleInputControl }} />
-          <ControllerInput control={control} name='diningRoom' />
-        </Box>
-        <Box sx={styleFlex}>
-          <Typography sx={styleTitleInput}>Khu vực</Typography>
-          <Box flexGrow={1} sx={styleControlSelect}>
-            <ControllerSelect
-              defaultValue={data.area}
-              variant='standard'
-              name='area'
-              control={control}
-              path={pathFormController.area_name}
-              listMenu={areas}
-              titleMenu='Lựa chọn khu vực?'
-              fontSize={theme.typography.font_14_base}
-              sx={{ py: '2px' }}
-            />
-            <Box onClick={() => dispath(openModalSecondary())}>
-              <AddIcon
-                sx={{
-                  fontSize: theme.typography.font_22_base,
-                  mb: '-14px',
-                  opacity: 0.7,
-                  cursor: 'pointer',
-                  '&:hover': {
-                    backgroundColor: color.gray1,
-                    borderRadius: '50%'
-                  }
-                }}
-              />
-            </Box>
-          </Box>
-        </Box>
-        <Box sx={styleFlex}>
-          <Typography sx={styleTitleInput}>Số ghế</Typography>
-          <ControllerInput control={control} name='quantitySeats' />
-        </Box>
-        <Box sx={styleFlex}>
-          <Typography sx={styleTitleInput}>Ghi chú</Typography>
-          <ControllerInput
-            control={control}
-            name='note'
-            startIcon={BorderColorIcon}
-            sx={{ paddingLeft: '24px' }}
-          />
-        </Box>
-        <Box sx={{ justifyContent: 'end', mt: 4, display: 'flex', gap: 2 }}>
-          <Button type='submit' variant='contained' size='small' startIcon={<SaveIcon />}>
-            Lưu
-          </Button>
-          <ButtomExitModal closeModal={closeModalUpdate} />
-        </Box>
-      </Stack>
-    </form>
-  );
+const styleAddIcon = {
+  fontSize: theme.typography.font_22_base,
+  mb: '-14px',
+  opacity: 0.7,
+  cursor: 'pointer',
+  '&:hover': {
+    backgroundColor: color.gray1,
+    borderRadius: '50%'
+  }
 };
-
-export default FormUpdateDiningRoom;

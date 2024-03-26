@@ -6,11 +6,11 @@ import ErrorMessageForm from '../ErrorMessageForm';
 
 const ControllerSelect = (props) => {
   const {
-    defaultValue = '',
     control,
     name,
     fontSize,
     label,
+    defaultValue,
     placeholder,
     titleMenu,
     listMenu,
@@ -41,18 +41,18 @@ const ControllerSelect = (props) => {
                 sx={sx}
                 size='small'
                 label={label}
-                value={value || defaultValue}
+                value={value || defaultValue || 'null'}
                 onChange={(e) => {
                   onChange(e.target.value);
                   setValue(e.target.value);
                 }}>
-                <MenuItem value='' sx={{ fontSize: fontSize }}>
+                <MenuItem value='null' sx={{ fontSize: fontSize }}>
                   <em>{titleMenu}</em>
                 </MenuItem>
                 {listMenu &&
                   listMenu.map((item, index) => {
                     return (
-                      <MenuItem key={index} value={item[path] || defaultValue} sx={{ fontSize: fontSize }}>
+                      <MenuItem key={index} value={item[path]} sx={{ fontSize: fontSize }}>
                         {item[path]}
                       </MenuItem>
                     );

@@ -12,7 +12,7 @@ class AreaService extends BaseService {
   BASE_ENDPOINT = areaEndPoint.base;
   constructor(prams) {
     super(prams);
-    this.setRequest();
+    this.setRequest(); 
   }
   add(data) {
     return this.post(areaEndPoint.create, data);
