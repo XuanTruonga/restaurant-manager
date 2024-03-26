@@ -11,7 +11,6 @@ import { useDispatch } from 'react-redux';
 import { openModalSecondary } from '../../../redux/SliceModalSecondary';
 import ModalDetailAreaDiningRoom from 'components/Modal/ModalDetailAreaDiningRoom';
 import ModalUpdateAreaDiningRoom from 'components/Modal/ModalUpdateAreaDiningRoom';
-import UseDinningRoom from '../utils/useDinningRoom';
 
 const styleWrapper = {
   borderRadius: 1,
@@ -23,7 +22,6 @@ const styleWrapper = {
 
 const SideBarArea = ({ dataArea }) => {
   const dispath = useDispatch();
-  const { setDataDiningRoom } = UseDinningRoom();
   const [valueArea, setValueArea] = useState('all');
   const [modalUpdateArea, setModalUpdateArea] = useState(false);
   const [modalDetailArea, setModalDetailArea] = useState(false);
@@ -32,7 +30,6 @@ const SideBarArea = ({ dataArea }) => {
   const handleFilterArea = (e) => {
     const areaId = String(e.target.value);
     setValueArea(areaId);
-    setDataDiningRoom();
   };
 
   return (
@@ -63,6 +60,7 @@ const SideBarArea = ({ dataArea }) => {
               </MenuItem>
               {dataArea &&
                 dataArea.map((item, index) => {
+                  console.log(item[pathFormController.area_id]);
                   return (
                     <MenuItem
                       onClick={() => setAreaItem(item)}

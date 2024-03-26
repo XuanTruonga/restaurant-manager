@@ -42,10 +42,10 @@ const DiningRoom = () => {
       minWidth: 100,
       cell: ({ cell }) => {
         const areaId = Number(cell.getValue());
-        const areaItem = dataArea.find((area) => {
+        const areaItem = dataArea?.find((area) => {
           return areaId === area.id;
         });
-        return <Typography>{areaItem.name}</Typography>;
+        return <Typography>{areaItem?.name}</Typography>;
       }
     }),
     columnHelper.accessor('seat', {

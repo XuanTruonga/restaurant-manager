@@ -3,11 +3,11 @@ import areaService from 'services/areaService';
 import diningRoomService from 'services/diningRoomService';
 import { useCallApi } from 'useContext/ContextCallApi';
 
-const UseDinningRoom = () => {
+const UseDinningRoom = (id) => {
   const { api } = useCallApi();
 
   const { data: dataDiningRoom } = useQuery({
-    queryKey: ['getAllDiningRoom'],
+    queryKey: ['getAllDiningRoom', api],
     queryFn: async () => {
       try {
         const res = await diningRoomService.getAll();
@@ -25,12 +25,8 @@ const UseDinningRoom = () => {
       } catch (error) {}
     }
   });
-  const setDataDiningRoom = (data) => {
-    // const filteredDiningRoom = dataDiningRoom.filter((item) => item.areaId === areaId);
-    // queryClient.setQueryData(['getAllDiningRoom'], () => data);
-  };
 
-  return { dataArea, dataDiningRoom, setDataDiningRoom };
+  return { dataArea, dataDiningRoom };
 };
 
 export default UseDinningRoom;

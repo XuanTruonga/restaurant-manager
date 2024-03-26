@@ -19,10 +19,11 @@ import ButtomExitModal from 'components/Modal/ButtomExitModal';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import diningRoomService from 'services/diningRoomService';
 import ToastMessage from 'components/Basic/ToastMessage';
+import { useCallApi } from 'useContext/ContextCallApi';
 
 const FormCreateDiningRoom = ({ dataArea }) => {
   const dispath = useDispatch();
-
+  const { callApi } = useCallApi();
   const {
     control,
     handleSubmit,
@@ -36,7 +37,8 @@ const FormCreateDiningRoom = ({ dataArea }) => {
     try {
       diningRoomService.add(newValue);
       ToastMessage('success', 'thêm phòng/bàn thành công');
-      dispath(closeModalPrimary())
+      callApi();
+      dispath(closeModalPrimary());
     } catch (error) {
       ToastMessage('success', 'thêm phòng/bàn thất bại');
     }

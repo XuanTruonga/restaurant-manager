@@ -20,7 +20,6 @@ class DiningRoomService extends BaseService {
     return this.delete(diningRoomEndPoint.delete, id);
   }
   edit(id, data) {
-    console.log(id, data);
     return this.update(diningRoomEndPoint.update, id, data);
   }
   getAll() {
