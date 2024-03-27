@@ -20,7 +20,7 @@ const styleWrapper = {
   boxShadow: theme.shadows[2]
 };
 
-const SideBarArea = ({ dataArea }) => {
+const SideBarCommodityGroup = ({ dataArea }) => {
   const dispath = useDispatch();
   const [valueArea, setValueArea] = useState('all');
   const [modalUpdateArea, setModalUpdateArea] = useState(false);
@@ -35,7 +35,7 @@ const SideBarArea = ({ dataArea }) => {
   return (
     <Box sx={styleWrapper}>
       <Box sx={{ marginBottom: '18px', position: 'relative' }}>
-        <Typography sx={{ fontWeight: theme.typography.font_semibold }}>Khu vực</Typography>
+        <Typography sx={{ fontWeight: theme.typography.font_semibold }}>Nhóm hàng hóa</Typography>
         <Tooltip title='Thêm khu vực'>
           <IconButton
             onClick={() => dispath(openModalSecondary())}
@@ -111,4 +111,4 @@ const CustomFormControl = styled(FormControl)(({ theme }) => ({
     border: `1px solid ${theme.palette.secondary.main}`
   }
 }));
-export default SideBarArea;
+export default SideBarCommodityGroup;

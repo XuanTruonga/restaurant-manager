@@ -10,10 +10,12 @@ import CoreTableBody from '@Core/components/table/CoreTableBody';
 import CoreTableHeader from '@Core/components/table/CoreTableHeader';
 import { Box, MenuItem, Pagination, Select, Typography, styled } from '@mui/material';
 import useSearchParamsHook from 'components/Hook/useSearchParamsHook';
+import { useEffect } from 'react';
 
 export default function CoreTable(props) {
-  const { columns, data, isLoading, isPagination = true, dataPagination, onClick } = props;
+  const { columns, data, isLoading, isPagination = true, dataPagination, onClick, setTable } = props;
   const [sorting, setSorting] = React.useState();
+  const [rowSelection, setRowSelection] = React.useState({});
   const [totalPage, setTotalPage] = React.useState(1);
   const finalColumn = useMemo(() => columns, []);
   const finalData = useMemo(() => data, []);
@@ -25,18 +27,25 @@ export default function CoreTable(props) {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-
     state: {
-      sorting: sorting
+      sorting: sorting,
+      rowSelection
     },
-    onSortingChange: setSorting
+    onSortingChange: setSorting,
+    onRowSelectionChange: setRowSelection,
+    enableRowSelection: true
   });
+  // console.log(tableInstance.getSelectedRowModel());
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isLoading) {
       setTotalPage(dataPagination?.total_page);
     }
   }, [isLoading]);
+
+  useEffect(() => {
+    setTable && setTable(tableInstance);
+  }, [columns]);
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: theme.restaurants.heightTable }}>
