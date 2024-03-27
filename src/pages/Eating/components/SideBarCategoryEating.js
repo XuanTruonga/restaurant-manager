@@ -7,10 +7,10 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { useDispatch } from 'react-redux';
-import { openModalSecondary } from '../../../redux/SliceModalSecondary';
-import ModalDetailAreaDiningRoom from 'components/Modal/ModalDetailAreaDiningRoom';
-import ModalUpdateAreaDiningRoom from 'components/Modal/ModalUpdateAreaDiningRoom';
+import useModal from 'components/Hook/useModal';
+import ModalDetailCateBasic from 'components/Modal/ModalDetailCateBasic';
+import ModalUpdateCategoryBasic from 'components/Modal/ModalUpdateCategoryBasic';
+import categoryService from 'services/categoryService';
 
 const styleWrapper = {
   borderRadius: 1,
@@ -20,16 +20,17 @@ const styleWrapper = {
   boxShadow: theme.shadows[2]
 };
 
-const SideBarCommodityGroup = ({ dataArea }) => {
-  const dispath = useDispatch();
-  const [valueArea, setValueArea] = useState('all');
-  const [modalUpdateArea, setModalUpdateArea] = useState(false);
-  const [modalDetailArea, setModalDetailArea] = useState(false);
-  const [areaItem, setAreaItem] = useState({});
+const SideBarCategoryEating = ({ dataCategoryEating }) => {
+  const { onModalSecondary: onModalCategoryEating } = useModal();
+  const [valueCategoryEating, setValueCategoryEating] = useState('all');
+
+  const [modalUpdateCategoryEating, setModalUpdateCategoryEating] = useState(false);
+  const [modalDetailCategoryEating, setModalDetailCategoryEating] = useState(false);
+  const [categoryEatingItem, setCategoryEatingItem] = useState({});
 
   const handleFilterArea = (e) => {
     const areaId = String(e.target.value);
-    setValueArea(areaId);
+    setValueCategoryEating(areaId);
   };
 
   return (
@@ -38,7 +39,7 @@ const SideBarCommodityGroup = ({ dataArea }) => {
         <Typography sx={{ fontWeight: theme.typography.font_semibold }}>Nhóm hàng hóa</Typography>
         <Tooltip title='Thêm khu vực'>
           <IconButton
-            onClick={() => dispath(openModalSecondary())}
+            onClick={() => onModalCategoryEating()}
             sx={{
               '& .MuiSvgIcon-root': { fontSize: theme.typography.text_2xl },
               position: 'absolute',
@@ -54,15 +55,15 @@ const SideBarCommodityGroup = ({ dataArea }) => {
       <Box sx={{}}>
         <Box sx={{ display: 'flex' }}>
           <CustomFormControl variant='standard' sx={{ minWidth: 120, width: '100%', fontSize: theme.typography.text_m, display: 'flex' }}>
-            <Select size='small' value={valueArea} onChange={handleFilterArea}>
+            <Select size='small' value={valueCategoryEating} onChange={handleFilterArea}>
               <MenuItem value='all' sx={{ fontSize: theme.typography.text_m }}>
                 Tất cả
               </MenuItem>
-              {dataArea &&
-                dataArea.map((item, index) => {
+              {dataCategoryEating &&
+                dataCategoryEating.map((item, index) => {
                   return (
                     <MenuItem
-                      onClick={() => setAreaItem(item)}
+                      onClick={() => setCategoryEatingItem(item)}
                       key={index}
                       value={item[pathFormController.area_id]}
                       sx={{ fontSize: theme.typography.text_m }}>
@@ -72,9 +73,9 @@ const SideBarCommodityGroup = ({ dataArea }) => {
                 })}
             </Select>
           </CustomFormControl>
-          {valueArea !== 'all' && (
+          {valueCategoryEating !== 'all' && (
             <Box
-              onClick={() => setModalDetailArea(true)}
+              onClick={() => setModalDetailCategoryEating(true)}
               sx={{
                 '& .MuiSvgIcon-root': { fontSize: theme.typography.text_xl, color: color.gray2 },
                 borderBottom: '1px solid #949494',
@@ -90,18 +91,20 @@ const SideBarCommodityGroup = ({ dataArea }) => {
           )}
         </Box>
       </Box>
-      <ModalDetailAreaDiningRoom
-        modalDetailArea={modalDetailArea}
-        setModalUpdateArea={setModalUpdateArea}
-        setModalDetailArea={setModalDetailArea}
-        areaItem={areaItem}
-        setValueArea={setValueArea}
+      <ModalDetailCateBasic
+        modalDetail={modalDetailCategoryEating}
+        setModalUpdate={setModalUpdateCategoryEating}
+        setModalDetail={setModalDetailCategoryEating}
+        dataModal={categoryEatingItem}
+        setValue={setValueCategoryEating}
+        serviceName={categoryService}
       />
-      <ModalUpdateAreaDiningRoom
-        setModalDetailArea={setModalDetailArea}
-        setModalUpdateArea={setModalUpdateArea}
-        modalUpdateArea={modalUpdateArea}
-        areaItem={areaItem}
+      <ModalUpdateCategoryBasic
+        setModalDetail={setModalDetailCategoryEating}
+        setModalUpdate={setModalUpdateCategoryEating}
+        modalUpdate={modalUpdateCategoryEating}
+        dataModal={categoryEatingItem}
+        serviceName={categoryService}
       />
     </Box>
   );
@@ -111,4 +114,4 @@ const CustomFormControl = styled(FormControl)(({ theme }) => ({
     border: `1px solid ${theme.palette.secondary.main}`
   }
 }));
-export default SideBarCommodityGroup;
+export default SideBarCategoryEating;

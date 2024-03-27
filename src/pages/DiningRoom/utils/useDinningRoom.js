@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import areaService from 'services/areaService';
+import categoryService from 'services/categoryService';
 import diningRoomService from 'services/diningRoomService';
 import { useCallApi } from 'useContext/ContextCallApi';
 
@@ -26,7 +27,17 @@ const UseDinningRoom = (id) => {
     }
   });
 
-  return { dataArea, dataDiningRoom };
+  const { data: dataCategoryEating } = useQuery({
+    queryKey: ['getAllCategotyProduct', api],
+    queryFn: async () => {
+      try {
+        const res = await categoryService.getAll();
+        return res.data;
+      } catch (error) {}
+    }
+  });
+
+  return { dataArea, dataDiningRoom, dataCategoryEating };
 };
 
 export default UseDinningRoom;

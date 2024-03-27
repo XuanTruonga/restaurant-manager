@@ -13,26 +13,30 @@ import IndeterminateCheckbox from 'components/Basic/IndeterminateCheckbox';
 import useModal from 'components/Hook/useModal';
 import { theme } from '@Core/Theme/theme';
 import { useRef } from 'react';
+import FormCreateCategoryEating from './components/FormCreateCategoryEating';
 
 const Eating = () => {
   const [table, setTable] = useState();
   const tableInstance = useRef();
-  const { dataArea, dataDiningRoom } = UseDinningRoom();
+  const { dataDiningRoom, dataCategoryEating } = UseDinningRoom();
   const { onModalDetail, onModalPrimary: onModalAddEating } = useModal();
+
   const handleViewDetailDiningRoom = (value) => {
     onModalDetail(value);
   };
+  const a = () => {};
+
   const columnDiningRoom = useMemo(() => {
     tableInstance.current = table;
     return [
       {
         id: 'select',
-        header: () => {
+        header: (table) => {
           return (
             <IndeterminateCheckbox
-              checked={tableInstance.current?.getIsAllRowsSelected()}
-              indeterminate={tableInstance.current?.getIsSomeRowsSelected()}
-              onChange={tableInstance.current?.getToggleAllRowsSelectedHandler()}
+              checked={tableInstance.current?.getIsAllRowsSelected() || false}
+              indeterminate={tableInstance.current?.getIsSomeRowsSelected() || a()}
+              onChange={tableInstance.current?.getToggleAllRowsSelectedHandler() || a()}
             />
           );
         },
@@ -53,32 +57,27 @@ const Eating = () => {
         minWidth: 50
       }),
       columnHelper.accessor('name', {
-        header: 'Tên phòng bàn',
-        minWidth: 120
+        header: 'Tên hàng',
+        minWidth: 150
       }),
-      {
-        accessorKey: 'note',
-        header: 'Ghi chú',
-        minWidth: 200
-      },
       columnHelper.accessor('areaId', {
-        header: 'Khu vực',
+        header: 'Tên nhóm hàng',
         minWidth: 100,
         cell: ({ cell }) => {
           const areaId = Number(cell.getValue());
-          const areaItem = dataArea?.find((area) => {
+          const areaItem = dataCategoryEating?.find((area) => {
             return areaId === area.id;
           });
           return <Typography>{areaItem?.name}</Typography>;
         }
       }),
       columnHelper.accessor('seat', {
-        header: 'Số ghế',
+        header: 'Giá bán',
         enableGlobalFilter: false,
         minWidth: 70
       }),
       columnHelper.accessor('status', {
-        header: 'Trạng thái',
+        header: 'Giá vốn',
         minWidth: 120,
         cell: ({ row }) => {
           return !row?.original?.status ? (
@@ -89,7 +88,7 @@ const Eating = () => {
         }
       }),
       columnHelper.accessor('', {
-        header: 'Thao tác',
+        header: 'Tồn kho',
         enableGlobalFilter: false,
 
         minWidth: 80,
@@ -108,7 +107,7 @@ const Eating = () => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={2.5} md={2.5}>
-        <SidebarEating dataArea={dataArea} />
+        <SidebarEating dataCategoryEating={dataCategoryEating} />
       </Grid>
       <Grid item xs={9.5} md={9.5}>
         <Box>
@@ -128,8 +127,8 @@ const Eating = () => {
           </Box>
           {dataDiningRoom?.length > 0 && <CoreTable columns={columnDiningRoom} data={dataDiningRoom} setTable={setTable} />}
           <BasicModalPrimary title={'Thêm phòng/bàn.'}>{/* <FormCreateDiningRoom dataArea={dataArea} /> */}</BasicModalPrimary>
-          <BasicModalSecondary title='Thêm khu vực.' width={'480px'}>
-            {/* <FormCreateAreaDiningRoom /> */}
+          <BasicModalSecondary title='Thêm nhóm hàng hóa.' width={'480px'}>
+            <FormCreateCategoryEating />
           </BasicModalSecondary>
           <BasicModalDetail title='Thông tin phòng/bàn.' width={'600px'}>
             {/* <DetailDiningRoom /> */}
