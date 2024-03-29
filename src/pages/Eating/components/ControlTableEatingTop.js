@@ -10,7 +10,6 @@ import ToastMessage from 'components/Basic/ToastMessage';
 const ControlTableEatingTop = ({ rowCheckBox }) => {
   const { onModalPrimary: onModalAddEating } = useModal();
   const rows = rowCheckBox?.rows;
-
   const handleDeleteEating = () => {
     rows?.map(async (item) => {
       try {

@@ -45,12 +45,11 @@ const FormUpdateEating = () => {
     setValue('cost', eatingItem?.cost);
     setValue('name', eatingItem?.name);
     setValue('price', eatingItem?.price);
-    setValue('description', eatingItem?.description);
+    setValue('description', eatingItem?.description || '');
     setValue('img', eatingItem?.img);
     setValue('quantity', eatingItem?.quantity);
     setValue('categoryId', categoryEatingItem?.name);
   }, []);
-
   return (
     <form onSubmit={handleSubmit(handleUpdateEating)}>
       <Stack>

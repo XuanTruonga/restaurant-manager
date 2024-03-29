@@ -15,7 +15,7 @@ const ControllerInput = (props) => {
       control={control}
       render={({ field, fieldState: { error } }) => {
         return (
-          <Box flexGrow={1} position={'relative'}>
+          <Box flexGrow={2} position={'relative'}>
             {startIcon && (
               <StartIcon
                 sx={{

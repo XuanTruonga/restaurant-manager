@@ -7,7 +7,7 @@ import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useConfirm } from '../confirm/comfirm';
 
-export const CoreTableActionDelete = ({ callback = () => {}, content = '', btn }) => {
+export const CoreTableActionDelete = ({ callback = () => {}, content = '', btn, bgcolor }) => {
   const confirm = useConfirm();
   const handleDelete = () => {
     confirm({
@@ -19,9 +19,16 @@ export const CoreTableActionDelete = ({ callback = () => {}, content = '', btn }
   };
 
   return (
-    <Tooltip title='Xoá' >
+    <Tooltip title='Xoá'>
       {btn ? (
-        <Button height={'100%'} onClick={handleDelete} variant='contained' color='error' size='small' startIcon={<DeleteIcon />}>
+        <Button
+          height={'100%'}
+          onClick={handleDelete}
+          variant='contained'
+          color='error'
+          size='small'
+          startIcon={<DeleteIcon />}
+          sx={{ '&.MuiButtonBase-root': { bgcolor: bgcolor } }}>
           Xóa
         </Button>
       ) : (

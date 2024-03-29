@@ -17,7 +17,7 @@ const CreateEatingLeft = (props) => {
     <Box sx={{ width: '60%' }}>
       <WrapperControll>
         <RequireText title='Tên hàng hóa' sx={{ width: theme.restaurants.widthTitleInputControl }} />
-        <ControllerInput control={control} name='name' />F
+        <ControllerInput control={control} name='name' />
       </WrapperControll>
 
       <WrapperControll sx={{ mt: '8px' }}>

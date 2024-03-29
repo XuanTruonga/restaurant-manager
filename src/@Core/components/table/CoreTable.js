@@ -9,11 +9,11 @@ import { useMemo } from 'react';
 import CoreTableBody from '@Core/components/table/CoreTableBody';
 import CoreTableHeader from '@Core/components/table/CoreTableHeader';
 import { Box, MenuItem, Pagination, Select, Typography, styled } from '@mui/material';
-import useSearchParamsHook from 'components/Hook/useSearchParamsHook';
 import { useEffect } from 'react';
+import useSearchParamsHook from 'components/Hook/useSearchParamsHook';
 
 export default function CoreTable(props) {
-  const { columns, data, isLoading, isPagination = true, dataPagination, onClick, setTable } = props;
+  const { columns, data, isLoading, isPagination = true, dataPagination, onClick, setTable, setRowCheckBox } = props;
   const [sorting, setSorting] = React.useState();
   const [rowSelection, setRowSelection] = React.useState({});
   const [totalPage, setTotalPage] = React.useState(1);
@@ -35,7 +35,6 @@ export default function CoreTable(props) {
     onRowSelectionChange: setRowSelection,
     enableRowSelection: true
   });
-  // console.log(tableInstance.getSelectedRowModel());
 
   useEffect(() => {
     if (!isLoading) {
@@ -45,6 +44,7 @@ export default function CoreTable(props) {
 
   useEffect(() => {
     setTable && setTable(tableInstance);
+    setRowCheckBox && setRowCheckBox(tableInstance.getSelectedRowModel());
   }, [columns, tableInstance.getSelectedRowModel()]);
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>

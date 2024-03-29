@@ -51,6 +51,7 @@ const ControllerSelect = (props) => {
                 </MenuItem>
                 {listMenu &&
                   listMenu.map((item, index) => {
+                    console.log(item[path]);
                     return (
                       <MenuItem key={index} value={item[path]} sx={{ fontSize: fontSize }}>
                         {item[path]}
