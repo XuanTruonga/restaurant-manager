@@ -3,8 +3,6 @@ import { CoreTableActionView } from '@Core/components/table/CoreTableAction';
 import { columnHelper } from '@Core/components/table/CoreTableBody';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { BasicModalDetail, BasicModalPrimary, BasicModalSecondary, BasicModalUpdate } from 'components/Modal/Modal';
-import { statusDingingRoom } from 'pages/DiningRoom/utils/statusDiningRoom';
-import UseDinningRoom from 'pages/DiningRoom/utils/useDinningRoom';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import SidebarEating from './components/SideBarEeting';
 import React, { useMemo, useState } from 'react';
@@ -14,29 +12,27 @@ import useModal from 'components/Hook/useModal';
 import { theme } from '@Core/Theme/theme';
 import { useRef } from 'react';
 import FormCreateCategoryEating from './components/FormCreateCategoryEating';
+import FormCreateEating from './components/FormCreateEating/FormCreateEating';
+import useApiGetAll from 'components/Hook/useApiGetAll';
+import DetailEating from './components/DetailEating';
+import FormUpdateEating from './components/FormUpdateEating';
 
 const Eating = () => {
   const [table, setTable] = useState();
   const tableInstance = useRef();
-  const { dataDiningRoom, dataCategoryEating } = UseDinningRoom();
+  const { dataEating, dataCategoryEating } = useApiGetAll();
   const { onModalDetail, onModalPrimary: onModalAddEating } = useModal();
-
-  const handleViewDetailDiningRoom = (value) => {
-    onModalDetail(value);
-  };
-  const a = () => {};
-
-  const columnDiningRoom = useMemo(() => {
-    tableInstance.current = table;
+  tableInstance.current = table;
+  const columnEating = useMemo(() => {
     return [
       {
         id: 'select',
-        header: (table) => {
+        header: () => {
           return (
             <IndeterminateCheckbox
-              checked={tableInstance.current?.getIsAllRowsSelected() || false}
-              indeterminate={tableInstance.current?.getIsSomeRowsSelected() || a()}
-              onChange={tableInstance.current?.getToggleAllRowsSelectedHandler() || a()}
+              checked={tableInstance.current?.getIsAllRowsSelected()}
+              indeterminate={tableInstance.current?.getIsSomeRowsSelected()}
+              onChange={tableInstance.current?.getToggleAllRowsSelectedHandler()}
             />
           );
         },
@@ -60,35 +56,36 @@ const Eating = () => {
         header: 'Tên hàng',
         minWidth: 150
       }),
-      columnHelper.accessor('areaId', {
+      columnHelper.accessor('categoryId', {
         header: 'Tên nhóm hàng',
         minWidth: 100,
         cell: ({ cell }) => {
-          const areaId = Number(cell.getValue());
-          const areaItem = dataCategoryEating?.find((area) => {
-            return areaId === area.id;
-          });
-          return <Typography>{areaItem?.name}</Typography>;
+          const categoryId = Number(cell.getValue());
+          const categoryItem =
+            dataCategoryEating &&
+            dataCategoryEating?.find((category) => {
+              return categoryId === category.id;
+            });
+          return <Typography>{categoryItem?.name}</Typography>;
         }
       }),
-      columnHelper.accessor('seat', {
+      columnHelper.accessor('price', {
         header: 'Giá bán',
+        enableGlobalFilter: false,
+        minWidth: 120,
+        cell: (row) => <Typography>{Number(row.getValue()).toLocaleString()}</Typography>
+      }),
+      columnHelper.accessor('cost', {
+        header: 'Giá vốn',
+        minWidth: 120
+      }),
+      columnHelper.accessor('quantity', {
+        header: 'Tồn kho',
         enableGlobalFilter: false,
         minWidth: 70
       }),
-      columnHelper.accessor('status', {
-        header: 'Giá vốn',
-        minWidth: 120,
-        cell: ({ row }) => {
-          return !row?.original?.status ? (
-            <Typography>{statusDingingRoom.active}</Typography>
-          ) : (
-            <Typography>{statusDingingRoom.shutDown}</Typography>
-          );
-        }
-      }),
       columnHelper.accessor('', {
-        header: 'Tồn kho',
+        header: 'Thao tác',
         enableGlobalFilter: false,
 
         minWidth: 80,
@@ -96,13 +93,13 @@ const Eating = () => {
           const subject = row?.original;
           return (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
-              <CoreTableActionView callback={() => handleViewDetailDiningRoom(subject)} />
+              <CoreTableActionView callback={() => onModalDetail(subject)} />
             </Box>
           );
         }
       })
     ];
-  }, [table]);
+  }, [table, dataEating]);
 
   return (
     <Grid container spacing={3}>
@@ -125,16 +122,18 @@ const Eating = () => {
               </Button>
             </Box>
           </Box>
-          {dataDiningRoom?.length > 0 && <CoreTable columns={columnDiningRoom} data={dataDiningRoom} setTable={setTable} />}
-          <BasicModalPrimary title={'Thêm phòng/bàn.'}>{/* <FormCreateDiningRoom dataArea={dataArea} /> */}</BasicModalPrimary>
+          {dataEating?.length > 0 && <CoreTable columns={columnEating} data={dataEating} setTable={setTable} />}
+          <BasicModalPrimary width={960} title={'Thêm hàng hóa.'}>
+            {<FormCreateEating />}
+          </BasicModalPrimary>
           <BasicModalSecondary title='Thêm nhóm hàng hóa.' width={'480px'}>
             <FormCreateCategoryEating />
           </BasicModalSecondary>
-          <BasicModalDetail title='Thông tin phòng/bàn.' width={'600px'}>
-            {/* <DetailDiningRoom /> */}
+          <BasicModalDetail title='Chi tiết hàng hóa.' width={'700px'}>
+            <DetailEating />
           </BasicModalDetail>
-          <BasicModalUpdate title='Sửa thông tin phòng/bàn.' width={'600px'}>
-            {/* <FormUpdateDiningRoom /> */}
+          <BasicModalUpdate title='Sửa thông tin phòng/bàn.' width={960}>
+            <FormUpdateEating />
           </BasicModalUpdate>
         </Box>
       </Grid>

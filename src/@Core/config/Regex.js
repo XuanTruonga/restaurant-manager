@@ -8,7 +8,7 @@ class Regexs {
     uppercaseCharacters = /.*[A-Z].*/;
     phoneVn = /(84|0[35789])[0-9]{8}\b/g;
     characterCharacter = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\|=]/;
-    number = /^[1-9]\d*$/;
+    number = /^[0-9]\d*$/;
     cmnd = /^[1-9]{11}\b/g;
     bankNumber = /^(?:\d{10}|\d{19})$/;
     password = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;

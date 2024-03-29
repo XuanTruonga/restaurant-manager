@@ -14,10 +14,10 @@ import { columnHelper } from '@Core/components/table/CoreTableBody';
 import { statusDingingRoom } from './utils/statusDiningRoom';
 import { CoreTableActionView } from '@Core/components/table/CoreTableAction';
 import { openModalDetail } from '../../redux/SliceModalDetail';
-import UseDinningRoom from './utils/useDinningRoom';
+import useApiGetAll from '../../components/Hook/useApiGetAll';
 
 const DiningRoom = () => {
-  const { dataArea, dataDiningRoom } = UseDinningRoom();
+  const { dataArea, dataDiningRoom } = useApiGetAll();
   const dispath = useDispatch();
 
   const handleViewDetailDiningRoom = (value) => {

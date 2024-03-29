@@ -45,7 +45,7 @@ export default function CoreTable(props) {
 
   useEffect(() => {
     setTable && setTable(tableInstance);
-  }, [columns]);
+  }, [columns, tableInstance.getSelectedRowModel()]);
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: theme.restaurants.heightTable }}>

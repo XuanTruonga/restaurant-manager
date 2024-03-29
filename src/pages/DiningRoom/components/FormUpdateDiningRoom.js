@@ -15,15 +15,15 @@ import validateFormCreateDiningRoom from '../utils/validateCreateDiningRoom';
 import SaveIcon from '@mui/icons-material/Save';
 import ButtomExitModal from 'components/Modal/ButtomExitModal';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import UseDinningRoom from '../utils/useDinningRoom';
 import areaService from 'services/areaService';
 import { useQuery } from '@tanstack/react-query';
 import useModal from 'components/Hook/useModal';
 import { onSubmitUpdateDiningRoom } from '../utils/handleDiningRoom';
+import useApiGetAll from '../../../components/Hook/useApiGetAll';
 
 const FormUpdateDiningRoom = () => {
+  const { dataArea } = useApiGetAll();
   const { dataModalUpdate, offModalUpdate, onModalSecondary: onModalAddArea } = useModal();
-  const { dataArea } = UseDinningRoom();
   const {
     control,
     handleSubmit,
