@@ -1,13 +1,13 @@
 import React from 'react';
 import SearchInput from 'components/Basic/SearchInput';
 import Box from '@mui/material/Box';
-import SideBarCommodityGroup from './SideBarCommodityGroup';
+import SideBarCategoryEating from './SideBarCategoryEating';
 
-const SidebarEating = ({ dataArea }) => {
+const SidebarEating = ({ dataCategoryEating }) => {
   return (
     <Box sx={{ minWidth: 186 }}>
       <SearchInput placeholder='Theo tên hàng hóa' />
-      <SideBarCommodityGroup dataArea={dataArea} />
+      <SideBarCategoryEating dataCategoryEating={dataCategoryEating} />
     </Box>
   );
 };

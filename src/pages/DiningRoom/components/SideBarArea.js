@@ -9,8 +9,9 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useDispatch } from 'react-redux';
 import { openModalSecondary } from '../../../redux/SliceModalSecondary';
-import ModalDetailAreaDiningRoom from 'components/Modal/ModalDetailAreaDiningRoom';
-import ModalUpdateAreaDiningRoom from 'components/Modal/ModalUpdateAreaDiningRoom';
+import ModalDetailCateBasic from 'components/Modal/ModalDetailCateBasic';
+import ModalUpdateCategoryBasic from 'components/Modal/ModalUpdateCategoryBasic';
+import areaService from 'services/areaService';
 
 const styleWrapper = {
   borderRadius: 1,
@@ -90,18 +91,20 @@ const SideBarArea = ({ dataArea }) => {
           )}
         </Box>
       </Box>
-      <ModalDetailAreaDiningRoom
-        modalDetailArea={modalDetailArea}
-        setModalUpdateArea={setModalUpdateArea}
-        setModalDetailArea={setModalDetailArea}
-        areaItem={areaItem}
-        setValueArea={setValueArea}
+      <ModalDetailCateBasic
+        modalDetail={modalDetailArea}
+        setModalUpdate={setModalUpdateArea}
+        setModalDetail={setModalDetailArea}
+        dataModal={areaItem}
+        setValue={setValueArea}
+        serviceName={areaService}
       />
-      <ModalUpdateAreaDiningRoom
-        setModalDetailArea={setModalDetailArea}
-        setModalUpdateArea={setModalUpdateArea}
-        modalUpdateArea={modalUpdateArea}
-        areaItem={areaItem}
+      <ModalUpdateCategoryBasic
+        setModalDetail={setModalDetailArea}
+        setModalUpdate={setModalUpdateArea}
+        modalUpdate={modalUpdateArea}
+        dataModal={areaItem}
+        serviceName={areaService}
       />
     </Box>
   );

@@ -8,7 +8,6 @@ import { Button } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import { CoreTableActionDelete } from '@Core/components/table/CoreTableAction';
-import areaService from 'services/areaService';
 import ToastMessage from 'components/Basic/ToastMessage';
 import { useCallApi } from 'useContext/ContextCallApi';
 
@@ -37,21 +36,21 @@ const styleFlex = {
   mt: '12px'
 };
 
-const ModalDetailAreaDiningRoom = ({ modalDetailArea, setModalUpdateArea, areaItem, setModalDetailArea, setValueArea }) => {
+const ModalDetailCateBasic = ({ modalDetail, setModalUpdate, dataModal, setModalDetail, setValue, serviceName }) => {
   const { callApi } = useCallApi();
   const handleDeleteArea = () => {
     try {
-      areaService.remove(areaItem.id);
-      ToastMessage('success', 'Xóa khu vực thành công');
-      setModalDetailArea(false);
-      setValueArea('all');
+      serviceName.remove(dataModal.id);
+      ToastMessage('success', 'Xóa thành công');
+      setModalDetail(false);
+      setValue('all');
       callApi();
     } catch (error) {
-      ToastMessage('error', 'Xóa khu vực thất bại');
+      ToastMessage('error', 'Xóa thất bại');
     }
   };
   return (
-    <Modal open={modalDetailArea}>
+    <Modal open={modalDetail}>
       <Box sx={{ ...style }}>
         <Typography color={theme.palette.primary.dark} p={1} fontSize={theme.typography.font_16_semibold}>
           Sửa khu vực
@@ -59,19 +58,19 @@ const ModalDetailAreaDiningRoom = ({ modalDetailArea, setModalUpdateArea, areaIt
         <Box>
           <Box
             sx={{ position: 'absolute', top: '0', right: '0', cursor: 'pointer', p: 1, ouline: 'none' }}
-            onClick={() => setModalDetailArea(false)}>
+            onClick={() => setModalDetail(false)}>
             <CloseIcon />
           </Box>
           <Box sx={styleFlex}>
             <Typography sx={styleTypography}>Tên phòng bàn:</Typography>
-            <Typography sx={{ fontWeight: 'bold' }}>{areaItem?.name}</Typography>
+            <Typography sx={{ fontWeight: 'bold' }}>{dataModal?.name}</Typography>
           </Box>
           <Box sx={{ ...styleFlex, minHeight: '50px' }}>
             <Typography sx={styleTypography}>Ghi chú:</Typography>
-            <Typography>{areaItem?.note}</Typography>
+            <Typography>{dataModal?.note}</Typography>
           </Box>
           <Box sx={{ justifyContent: 'end', mt: 4, display: 'flex', gap: 2, alignItems: 'center' }}>
-            <Button onClick={() => setModalUpdateArea(true)} variant='contained' size='small' startIcon={<SaveIcon />}>
+            <Button onClick={() => setModalUpdate(true)} variant='contained' size='small' startIcon={<SaveIcon />}>
               Cập nhập
             </Button>
             <CoreTableActionDelete btn={true} content='Vui lòng xác nhận xóa.' callback={handleDeleteArea} />
@@ -82,4 +81,4 @@ const ModalDetailAreaDiningRoom = ({ modalDetailArea, setModalUpdateArea, areaIt
   );
 };
 
-export default ModalDetailAreaDiningRoom;
+export default ModalDetailCateBasic;

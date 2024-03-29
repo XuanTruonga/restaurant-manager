@@ -1,5 +1,5 @@
-import React, { createContext, useContext } from 'react';
-import { useState } from 'react';
+import { createContext } from 'react';
+import { useContext, useState } from 'react';
 
 export const ContextCallApi = createContext();
 

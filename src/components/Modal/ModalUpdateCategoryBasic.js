@@ -14,11 +14,10 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import SaveIcon from '@mui/icons-material/Save';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import areaService from 'services/areaService';
 import ToastMessage from 'components/Basic/ToastMessage';
 import { useCallApi } from 'useContext/ContextCallApi';
 
-const ModalUpdateAreaDiningRoom = ({ modalUpdateArea, areaItem, setModalUpdateArea, setModalDetailArea }) => {
+const ModalUpdateCategoryBasic = ({ modalUpdate, dataModal, setModalUpdate, setModalDetail, serviceName }) => {
   const { callApi } = useCallApi();
   const validateUpdateAreaDiningRoom = yup.object({
     name: yup.string().required('trường bắt buộc').trim(),
@@ -29,22 +28,22 @@ const ModalUpdateAreaDiningRoom = ({ modalUpdateArea, areaItem, setModalUpdateAr
   });
 
   useEffect(() => {
-    setValue('name', areaItem?.name);
-    setValue('note', areaItem?.note);
-  }, [areaItem]);
+    setValue('name', dataModal?.name);
+    setValue('note', dataModal?.note || '');
+  }, [dataModal]);
   const handleUpdateArea = async (value) => {
     try {
-      await areaService.edit(areaItem.id, value);
-      ToastMessage('success', 'Sửa khu vực thành công');
+      await serviceName.edit(dataModal.id, value);
+      ToastMessage('success', 'Cập nhập thành công');
       callApi();
-      setModalUpdateArea(false);
-      setModalDetailArea(false);
+      setModalUpdate(false);
+      setModalDetail(false);
     } catch (error) {
-      ToastMessage('error', 'Sửa khu vực thất bại');
+      ToastMessage('error', 'Cập nhập thất bại');
     }
   };
   return (
-    <Modal open={modalUpdateArea}>
+    <Modal open={modalUpdate}>
       <form onSubmit={handleSubmit(handleUpdateArea)}>
         <Box sx={{ ...style }}>
           <Typography color={theme.palette.primary.dark} p={1} fontSize={theme.typography.font_16_semibold}>
@@ -65,12 +64,7 @@ const ModalUpdateAreaDiningRoom = ({ modalUpdateArea, areaItem, setModalUpdateAr
               <Button type='submit' variant='contained' size='small' startIcon={<SaveIcon />}>
                 Lưu
               </Button>
-              <Button
-                onClick={() => setModalUpdateArea(false)}
-                variant='contained'
-                size='small'
-                color='secondary'
-                startIcon={<BlockIcon />}>
+              <Button onClick={() => setModalUpdate(false)} variant='contained' size='small' color='secondary' startIcon={<BlockIcon />}>
                 Bỏ qua
               </Button>
             </Box>
@@ -81,7 +75,7 @@ const ModalUpdateAreaDiningRoom = ({ modalUpdateArea, areaItem, setModalUpdateAr
   );
 };
 
-export default ModalUpdateAreaDiningRoom;
+export default ModalUpdateCategoryBasic;
 const style = {
   position: 'absolute',
   top: '7%',

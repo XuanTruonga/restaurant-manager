@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ToastMessage = (status, string) => {
-  console.log(status);
   switch (status) {
     case 'success':
       toast.success(string, {
