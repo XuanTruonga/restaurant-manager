@@ -3,19 +3,22 @@ import color from '@Core/Theme/color';
 
 import React from 'react';
 import BodyCashierFilterArea from './BodyCashierFilterArea';
-import { Avatar, Box, Grid, Typography, styled } from '@mui/material';
+import { Box, Grid, Typography, styled } from '@mui/material';
 import BodyCashierFilterStatus from './BodyCashierFilterStatus';
 import EnhancedEncryptionIcon from '@mui/icons-material/EnhancedEncryption';
 import { theme } from '@Core/Theme/theme';
-const diningRoom = ['A2', 'B1', 'C1', 'D1', 'A1', 'A2', 'E2', 'E2', 'E2', 'E2', 'E2', 'E2', 'E2', 'E4', 'E5', 'E6', 'E7'];
+import useApiGetAll from 'components/Hook/useApiGetAll';
+import TableIcon from 'assets/svg/TableIcon';
+
 const BodyCashierLeft = (props) => {
-  const { valueArea, setValueArea, statusDiningRoom, setStatusDiningRoom, setValueDiningRoom, valueDiningRoom } = props;
+  const { valueArea, setValueArea, statusDiningRoom, setStatusDiningRoom, setDataDiningRoom, dataDiningRoom } = props;
+  const { dataDiningRoom: listDiningRoom } = useApiGetAll();
 
   const handleRenderBill = (value) => {
-    setValueDiningRoom({ name: value, data: {} });
+    setDataDiningRoom({ name: value.name, data: {} });
   };
   const handleBillBringBack = () => {
-    setValueDiningRoom(null);
+    setDataDiningRoom({ name: null, data: {} });
   };
   return (
     <Box sx={{ backgroundColor: color.while, width: '56%', height: '100%', borderRadius: '18px', p: '8px 10px', position: 'relative' }}>
@@ -26,26 +29,26 @@ const BodyCashierLeft = (props) => {
           <Grid item xl={2} lg={2.4} md={3} xs={4}>
             <WrapperItemDiningRoom
               onClick={handleBillBringBack}
-              style={!valueDiningRoom ? { backgroundColor: theme.palette.primary.bold, color: color.while } : null}>
+              style={!dataDiningRoom.name ? { backgroundColor: theme.palette.primary.bold, color: color.while } : null}>
               <Box pt={'9px'}>
                 <EnhancedEncryptionIcon
                   sx={{ fontSize: 52, height: 52, color: '#6682A3' }}
-                  style={!valueDiningRoom ? { color: color.while } : null}
+                  style={!dataDiningRoom.name ? { color: color.while } : null}
                 />
                 <Typography> Mang về</Typography>
               </Box>
             </WrapperItemDiningRoom>
           </Grid>
 
-          {diningRoom.map((item, index) => {
+          {listDiningRoom?.map((item, index) => {
             return (
               <Grid xl={2} lg={2.4} md={3} xs={4} item key={index}>
                 <WrapperItemDiningRoom
                   onClick={() => handleRenderBill(item)}
-                  style={item === valueDiningRoom.name ? { backgroundColor: theme.palette.primary.bold, color: color.while } : null}>
+                  style={item.name === dataDiningRoom.name ? { backgroundColor: theme.palette.primary.bold, color: color.while } : null}>
                   <Box pt='9px' textAlign='-webkit-center'>
-                    <Avatar src='https://i.pinimg.com/736x/fc/90/9f/fc909f4bf3a61b87bb11d60f01c0f1f4.jpg' alt='diningRoom'></Avatar>
-                    <Typography marginTop={1}>item</Typography>
+                    <TableIcon />
+                    <Typography marginTop={1}>{item.name}</Typography>
                   </Box>
                 </WrapperItemDiningRoom>
               </Grid>

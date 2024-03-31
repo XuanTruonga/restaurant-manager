@@ -21,7 +21,6 @@ class AreaService extends BaseService {
     return this.delete(areaEndPoint.delete, id);
   }
   edit(id, data) {
-    console.log(id, data);
     return this.update(areaEndPoint.update, id, data);
   }
   getAll() {

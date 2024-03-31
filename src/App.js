@@ -12,16 +12,16 @@ function App() {
     return <LazyLoadingFullScreen />;
   }
   return (
-    <div>
-        <CallApiProvider>
-          <CoreConfirmProvider>
-            <BrowserRouter>
-              <Routers />
-            </BrowserRouter>
-          </CoreConfirmProvider>
-          <ToastContainer />
-        </CallApiProvider>
-    </div>
+    <>
+      <CallApiProvider>
+        <CoreConfirmProvider>
+          <BrowserRouter>
+            <Routers />
+          </BrowserRouter>
+        </CoreConfirmProvider>
+        <ToastContainer />
+      </CallApiProvider>
+    </>
   );
 }
 

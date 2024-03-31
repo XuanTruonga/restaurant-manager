@@ -99,7 +99,7 @@ const Eating = () => {
         }
       })
     ];
-  }, [table, dataEating]);
+  }, [table, dataEating, dataCategoryEating]);
 
   return (
     <Grid container spacing={3}>

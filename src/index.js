@@ -13,7 +13,7 @@ import store from './redux/store';
 import InitializedAuth from 'components/InitializedAuth/InitializedAuth';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
 root.render(
   <Provider store={store}>
     <QueryClientProvider client={queryClient}>

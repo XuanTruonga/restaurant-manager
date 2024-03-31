@@ -1,6 +1,5 @@
-import { useDispatch } from 'react-redux';
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, Grid, Typography } from '@mui/material';
-import { openModalPrimary } from '../../redux/SliceModalPrimary';
 import CoreTable from '@Core/components/table/CoreTable';
 import FormCreateDiningRoom from './components/FormCreateDiningRoom';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
@@ -13,72 +12,74 @@ import { BasicModalDetail, BasicModalPrimary, BasicModalSecondary, BasicModalUpd
 import { columnHelper } from '@Core/components/table/CoreTableBody';
 import { statusDingingRoom } from './utils/statusDiningRoom';
 import { CoreTableActionView } from '@Core/components/table/CoreTableAction';
-import { openModalDetail } from '../../redux/SliceModalDetail';
 import useApiGetAll from '../../components/Hook/useApiGetAll';
+import { useMemo } from 'react';
+import useModal from 'components/Hook/useModal';
 
 const DiningRoom = () => {
   const { dataArea, dataDiningRoom } = useApiGetAll();
-  const dispath = useDispatch();
-
+  const { onModalDetail, onModalPrimary } = useModal();
   const handleViewDetailDiningRoom = (value) => {
-    dispath(openModalDetail(value));
+    onModalDetail(value);
   };
-  const columnDiningRoom = [
-    columnHelper.accessor((_, index) => index + 1, {
-      header: 'Stt',
-      minWidth: 50
-    }),
-    columnHelper.accessor('name', {
-      header: 'Tên phòng bàn',
-      minWidth: 120
-    }),
-    {
-      accessorKey: 'note',
-      header: 'Ghi chú',
-      minWidth: 200
-    },
-    columnHelper.accessor('areaId', {
-      header: 'Khu vực',
-      minWidth: 100,
-      cell: ({ cell }) => {
-        const areaId = Number(cell.getValue());
-        const areaItem = dataArea?.find((area) => {
-          return areaId === area.id;
-        });
-        return <Typography>{areaItem?.name}</Typography>;
-      }
-    }),
-    columnHelper.accessor('seat', {
-      header: 'Số ghế',
-      enableGlobalFilter: false,
-      minWidth: 70
-    }),
-    columnHelper.accessor('status', {
-      header: 'Trạng thái',
-      minWidth: 120,
-      cell: ({ row }) => {
-        return !row.original.status ? (
-          <Typography>{statusDingingRoom.active}</Typography>
-        ) : (
-          <Typography>{statusDingingRoom.shutDown}</Typography>
-        );
-      }
-    }),
-    columnHelper.accessor('', {
-      header: 'Thao tác',
-      enableGlobalFilter: false,
+  const columnDiningRoom = useMemo(() => {
+    return [
+      columnHelper.accessor((_, index) => index + 1, {
+        header: 'Stt',
+        minWidth: 50
+      }),
+      columnHelper.accessor('name', {
+        header: 'Tên phòng bàn',
+        minWidth: 120
+      }),
+      {
+        accessorKey: 'note',
+        header: 'Ghi chú',
+        minWidth: 200
+      },
+      columnHelper.accessor('areaId', {
+        header: 'Khu vực',
+        minWidth: 100,
+        cell: ({ cell }) => {
+          const areaId = Number(cell.getValue());
+          const areaItem = dataArea?.find((area) => {
+            return areaId === area.id;
+          });
+          return <Typography>{areaItem?.name}</Typography>;
+        }
+      }),
+      columnHelper.accessor('seat', {
+        header: 'Số ghế',
+        enableGlobalFilter: false,
+        minWidth: 70
+      }),
+      columnHelper.accessor('status', {
+        header: 'Trạng thái',
+        minWidth: 120,
+        cell: ({ row }) => {
+          return !row.original.status ? (
+            <Typography>{statusDingingRoom.active}</Typography>
+          ) : (
+            <Typography>{statusDingingRoom.shutDown}</Typography>
+          );
+        }
+      }),
+      columnHelper.accessor('', {
+        header: 'Thao tác',
+        enableGlobalFilter: false,
 
-      minWidth: 80,
-      cell: ({ row }) => {
-        const subject = row?.original;
-        return (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
-            <CoreTableActionView callback={() => handleViewDetailDiningRoom(subject)} />
-          </Box>
-        );
-      }
-    })
-  ];
+        minWidth: 80,
+        cell: ({ row }) => {
+          const subject = row?.original;
+          return (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
+              <CoreTableActionView callback={() => handleViewDetailDiningRoom(subject)} />
+            </Box>
+          );
+        }
+      })
+    ];
+  }, [dataDiningRoom, dataArea]);
 
   return (
     <Grid container spacing={3}>
@@ -91,7 +92,7 @@ const DiningRoom = () => {
             <Typography sx={{ fontSize: theme.typography.font_26_base }}>Hàng hóa</Typography>
             <Box>
               <Button
-                onClick={() => dispath(openModalPrimary())}
+                onClick={() => onModalPrimary()}
                 variant='contained'
                 size='small'
                 color='primary'

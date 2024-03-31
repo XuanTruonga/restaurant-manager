@@ -18,11 +18,12 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import areaService from 'services/areaService';
 import { useQuery } from '@tanstack/react-query';
 import useModal from 'components/Hook/useModal';
-import { onSubmitUpdateDiningRoom } from '../utils/handleDiningRoom';
 import useApiGetAll from '../../../components/Hook/useApiGetAll';
+import ToastMessage from 'components/Basic/ToastMessage';
+import diningRoomService from 'services/diningRoomService';
 
 const FormUpdateDiningRoom = () => {
-  const { dataArea } = useApiGetAll();
+  const { dataArea, refetchApiDiningRoom } = useApiGetAll();
   const { dataModalUpdate, offModalUpdate, onModalSecondary: onModalAddArea } = useModal();
   const {
     control,
@@ -43,14 +44,28 @@ const FormUpdateDiningRoom = () => {
       return true;
     }
   });
+  const onSubmitUpdateDiningRoom = async (valueForm) => {
+    const areaFillter = dataArea?.find((area) => {
+      return valueForm.areaId === String(area.id) || valueForm.areaId === area.name;
+    });
+    const newValueForm = { ...valueForm, areaId: String(areaFillter.id) };
+    try {
+      await diningRoomService.edit(dataModalUpdate.id, newValueForm);
+      ToastMessage('success', 'Cập nhập phòng/bàn thành công.');
+      offModalUpdate();
+      refetchApiDiningRoom();
+    } catch (error) {
+      ToastMessage('error', error.response.status === 500 ? 'Phòng bàn đã tồn tại' : 'Thêm phòng bàn thất bại');
+    }
+  };
   useEffect(() => {
     setValue('seat', dataModalUpdate?.seat);
     setValue('note', dataModalUpdate?.note);
     setValue('name', dataModalUpdate?.name);
-    setValue('areaId', areaItem?.name);
+    setValue('areaId', dataModalUpdate?.areaId);
   }, [dataModalUpdate]);
   return (
-    <form onSubmit={handleSubmit((value) => onSubmitUpdateDiningRoom(value, dataModalUpdate, offModalUpdate))}>
+    <form onSubmit={handleSubmit(onSubmitUpdateDiningRoom)}>
       <Stack>
         <Box sx={styleFlex}>
           <RequireText title='Tên phòng bàn' sx={{ width: theme.restaurants.widthTitleInputControl }} />

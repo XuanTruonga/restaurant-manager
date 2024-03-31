@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -15,10 +17,12 @@ import SaveIcon from '@mui/icons-material/Save';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import ToastMessage from 'components/Basic/ToastMessage';
-import { useCallApi } from 'useContext/ContextCallApi';
+import useApiGetAll from 'components/Hook/useApiGetAll';
+import { useQuery } from '@tanstack/react-query';
+import areaService from 'services/areaService';
 
-const ModalUpdateCategoryBasic = ({ modalUpdate, dataModal, setModalUpdate, setModalDetail, serviceName }) => {
-  const { callApi } = useCallApi();
+const ModalUpdateArea = ({ modalUpdate, dataModal, setModalUpdate, setModalDetail, refetchApi, setAreaItem }) => {
+  const { refetchApiDiningRoom, dataArea } = useApiGetAll();
   const validateUpdateAreaDiningRoom = yup.object({
     name: yup.string().required('trường bắt buộc').trim(),
     note: yup.string().trim()
@@ -27,19 +31,29 @@ const ModalUpdateCategoryBasic = ({ modalUpdate, dataModal, setModalUpdate, setM
     resolver: yupResolver(validateUpdateAreaDiningRoom)
   });
 
+  const { data: dataAreaItem } = useQuery({
+    queryKey: ['getOne', dataArea, dataModal],
+    queryFn: async () => {
+      const res = await areaService.getOne(dataModal.id);
+      setAreaItem(res.data);
+      return res.data;
+    }
+  });
+
   useEffect(() => {
     setValue('name', dataModal?.name);
     setValue('note', dataModal?.note || '');
   }, [dataModal]);
   const handleUpdateArea = async (value) => {
     try {
-      await serviceName.edit(dataModal.id, value);
+      await areaService.edit(dataModal.id, value);
       ToastMessage('success', 'Cập nhập thành công');
-      callApi();
+      refetchApi();
+      refetchApiDiningRoom();
       setModalUpdate(false);
       setModalDetail(false);
     } catch (error) {
-      ToastMessage('error', 'Cập nhập thất bại');
+      ToastMessage('error', error?.response?.status === 500 ? 'Danh mục/khu vực đã tồn tại' : 'Cập nhập thất bại');
     }
   };
   return (
@@ -75,7 +89,7 @@ const ModalUpdateCategoryBasic = ({ modalUpdate, dataModal, setModalUpdate, setM
   );
 };
 
-export default ModalUpdateCategoryBasic;
+export default ModalUpdateArea;
 const style = {
   position: 'absolute',
   top: '7%',

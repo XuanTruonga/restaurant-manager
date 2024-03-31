@@ -11,9 +11,9 @@ import * as yup from 'yup';
 import ButtomExitModal from 'components/Modal/ButtomExitModal';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import ToastMessage from 'components/Basic/ToastMessage';
-import { useCallApi } from 'useContext/ContextCallApi';
 import useModal from 'components/Hook/useModal';
 import categoryService from 'services/categoryService';
+import useApiGetAll from 'components/Hook/useApiGetAll';
 
 const styleFlex = {
   display: 'flex',
@@ -25,7 +25,7 @@ const styleFlex = {
 
 const FormCreateCategoryEating = () => {
   const { offModalSecondary: offModalCategoryEating } = useModal();
-  const { callApi } = useCallApi();
+  const { refetchApiCategoryEating } = useApiGetAll();
   const validateCreateCategoryEating = yup.object({
     name: yup.string().required('trường bắt buộc').trim(),
     note: yup.string().trim()
@@ -36,11 +36,11 @@ const FormCreateCategoryEating = () => {
   const onSubmitAddArea = async (value) => {
     try {
       await categoryService.add(value);
-      ToastMessage('success', 'Thêm danh mục thành công');
-      callApi();
+      ToastMessage('success', 'Thêm nhóm hàng thành công');
+      refetchApiCategoryEating();
       offModalCategoryEating();
     } catch (error) {
-      ToastMessage('error', 'Thêm danh mục thất bại');
+      ToastMessage('error', error.response.status === 500 ? 'Nhóm hàng đã tồn tại' : 'Thêm nhóm hàng thất bại');
     }
   };
   return (

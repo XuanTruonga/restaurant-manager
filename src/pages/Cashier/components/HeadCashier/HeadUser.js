@@ -45,7 +45,7 @@ export default function HeadUser() {
               <MenuItem onClick={handleClose} disableRipple>
                 <Icon />
                 {item?.name}
-              </MenuItem>   
+              </MenuItem>
             </Link>
           );
         })}

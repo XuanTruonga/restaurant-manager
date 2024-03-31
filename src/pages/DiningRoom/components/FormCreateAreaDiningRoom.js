@@ -13,8 +13,8 @@ import ButtomExitModal from 'components/Modal/ButtomExitModal';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import areaService from 'services/areaService';
 import ToastMessage from 'components/Basic/ToastMessage';
-import { useDispatch } from 'react-redux';
-import { useCallApi } from 'useContext/ContextCallApi';
+import useApiGetAll from 'components/Hook/useApiGetAll';
+import useModal from 'components/Hook/useModal';
 
 const styleFlex = {
   display: 'flex',
@@ -25,8 +25,8 @@ const styleFlex = {
 };
 
 const FormCreateAreaDiningRoom = () => {
-  const dispatch = useDispatch();
-  const { callApi } = useCallApi();
+  const { offModalSecondary: offModalAddDiningroom } = useModal();
+  const { refetchApiArea } = useApiGetAll();
   const validateCreateAreaDiningRoom = yup.object({
     name: yup.string().required('trường bắt buộc').trim(),
     note: yup.string().trim()
@@ -38,10 +38,10 @@ const FormCreateAreaDiningRoom = () => {
     try {
       await areaService.add(value);
       ToastMessage('success', 'Thêm khu vực thành công');
-      callApi();
-      dispatch(closeModalSecondary());
+      refetchApiArea();
+      offModalAddDiningroom();
     } catch (error) {
-      ToastMessage('error', 'Thêm khu vực thất bại');
+      ToastMessage('error', error.response.status === 500 ? 'Khu vực đã tồn tại' : 'Thêm khu vực thất bại');
     }
   };
   return (

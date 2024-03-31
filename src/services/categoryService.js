@@ -21,7 +21,6 @@ class CategoryService extends BaseService {
     return this.delete(categoryEndPoint.delete, id);
   }
   edit(id, data) {
-    console.log(id, data);
     return this.update(categoryEndPoint.update, id, data);
   }
   getAll() {

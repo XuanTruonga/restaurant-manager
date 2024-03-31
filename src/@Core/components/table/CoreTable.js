@@ -5,7 +5,6 @@ import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
 import { theme } from '@Core/Theme/theme';
 import { getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
-import { useMemo } from 'react';
 import CoreTableBody from '@Core/components/table/CoreTableBody';
 import CoreTableHeader from '@Core/components/table/CoreTableHeader';
 import { Box, MenuItem, Pagination, Select, Typography, styled } from '@mui/material';
@@ -17,24 +16,26 @@ export default function CoreTable(props) {
   const [sorting, setSorting] = React.useState();
   const [rowSelection, setRowSelection] = React.useState({});
   const [totalPage, setTotalPage] = React.useState(1);
-  const finalColumn = useMemo(() => columns, []);
-  const finalData = useMemo(() => data, []);
+
   const { setParams } = useSearchParamsHook();
 
-  const tableInstance = useReactTable({
-    columns: finalColumn,
-    data: finalData,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    state: {
-      sorting: sorting,
-      rowSelection
+  const tableInstance = useReactTable(
+    {
+      columns,
+      data,
+      getCoreRowModel: getCoreRowModel(),
+      getSortedRowModel: getSortedRowModel(),
+      getPaginationRowModel: getPaginationRowModel(),
+      state: {
+        sorting: sorting,
+        rowSelection
+      },
+      onSortingChange: setSorting,
+      onRowSelectionChange: setRowSelection,
+      enableRowSelection: true
     },
-    onSortingChange: setSorting,
-    onRowSelectionChange: setRowSelection,
-    enableRowSelection: true
-  });
+    [data]
+  );
 
   useEffect(() => {
     if (!isLoading) {

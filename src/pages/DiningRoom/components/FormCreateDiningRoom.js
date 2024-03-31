@@ -10,20 +10,18 @@ import ControllerSelect from '@Core/components/input/ControllerSelect';
 import pathFormController from 'utils/constants/pathFormController';
 import AddIcon from '@mui/icons-material/Add';
 import color from '@Core/Theme/color';
-import { useDispatch } from 'react-redux';
-import { openModalSecondary } from '../../../redux/SliceModalSecondary';
 import validateFormCreateDiningRoom from '../utils/validateCreateDiningRoom';
 import SaveIcon from '@mui/icons-material/Save';
-import { closeModalPrimary } from '../../../redux/SliceModalPrimary';
 import ButtomExitModal from 'components/Modal/ButtomExitModal';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import diningRoomService from 'services/diningRoomService';
 import ToastMessage from 'components/Basic/ToastMessage';
-import { useCallApi } from 'useContext/ContextCallApi';
+import useApiGetAll from 'components/Hook/useApiGetAll';
+import useModal from 'components/Hook/useModal';
 
 const FormCreateDiningRoom = ({ dataArea }) => {
-  const dispath = useDispatch();
-  const { callApi } = useCallApi();
+  const { offModalPrimary } = useModal();
+  const { refetchApiDiningRoom } = useApiGetAll();
   const {
     control,
     handleSubmit,
@@ -35,12 +33,12 @@ const FormCreateDiningRoom = ({ dataArea }) => {
     const area = dataArea.find((item) => value.areaId === item.name);
     const newValue = { ...value, areaId: area.id };
     try {
-      diningRoomService.add(newValue);
+      await diningRoomService.add(newValue);
       ToastMessage('success', 'thêm phòng/bàn thành công');
-      callApi();
-      dispath(closeModalPrimary());
+      refetchApiDiningRoom();
+      offModalPrimary();
     } catch (error) {
-      ToastMessage('success', 'thêm phòng/bàn thất bại');
+      ToastMessage('error', error.response.status === 500 ? 'Phòng bàn đã tồn tại' : 'Thêm phòng bàn thất bại');
     }
   };
   return (
@@ -79,7 +77,7 @@ const FormCreateDiningRoom = ({ dataArea }) => {
               fontSize={theme.typography.font_14_base}
               sx={{ py: '2px' }}
             />
-            <Box onClick={() => dispath(openModalSecondary())}>
+            <Box onClick={() => offModalPrimary()}>
               <AddIcon sx={errors?.areaId?.message ? { ...styleAddIcon, mb: '-1px' } : { ...styleAddIcon }} />
             </Box>
           </Box>
@@ -97,7 +95,7 @@ const FormCreateDiningRoom = ({ dataArea }) => {
           <Button type='submit' variant='contained' size='small' startIcon={<SaveIcon />}>
             Lưu
           </Button>
-          <ButtomExitModal closeModal={closeModalPrimary} />
+          <ButtomExitModal closeModal={offModalPrimary} />
         </Box>
       </Stack>
     </form>

@@ -16,7 +16,7 @@ import ButtomExitModal from 'components/Modal/ButtomExitModal';
 import useApiGetAll from 'components/Hook/useApiGetAll';
 
 const FormUpdateEating = () => {
-  const { dataCategoryEating } = useApiGetAll();
+  const { dataCategoryEating, refetchApiEating } = useApiGetAll();
   const {
     offModalUpdate,
     dataModalUpdate: { eatingItem, categoryEatingItem }
@@ -29,15 +29,19 @@ const FormUpdateEating = () => {
   } = useForm({
     resolver: yupResolver(validateFormCreateEating)
   });
-  const handleUpdateEating = async (value) => {
-    const category = dataCategoryEating.find((item) => value.categoryId === item.name);
-    const newValue = { ...value, categoryId: category.id };
+
+  const handleUpdateEating = async (valueForm) => {
+    const categoryFillter = dataCategoryEating?.find((category) => {
+      return valueForm.categoryId === String(category.id) || valueForm.categoryId === category.name;
+    });
+    const newValueForm = { ...valueForm, categoryId: String(categoryFillter.id) };
     try {
-      productService.edit(eatingItem?.id, newValue);
-      ToastMessage('success', 'Cập nhập khu vực thành công');
+      await productService.edit(eatingItem.id, newValueForm);
+      ToastMessage('success', 'Cập nhập phòng/bàn thành công.');
       offModalUpdate();
+      refetchApiEating();
     } catch (error) {
-      ToastMessage('success', 'Cập nhập khu vực thất bại');
+      ToastMessage('error', error.response.status === 500 ? 'Hàng hóa đã tồn tại' : 'Thêm hàng hóa thất bại');
     }
   };
 
@@ -48,7 +52,7 @@ const FormUpdateEating = () => {
     setValue('description', eatingItem?.description || '');
     setValue('img', eatingItem?.img);
     setValue('quantity', eatingItem?.quantity);
-    setValue('categoryId', categoryEatingItem?.name);
+    setValue('categoryId', eatingItem?.categoryId);
   }, []);
   return (
     <form onSubmit={handleSubmit(handleUpdateEating)}>

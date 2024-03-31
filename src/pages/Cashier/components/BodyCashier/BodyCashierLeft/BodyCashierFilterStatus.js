@@ -9,8 +9,7 @@ import { Box } from '@mui/material';
 
 export default function BodyCashierFilterStatus(props) {
   const { statusDiningRoom, setStatusDiningRoom } = props;
-  console.log(statusDiningRoom);
-  console.log(statusDiningRoom);
+
   const handleFilterStatus = (e) => {
     const target = e.target.value;
     switch (target) {

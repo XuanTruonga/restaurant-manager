@@ -9,7 +9,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import { CoreTableActionDelete } from '@Core/components/table/CoreTableAction';
 import ToastMessage from 'components/Basic/ToastMessage';
-import { useCallApi } from 'useContext/ContextCallApi';
 
 const style = {
   position: 'absolute',
@@ -36,17 +35,16 @@ const styleFlex = {
   mt: '12px'
 };
 
-const ModalDetailCateBasic = ({ modalDetail, setModalUpdate, dataModal, setModalDetail, setValue, serviceName }) => {
-  const { callApi } = useCallApi();
-  const handleDeleteArea = () => {
+const ModalDetailArea = ({ modalDetail, setModalUpdate, dataModal, setModalDetail, setValue, serviceName, refetchApi }) => {
+  const handleDeleteArea = async () => {
     try {
-      serviceName.remove(dataModal.id);
-      ToastMessage('success', 'Xóa thành công');
+      await serviceName.remove(dataModal.id);
+      ToastMessage('success', 'Xóa thành công.');
       setModalDetail(false);
       setValue('all');
-      callApi();
+      refetchApi();
     } catch (error) {
-      ToastMessage('error', 'Xóa thất bại');
+      ToastMessage('error', 'Xóa thất bại.');
     }
   };
   return (
@@ -70,7 +68,14 @@ const ModalDetailCateBasic = ({ modalDetail, setModalUpdate, dataModal, setModal
             <Typography>{dataModal?.note}</Typography>
           </Box>
           <Box sx={{ justifyContent: 'end', mt: 4, display: 'flex', gap: 2, alignItems: 'center' }}>
-            <Button onClick={() => setModalUpdate(true)} variant='contained' size='small' startIcon={<SaveIcon />}>
+            <Button
+              onClick={() => {
+                setModalUpdate(true);
+                setModalDetail(false);
+              }}
+              variant='contained'
+              size='small'
+              startIcon={<SaveIcon />}>
               Cập nhập
             </Button>
             <CoreTableActionDelete btn={true} content='Vui lòng xác nhận xóa.' callback={handleDeleteArea} />
@@ -81,4 +86,4 @@ const ModalDetailCateBasic = ({ modalDetail, setModalUpdate, dataModal, setModal
   );
 };
 
-export default ModalDetailCateBasic;
+export default ModalDetailArea;

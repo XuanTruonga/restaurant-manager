@@ -1,20 +1,15 @@
 import { theme } from '@Core/Theme/theme';
 import { Box, Button, Radio, Stack, Typography } from '@mui/material';
 import React from 'react';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import SaveIcon from '@mui/icons-material/Save';
 import { CoreTableActionDelete } from '@Core/components/table/CoreTableAction';
 import { useQuery } from '@tanstack/react-query';
 import areaService from 'services/areaService';
 
-import {
-  handleActiveDinningRoom,
-  handleDeleteDiningRoom,
-  handleDisabledDinningRoom,
-  handleUpdateDiningRoom
-} from '../utils/handleDiningRoom';
+import { handleDeleteDiningRoom, handleUpdateDiningRoom } from '../utils/handleDiningRoom';
 import color from '@Core/Theme/color';
 import useModal from 'components/Hook/useModal';
+import useApiGetAll from 'components/Hook/useApiGetAll';
 
 const styleBox = { display: 'flex', gap: 3, boderBottom: `1px solid ${color.gray1}`, py: '8px' };
 const styleTypography = {
@@ -24,6 +19,7 @@ const styleTypography = {
 
 const DetailDiningRoom = () => {
   const { offModalDetail, onModalUpdate, dataModalDetail } = useModal();
+  const { refetchApiDiningRoom } = useApiGetAll();
   const { data: areaItem } = useQuery({
     queryKey: ['getDataAreaItem'],
     queryFn: async () => {
@@ -77,7 +73,7 @@ const DetailDiningRoom = () => {
           startIcon={<SaveIcon />}>
           Cập nhập
         </Button>
-        {!dataModalDetail?.status ? (
+        {/* {!dataModalDetail?.status ? (
           <Button
             onClick={() => handleDisabledDinningRoom(dataModalDetail, offModalDetail)}
             variant='contained'
@@ -93,11 +89,11 @@ const DetailDiningRoom = () => {
             startIcon={<CheckBoxIcon />}>
             Cho phép hoạt động
           </Button>
-        )}
+        )} */}
         <CoreTableActionDelete
           btn={true}
           content='Vui lòng xác nhận xóa.'
-          callback={() => handleDeleteDiningRoom(dataModalDetail, offModalDetail)}
+          callback={() => handleDeleteDiningRoom(dataModalDetail, offModalDetail, refetchApiDiningRoom)}
         />
       </Box>
     </Stack>

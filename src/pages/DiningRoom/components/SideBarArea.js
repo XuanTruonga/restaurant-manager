@@ -9,9 +9,10 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useDispatch } from 'react-redux';
 import { openModalSecondary } from '../../../redux/SliceModalSecondary';
-import ModalDetailCateBasic from 'components/Modal/ModalDetailCateBasic';
-import ModalUpdateCategoryBasic from 'components/Modal/ModalUpdateCategoryBasic';
 import areaService from 'services/areaService';
+import useApiGetAll from 'components/Hook/useApiGetAll';
+import ModalDetailArea from 'components/Modal/ModalDetailArea';
+import ModalUpdateArea from 'components/Modal/ModalUpdateArea';
 
 const styleWrapper = {
   borderRadius: 1,
@@ -27,7 +28,8 @@ const SideBarArea = ({ dataArea }) => {
   const [modalUpdateArea, setModalUpdateArea] = useState(false);
   const [modalDetailArea, setModalDetailArea] = useState(false);
   const [areaItem, setAreaItem] = useState({});
-
+  // console.log(areaItem);
+  const { refetchApiArea } = useApiGetAll();
   const handleFilterArea = (e) => {
     const areaId = String(e.target.value);
     setValueArea(areaId);
@@ -91,20 +93,23 @@ const SideBarArea = ({ dataArea }) => {
           )}
         </Box>
       </Box>
-      <ModalDetailCateBasic
+      <ModalDetailArea
         modalDetail={modalDetailArea}
         setModalUpdate={setModalUpdateArea}
         setModalDetail={setModalDetailArea}
         dataModal={areaItem}
         setValue={setValueArea}
         serviceName={areaService}
+        refetchApi={refetchApiArea}
       />
-      <ModalUpdateCategoryBasic
+      <ModalUpdateArea
+        setAreaItem={setAreaItem}
         setModalDetail={setModalDetailArea}
         setModalUpdate={setModalUpdateArea}
         modalUpdate={modalUpdateArea}
         dataModal={areaItem}
         serviceName={areaService}
+        refetchApi={refetchApiArea}
       />
     </Box>
   );

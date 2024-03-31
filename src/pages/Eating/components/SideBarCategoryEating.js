@@ -8,9 +8,10 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import useModal from 'components/Hook/useModal';
-import ModalDetailCateBasic from 'components/Modal/ModalDetailCateBasic';
-import ModalUpdateCategoryBasic from 'components/Modal/ModalUpdateCategoryBasic';
 import categoryService from 'services/categoryService';
+import useApiGetAll from 'components/Hook/useApiGetAll';
+import ModalDetailCategory from 'components/Modal/ModalDetailCategory';
+import ModalUpdateCategory from 'components/Modal/ModalUpdateCategory';
 
 const styleWrapper = {
   borderRadius: 1,
@@ -23,6 +24,7 @@ const styleWrapper = {
 const SideBarCategoryEating = ({ dataCategoryEating }) => {
   const { onModalSecondary: onModalCategoryEating } = useModal();
   const [valueCategoryEating, setValueCategoryEating] = useState('all');
+  const { refetchApiCategoryEating } = useApiGetAll();
 
   const [modalUpdateCategoryEating, setModalUpdateCategoryEating] = useState(false);
   const [modalDetailCategoryEating, setModalDetailCategoryEating] = useState(false);
@@ -91,20 +93,21 @@ const SideBarCategoryEating = ({ dataCategoryEating }) => {
           )}
         </Box>
       </Box>
-      <ModalDetailCateBasic
+      <ModalDetailCategory
         modalDetail={modalDetailCategoryEating}
         setModalUpdate={setModalUpdateCategoryEating}
         setModalDetail={setModalDetailCategoryEating}
         dataModal={categoryEatingItem}
         setValue={setValueCategoryEating}
-        serviceName={categoryService}
+        refetchApi={refetchApiCategoryEating}
       />
-      <ModalUpdateCategoryBasic
+      <ModalUpdateCategory
         setModalDetail={setModalDetailCategoryEating}
         setModalUpdate={setModalUpdateCategoryEating}
         modalUpdate={modalUpdateCategoryEating}
         dataModal={categoryEatingItem}
-        serviceName={categoryService}
+        setCategoryEatingItem={setCategoryEatingItem}
+        refetchApi={refetchApiCategoryEating}
       />
     </Box>
   );
