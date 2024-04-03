@@ -11,19 +11,22 @@ import './index.css';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import InitializedAuth from 'components/InitializedAuth/InitializedAuth';
+import LoadingScreen from 'useContext/LoadingScreen';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 export const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
 root.render(
   <Provider store={store}>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <InitializedAuth>
-          <App />
-        </InitializedAuth>
-        <CssBaseline />
-      </ThemeProvider>
+      <LoadingScreen>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <InitializedAuth>
+            <App />
+          </InitializedAuth>
+          <CssBaseline />
+        </ThemeProvider>
+      </LoadingScreen>
     </QueryClientProvider>
   </Provider>
 );

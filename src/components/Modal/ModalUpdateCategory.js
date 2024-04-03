@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
@@ -43,7 +44,6 @@ const ModalUpdateCategory = ({ modalUpdate, dataModal, setModalUpdate, setModalD
       setModalUpdate(false);
       setModalDetail(false);
     } catch (error) {
-      console.log(error);
       ToastMessage('error', error.response.status === 500 ? 'Nhóm hàng đã tồn tại' : 'Cập nhập thất bại');
     }
   };
@@ -55,6 +55,7 @@ const ModalUpdateCategory = ({ modalUpdate, dataModal, setModalUpdate, setModalD
       return res.data;
     }
   });
+
   return (
     <Modal open={modalUpdate}>
       <form onSubmit={handleSubmit(handleUpdateArea)}>

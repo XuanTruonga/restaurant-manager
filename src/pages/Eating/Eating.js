@@ -20,7 +20,7 @@ const Eating = () => {
   const [table, setTable] = useState();
   const [rowCheckBox, setRowCheckBox] = useState();
   const tableInstance = useRef();
-  const { dataEating, dataCategoryEating } = useApiGetAll();
+  const { dataEating, dataCategoryEating, paginationEating } = useApiGetAll();
   const { onModalDetail } = useModal();
   tableInstance.current = table;
   const columnEating = useMemo(() => {
@@ -109,8 +109,14 @@ const Eating = () => {
       <Grid item xs={9.5} md={9.5}>
         <Box>
           <ControlTableEatingTop rowCheckBox={rowCheckBox} />
-          {dataEating?.length > 0 && (
-            <CoreTable columns={columnEating} data={dataEating} setTable={setTable} setRowCheckBox={setRowCheckBox} />
+          {dataEating && (
+            <CoreTable
+              columns={columnEating}
+              data={dataEating}
+              setTable={setTable}
+              setRowCheckBox={setRowCheckBox}
+              paginationEating={paginationEating}
+            />
           )}
           <BasicModalPrimary width={960} title={'Thêm hàng hóa.'}>
             {<FormCreateEating />}

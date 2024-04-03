@@ -10,38 +10,40 @@ import CoreTableHeader from '@Core/components/table/CoreTableHeader';
 import { Box, MenuItem, Pagination, Select, Typography, styled } from '@mui/material';
 import { useEffect } from 'react';
 import useSearchParamsHook from 'components/Hook/useSearchParamsHook';
+import { useState } from 'react';
 
 export default function CoreTable(props) {
-  const { columns, data, isLoading, isPagination = true, dataPagination, onClick, setTable, setRowCheckBox } = props;
+  const { columns, data = [], isLoading, isPagination = true, onClick, setTable, setRowCheckBox, paginationDiningRoom } = props;
+  const { searchParams: dataPagination } = useSearchParamsHook();
   const [sorting, setSorting] = React.useState();
   const [rowSelection, setRowSelection] = React.useState({});
-  const [totalPage, setTotalPage] = React.useState(1);
-
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 30
+  });
   const { setParams } = useSearchParamsHook();
-
-  const tableInstance = useReactTable(
-    {
-      columns,
-      data,
-      getCoreRowModel: getCoreRowModel(),
-      getSortedRowModel: getSortedRowModel(),
-      getPaginationRowModel: getPaginationRowModel(),
-      state: {
-        sorting: sorting,
-        rowSelection
-      },
-      onSortingChange: setSorting,
-      onRowSelectionChange: setRowSelection,
-      enableRowSelection: true
+  const tableInstance = useReactTable({
+    columns,
+    data,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    state: {
+      sorting: sorting,
+      rowSelection,
+      pagination
     },
-    [data]
-  );
-
+    onSortingChange: setSorting,
+    onRowSelectionChange: setRowSelection,
+    enableRowSelection: true,
+    onPaginationChange: setPagination
+  });
   useEffect(() => {
     if (!isLoading) {
-      setTotalPage(dataPagination?.total_page);
+      // setTotalPage(dataPagination?.total_page);
     }
   }, [isLoading]);
+  // console.log(paginationDiningRoom);
 
   useEffect(() => {
     setTable && setTable(tableInstance);
@@ -85,8 +87,8 @@ export default function CoreTable(props) {
           <StylePagination
             sx={{ fontSize: '14px !important' }}
             onChange={(_, page) => setParams('page', String(page))}
-            count={totalPage}
-            page={dataPagination?.page}
+            count={paginationDiningRoom?.totalPage}
+            page={Number(dataPagination?.page) || 1}
             siblingCount={1}
           />
         </Box>

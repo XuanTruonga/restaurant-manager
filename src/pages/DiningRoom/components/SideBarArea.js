@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, FormControl, MenuItem, Select, Typography, styled } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import pathFormController from 'utils/constants/pathFormController';
 import { theme } from '@Core/Theme/theme';
 import color from '@Core/Theme/color';
@@ -13,6 +14,7 @@ import areaService from 'services/areaService';
 import useApiGetAll from 'components/Hook/useApiGetAll';
 import ModalDetailArea from 'components/Modal/ModalDetailArea';
 import ModalUpdateArea from 'components/Modal/ModalUpdateArea';
+import useSearchParamsHook from 'components/Hook/useSearchParamsHook';
 
 const styleWrapper = {
   borderRadius: 1,
@@ -23,17 +25,23 @@ const styleWrapper = {
 };
 
 const SideBarArea = ({ dataArea }) => {
+  const { setParams, setSearchParams, searchParams } = useSearchParamsHook();
   const dispath = useDispatch();
   const [valueArea, setValueArea] = useState('all');
   const [modalUpdateArea, setModalUpdateArea] = useState(false);
   const [modalDetailArea, setModalDetailArea] = useState(false);
-  const [areaItem, setAreaItem] = useState({});
-  // console.log(areaItem);
+  const [areaItem, setAreaItem] = useState();
   const { refetchApiArea } = useApiGetAll();
   const handleFilterArea = (e) => {
     const areaId = String(e.target.value);
-    setValueArea(areaId);
+    setValueArea(areaId.trim());
   };
+
+  useEffect(() => {
+    if (searchParams.areaId) {
+      setValueArea(searchParams.areaId);
+    }
+  }, []);
 
   return (
     <Box sx={styleWrapper}>
@@ -57,15 +65,24 @@ const SideBarArea = ({ dataArea }) => {
       <Box sx={{}}>
         <Box sx={{ display: 'flex' }}>
           <CustomFormControl variant='standard' sx={{ minWidth: 120, width: '100%', fontSize: theme.typography.text_m, display: 'flex' }}>
-            <Select size='small' value={valueArea} onChange={handleFilterArea}>
-              <MenuItem value='all' sx={{ fontSize: theme.typography.text_m }}>
+            <Select id='area' size='small' value={valueArea || 'all'} onChange={handleFilterArea}>
+              <MenuItem
+                onClick={() => {
+                  delete searchParams.areaId;
+                  setSearchParams(searchParams);
+                }}
+                value='all'
+                sx={{ fontSize: theme.typography.text_m }}>
                 Tất cả
               </MenuItem>
               {dataArea &&
                 dataArea.map((item, index) => {
                   return (
                     <MenuItem
-                      onClick={() => setAreaItem(item)}
+                      onClick={() => {
+                        setAreaItem(item);
+                        setParams('areaId', item.id);
+                      }}
                       key={index}
                       value={item[pathFormController.area_id]}
                       sx={{ fontSize: theme.typography.text_m }}>

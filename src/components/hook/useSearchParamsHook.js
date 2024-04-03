@@ -11,9 +11,11 @@ const useSearchParamsHook = () => {
     return setSearchParams(params);
   };
 
+  
   return {
     searchParams: params,
-    setParams
+    setParams,
+    setSearchParams,
   };
 };
 

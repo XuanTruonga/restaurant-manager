@@ -1,9 +1,21 @@
 import color from '@Core/Theme/color';
 import { theme } from '@Core/Theme/theme';
-import { Box, Input, Typography, styled } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import React from 'react';
+import DebouncedInput from './DebouncedInput';
+import useSearchParamsHook from 'components/Hook/useSearchParamsHook';
 
 const SearchInput = ({ placeholder }) => {
+  const { setSearchParams, setParams, searchParams } = useSearchParamsHook();
+  const handleSearch = (e) => {
+    if (e) {
+      setParams('name', e);
+    }
+    if (!e) {
+      delete searchParams.name;
+      setSearchParams(searchParams);
+    }
+  };
   return (
     <Box
       sx={{
@@ -15,18 +27,14 @@ const SearchInput = ({ placeholder }) => {
       }}>
       <Typography sx={{ fontSize: theme.typography.font_semibold, px: '16px' }}>Tìm kiếm</Typography>
       <Box sx={{ p: '10px 16px 0', width: '100%' }}>
-        <StyleInput
+        <DebouncedInput
+          onChange={handleSearch}
           sx={{ fontSize: theme.typography.text_m, mb: '10px' }}
           fullWidth
-          placeholder={placeholder}></StyleInput>
+          placeholder={placeholder}></DebouncedInput>
       </Box>
     </Box>
   );
 };
-const StyleInput = styled(Input)(({ theme }) => ({
-  '&.MuiInput-root::after': {
-    borderBottom: `2px solid ${theme.palette.secondary.main}`
-  }
-}));
 
 export default SearchInput;

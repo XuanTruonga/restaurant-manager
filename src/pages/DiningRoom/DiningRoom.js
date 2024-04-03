@@ -10,15 +10,16 @@ import { theme } from '@Core/Theme/theme';
 import SidebarDiningRoom from './components/SidebarDiningRoom';
 import { BasicModalDetail, BasicModalPrimary, BasicModalSecondary, BasicModalUpdate } from 'components/Modal/Modal';
 import { columnHelper } from '@Core/components/table/CoreTableBody';
-import { statusDingingRoom } from './utils/statusDiningRoom';
+import { statusDingingRoom, statusDiningRoomkey } from './utils/statusDiningRoom';
 import { CoreTableActionView } from '@Core/components/table/CoreTableAction';
 import useApiGetAll from '../../components/Hook/useApiGetAll';
 import { useMemo } from 'react';
 import useModal from 'components/Hook/useModal';
 
 const DiningRoom = () => {
-  const { dataArea, dataDiningRoom } = useApiGetAll();
+  const { dataArea, dataDiningRoom, paginationDiningRoom } = useApiGetAll();
   const { onModalDetail, onModalPrimary } = useModal();
+
   const handleViewDetailDiningRoom = (value) => {
     onModalDetail(value);
   };
@@ -57,11 +58,12 @@ const DiningRoom = () => {
         header: 'Trạng thái',
         minWidth: 120,
         cell: ({ row }) => {
-          return !row.original.status ? (
-            <Typography>{statusDingingRoom.active}</Typography>
-          ) : (
-            <Typography>{statusDingingRoom.shutDown}</Typography>
-          );
+          if (row.original.status === statusDiningRoomkey.idle) {
+            return <Typography>{statusDingingRoom.shutDown}</Typography>;
+          }
+          if (row.original.status === statusDiningRoomkey.active) {
+            return <Typography>{statusDingingRoom.active}</Typography>;
+          }
         }
       }),
       columnHelper.accessor('', {
@@ -102,7 +104,7 @@ const DiningRoom = () => {
               </Button>
             </Box>
           </Box>
-          {dataDiningRoom?.length > 0 && <CoreTable columns={columnDiningRoom} data={dataDiningRoom} />}
+          {dataDiningRoom && <CoreTable columns={columnDiningRoom} data={dataDiningRoom} paginationDiningRoom={paginationDiningRoom} />}
           <BasicModalPrimary title={'Thêm phòng/bàn.'}>
             <FormCreateDiningRoom dataArea={dataArea} />
           </BasicModalPrimary>

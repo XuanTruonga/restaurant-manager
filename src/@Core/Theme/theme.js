@@ -7,10 +7,10 @@ export const theme = createTheme({
   restaurants: {
     appBarHeight: '56px',
     boxMenuHeight: '616px',
-    heightTable: '530px',
+    heightTable: '65vh',
     widthTitleInputControl: '22%',
     HeadCashierHeight: '36px',
-    BodyCashierHeight: '34px',
+    BodyCashierHeight: '34px'
   },
   typography: typography,
   components: {

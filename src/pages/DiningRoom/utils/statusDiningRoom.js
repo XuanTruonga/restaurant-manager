@@ -1,5 +1,11 @@
 export const statusDingingRoom = {
-    active:'Đang hoạt động',
-    shutDown:'Ngừng hoạt động',
-    all:'Tất cả'
-}
+  active: 'Đang sử dụng',
+  shutDown: 'Còn trống',
+  all: 'Tất cả'
+};
+
+export const statusDiningRoomkey = {
+  idle: 'IDLE', //nhàn rỗi
+  ordered: 'ORDERED', // chưa thanh toán
+  active: 'ACTIVE' // đang hoạt động
+};

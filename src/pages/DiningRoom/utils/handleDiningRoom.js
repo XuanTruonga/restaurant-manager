@@ -10,7 +10,6 @@ export const handleUpdateDiningRoom = (onModalUpdate, offModalDetail, dataModalD
 export const handleDeleteDiningRoom = async (dataModalDetail, offModalDetail, refetchApiDiningRoom) => {
   try {
     await diningRoomService.remove(dataModalDetail.id);
-    // callApi();
     ToastMessage('success', 'Xóa phòng bàn thành công');
     offModalDetail();
     refetchApiDiningRoom();

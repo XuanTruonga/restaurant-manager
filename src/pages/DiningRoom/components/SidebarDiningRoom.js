@@ -9,43 +9,50 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import { statusDingingRoom } from '../utils/statusDiningRoom';
+import { statusDingingRoom, statusDiningRoomkey } from '../utils/statusDiningRoom';
 import SideBarArea from './SideBarArea';
+import useSearchParamsHook from 'components/Hook/useSearchParamsHook';
 
 const SidebarDiningRoom = ({ dataArea }) => {
-  const [selectedValue, setSelectedValue] = React.useState(statusDingingRoom.active);
+  const { setParams, searchParams, setSearchParams } = useSearchParamsHook();
+
   const handleChangeRadio = (e) => {
-    setSelectedValue(e.target.value);
+    if (e.target.value === statusDingingRoom.all) {
+      delete searchParams.status;
+      setSearchParams(searchParams);
+    } else {
+      setParams('status', e.target.value);
+    }
   };
-  console.log(selectedValue);
+
   return (
     <Box sx={{ minWidth: 186 }}>
       <SideBarArea dataArea={dataArea} />
       <SearchInput placeholder='Theo tên phòng/bàn' />
-      <Accordion sx={{ mb: '18px' }}>
+      <Accordion sx={{ mb: '18px' }} defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1-content' id='panel1-header'>
           Trạng thái
         </AccordionSummary>
         <AccordionDetails>
           <FormControl>
-            <RadioGroup aria-labelledby='demo-radio-buttons-group-label' defaultValue={statusDingingRoom.active}>
+            <RadioGroup
+              aria-labelledby='demo-radio-buttons-group-label'
+              onChange={handleChangeRadio}
+              value={searchParams.status || statusDingingRoom.all}>
               <FormControlLabel
-                value={statusDingingRoom.active}
-                onChange={handleChangeRadio}
+                value={statusDingingRoom.all}
+                control={<Radio size='small' color='success' />}
+                label={statusDingingRoom.all}
+              />
+              <FormControlLabel
+                value={statusDiningRoomkey.active}
                 control={<Radio size='small' color='success' />}
                 label={statusDingingRoom.active}
               />
               <FormControlLabel
-                value={statusDingingRoom.shutDown}
-                onChange={handleChangeRadio}
+                value={statusDiningRoomkey.idle}
                 control={<Radio size='small' color='success' />}
                 label={statusDingingRoom.shutDown}
-              />
-              <FormControlLabel
-                value={statusDingingRoom.all}
-                onChange={handleChangeRadio}
-                control={<Radio size='small' color='success' />}
-                label={statusDingingRoom.all}
               />
             </RadioGroup>
           </FormControl>

@@ -18,7 +18,7 @@ class UserService extends BaseService {
     return this.post(authEndPoint.sigin, data);
   }
   verifyToken() {
-    return this.get(authEndPoint.verifyToken);
+    return this.get('', authEndPoint.verifyToken);
   }
   getAll() {
     return this.get();

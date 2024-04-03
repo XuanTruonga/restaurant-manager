@@ -1,7 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { theme } from '@Core/Theme/theme';
+import { Input, styled } from '@mui/material';
 import React from 'react';
 
-function DebouncedInput({ value: initialValue, onChange, debounce = 500, ...props }) {
+function DebouncedInput({ value: initialValue, onChange, debounce = 500, placeholder, ...props }) {
   const [value, setValue] = React.useState(initialValue);
 
   React.useEffect(() => {
@@ -17,13 +19,18 @@ function DebouncedInput({ value: initialValue, onChange, debounce = 500, ...prop
   }, [value]);
 
   return (
-    <input
-      style={{ outline: 'none', borderRadius: '4px', border: '1px solid', padding: '4px 12px' }}
-      {...props}
-      value={value}
+    <StyleInput
       onChange={(e) => setValue(e.target.value)}
-    />
+      sx={{ fontSize: theme.typography.text_m, mb: '10px' }}
+      fullWidth
+      placeholder={placeholder}></StyleInput>
   );
 }
 
 export default DebouncedInput;
+
+const StyleInput = styled(Input)(({ theme }) => ({
+  '&.MuiInput-root::after': {
+    borderBottom: `2px solid ${theme.palette.secondary.main}`
+  }
+}));

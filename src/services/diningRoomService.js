@@ -22,8 +22,8 @@ class DiningRoomService extends BaseService {
   edit(id, data) {
     return this.update(diningRoomEndPoint.update, id, data);
   }
-  getAll() {
-    return this.get();
+  getAll(prams) {
+    return this.get(prams);
   }
   getOne(id) {
     return this.find(diningRoomEndPoint.find_on, id);

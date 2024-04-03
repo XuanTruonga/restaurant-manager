@@ -1,23 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { theme } from '@Core/Theme/theme';
 import { Skeleton, TableBody, TableCell, TableRow, styled } from '@mui/material';
 import { createColumnHelper, flexRender } from '@tanstack/react-table';
-import { useRef } from 'react';
+import { useState } from 'react';
 import { useEffect } from 'react';
 
 export const columnHelper = createColumnHelper();
 
 function CoreTableBody(props) {
+  const [rows, setRows] = useState();
   const { table, isLoading } = props;
-  const rows = useRef();
 
   useEffect(() => {
-    rows.current = table?.getRowModel().rows;
+    setRows(table?.getRowModel().rows);
   });
-
   const renderTableBody = () => {
     const allColumns = table.getAllColumns();
     if (isLoading) {
-      return rows.current?.map((row, index) => (
+      return rows?.map((row, index) => (
         <TableRow key={index}>
           {row.getVisibleCells().map((cell, index) => (
             <TableCell key={index}>
@@ -27,8 +27,7 @@ function CoreTableBody(props) {
         </TableRow>
       ));
     }
-
-    if (rows.current?.length === 0) {
+    if (rows?.length === 0 ) {
       return (
         <TableRow>
           <TableCell align='center' colSpan={allColumns.length} sx={{ py: 2 }}>
@@ -38,7 +37,7 @@ function CoreTableBody(props) {
       );
     }
 
-    return rows.current?.map((row, index) => (
+    return rows?.map((row, index) => (
       <StyleTableRow
         key={index}
         sx={{

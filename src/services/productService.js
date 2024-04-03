@@ -22,8 +22,8 @@ class ProductService extends BaseService {
   edit(id, data) {
     return this.update(productEndPoint.update, id, data);
   }
-  getAll() {
-    return this.get();
+  getAll(prams) {
+    return this.get(prams);
   }
   getOne(id) {
     return this.find(productEndPoint.find_on, id);

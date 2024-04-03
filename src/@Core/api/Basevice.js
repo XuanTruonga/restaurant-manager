@@ -75,12 +75,12 @@ class BaseService {
   create = (data) => {
     return this.request.post(this.BASE_ENDPOINT, data);
   };
-  post(enpoint ='', data) {
+  post(enpoint = '', data) {
     return this.request.post(this.BASE_ENDPOINT + '/' + enpoint, data);
   }
 
-  get(enpoint = '', params = {}) {
-    return this.request.get(this.BASE_ENDPOINT + enpoint, params);
+  get(params = {}, enpoint = '') {
+    return this.request.get(this.BASE_ENDPOINT + enpoint, { params });
   }
 
   /**

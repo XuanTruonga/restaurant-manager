@@ -31,19 +31,11 @@ const ModalUpdateArea = ({ modalUpdate, dataModal, setModalUpdate, setModalDetai
     resolver: yupResolver(validateUpdateAreaDiningRoom)
   });
 
-  const { data: dataAreaItem } = useQuery({
-    queryKey: ['getOne', dataArea, dataModal],
-    queryFn: async () => {
-      const res = await areaService.getOne(dataModal.id);
-      setAreaItem(res.data);
-      return res.data;
-    }
-  });
-
   useEffect(() => {
     setValue('name', dataModal?.name);
     setValue('note', dataModal?.note || '');
   }, [dataModal]);
+
   const handleUpdateArea = async (value) => {
     try {
       await areaService.edit(dataModal.id, value);
@@ -56,6 +48,15 @@ const ModalUpdateArea = ({ modalUpdate, dataModal, setModalUpdate, setModalDetai
       ToastMessage('error', error?.response?.status === 500 ? 'Danh mục/khu vực đã tồn tại' : 'Cập nhập thất bại');
     }
   };
+
+  const { data: dataAreaItem } = useQuery({
+    queryKey: ['getOne', dataArea, dataModal],
+    queryFn: async () => {
+      const res = await areaService.getOne(dataModal.id);
+      setAreaItem(res.data);
+      return res.data;
+    }
+  });
   return (
     <Modal open={modalUpdate}>
       <form onSubmit={handleSubmit(handleUpdateArea)}>

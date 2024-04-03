@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, FormControl, MenuItem, Select, Typography, styled } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import pathFormController from 'utils/constants/pathFormController';
 import { theme } from '@Core/Theme/theme';
 import color from '@Core/Theme/color';
@@ -8,10 +9,10 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import useModal from 'components/Hook/useModal';
-import categoryService from 'services/categoryService';
 import useApiGetAll from 'components/Hook/useApiGetAll';
 import ModalDetailCategory from 'components/Modal/ModalDetailCategory';
 import ModalUpdateCategory from 'components/Modal/ModalUpdateCategory';
+import useSearchParamsHook from 'components/Hook/useSearchParamsHook';
 
 const styleWrapper = {
   borderRadius: 1,
@@ -25,15 +26,21 @@ const SideBarCategoryEating = ({ dataCategoryEating }) => {
   const { onModalSecondary: onModalCategoryEating } = useModal();
   const [valueCategoryEating, setValueCategoryEating] = useState('all');
   const { refetchApiCategoryEating } = useApiGetAll();
+  const { setParams, setSearchParams, searchParams } = useSearchParamsHook();
 
   const [modalUpdateCategoryEating, setModalUpdateCategoryEating] = useState(false);
   const [modalDetailCategoryEating, setModalDetailCategoryEating] = useState(false);
-  const [categoryEatingItem, setCategoryEatingItem] = useState({});
+  const [categoryEatingItem, setCategoryEatingItem] = useState();
 
   const handleFilterArea = (e) => {
-    const areaId = String(e.target.value);
-    setValueCategoryEating(areaId);
+    const categoryId = String(e.target.value);
+    setValueCategoryEating(categoryId);
   };
+  useEffect(() => {
+    if (searchParams.categoryId) {
+      setValueCategoryEating(searchParams.categoryId);
+    }
+  }, []);
 
   return (
     <Box sx={styleWrapper}>
@@ -58,14 +65,23 @@ const SideBarCategoryEating = ({ dataCategoryEating }) => {
         <Box sx={{ display: 'flex' }}>
           <CustomFormControl variant='standard' sx={{ minWidth: 120, width: '100%', fontSize: theme.typography.text_m, display: 'flex' }}>
             <Select size='small' value={valueCategoryEating} onChange={handleFilterArea}>
-              <MenuItem value='all' sx={{ fontSize: theme.typography.text_m }}>
+              <MenuItem
+                onClick={() => {
+                  delete searchParams.categoryId;
+                  setSearchParams(searchParams);
+                }}
+                value='all'
+                sx={{ fontSize: theme.typography.text_m }}>
                 Tất cả
               </MenuItem>
               {dataCategoryEating &&
                 dataCategoryEating.map((item, index) => {
                   return (
                     <MenuItem
-                      onClick={() => setCategoryEatingItem(item)}
+                      onClick={() => {
+                        setCategoryEatingItem(item);
+                        setParams('categoryId', item.id);
+                      }}
                       key={index}
                       value={item[pathFormController.area_id]}
                       sx={{ fontSize: theme.typography.text_m }}>
