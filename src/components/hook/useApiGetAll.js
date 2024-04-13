@@ -9,7 +9,12 @@ import useSearchParamsHook from './useSearchParamsHook';
 const useApiGetAll = () => {
   const { searchParams } = useSearchParamsHook();
   const prams = { page: 1, ...searchParams, isPagination: true, operator: 'like' };
-  const { data: dataDiningRoom, refetch: refetchApiDiningRoom } = useQuery({
+
+  const {
+    data: dataDiningRoom,
+    refetch: refetchApiDiningRoom,
+    isLoading: loadingDiningRoom
+  } = useQuery({
     queryKey: ['getAllDiningRoom', searchParams],
     queryFn: async () => {
       const res = await diningRoomService.getAll(prams);
@@ -17,7 +22,11 @@ const useApiGetAll = () => {
     }
   });
 
-  const { data: dataArea, refetch: refetchApiArea } = useQuery({
+  const {
+    data: dataArea,
+    refetch: refetchApiArea,
+    isLoading: loadingEating
+  } = useQuery({
     queryKey: ['getAllArea', searchParams],
     queryFn: async () => {
       const res = await areaService.getAll(prams);
@@ -51,7 +60,9 @@ const useApiGetAll = () => {
     refetchApiDiningRoom,
     refetchApiArea,
     refetchApiCategoryEating,
-    refetchApiEating
+    refetchApiEating,
+    loadingDiningRoom,
+    loadingEating
   };
 };
 

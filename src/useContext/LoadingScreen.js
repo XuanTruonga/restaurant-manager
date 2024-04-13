@@ -1,9 +1,9 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import CircularProgress from '@mui/material/CircularProgress';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { styled } from '@mui/material';
-import { useContext } from 'react';
 
 const style = {
   display: 'flex',
@@ -19,18 +19,13 @@ function LoadingScreen({ children }) {
     <ContextProgress.Provider value={{ setProgress }}>
       <Modal sx={{ '&.MuiBackdrop-root': { opacity: '0.7' } }} open={progress}>
         <Box sx={style}>
-          <StyleProgress />
+          <StyleProgress disableShrink />
         </Box>
       </Modal>
       {children}
     </ContextProgress.Provider>
   );
 }
-
-export const SetProgress = (boolean) => {
-  const { setProgress } = useContext(ContextProgress);
-  setProgress(boolean);
-};
 
 export default LoadingScreen;
 

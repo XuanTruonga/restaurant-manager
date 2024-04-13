@@ -23,8 +23,8 @@ class CategoryService extends BaseService {
   edit(id, data) {
     return this.update(categoryEndPoint.update, id, data);
   }
-  getAll() {
-    return this.get();
+  getAll(prams) {
+    return this.get(prams);
   }
   getOne(id) {
     return this.find(categoryEndPoint.find_on, id);

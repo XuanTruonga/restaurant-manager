@@ -82,7 +82,8 @@ const Eating = () => {
       columnHelper.accessor('quantity', {
         header: 'Tồn kho',
         enableGlobalFilter: false,
-        minWidth: 80
+        minWidth: 80,
+        cell: (row) => <Typography>{Number(row.getValue()).toLocaleString()}</Typography>
       }),
       columnHelper.accessor('', {
         header: 'Thao tác',
@@ -115,7 +116,7 @@ const Eating = () => {
               data={dataEating}
               setTable={setTable}
               setRowCheckBox={setRowCheckBox}
-              paginationEating={paginationEating}
+              dataPagination={paginationEating}
             />
           )}
           <BasicModalPrimary width={960} title={'Thêm hàng hóa.'}>

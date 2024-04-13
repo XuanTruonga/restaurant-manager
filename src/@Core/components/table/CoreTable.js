@@ -13,8 +13,8 @@ import useSearchParamsHook from 'components/Hook/useSearchParamsHook';
 import { useState } from 'react';
 
 export default function CoreTable(props) {
-  const { columns, data = [], isLoading, isPagination = true, onClick, setTable, setRowCheckBox, paginationDiningRoom } = props;
-  const { searchParams: dataPagination } = useSearchParamsHook();
+  const { columns, data = [], isLoading, isPagination = true, onClick, setTable, setRowCheckBox, dataPagination } = props;
+  const { searchParams: dataPaginationPram } = useSearchParamsHook();
   const [sorting, setSorting] = React.useState();
   const [rowSelection, setRowSelection] = React.useState({});
   const [pagination, setPagination] = useState({
@@ -40,10 +40,10 @@ export default function CoreTable(props) {
   });
   useEffect(() => {
     if (!isLoading) {
-      // setTotalPage(dataPagination?.total_page);
+      // setTotalPage(dataPaginationPram?.total_page);
     }
   }, [isLoading]);
-  // console.log(paginationDiningRoom);
+  // console.log(dataPagination);
 
   useEffect(() => {
     setTable && setTable(tableInstance);
@@ -75,7 +75,7 @@ export default function CoreTable(props) {
               sx={{ width: 70, borderRadius: '12px', fontSize: '14px !important' }}
               size='small'
               variant='outlined'
-              value={dataPagination?.limit || 10}
+              value={dataPaginationPram?.limit || 10}
               onChange={(e) => {
                 setParams('limit', e.target.value);
               }}>
@@ -87,8 +87,8 @@ export default function CoreTable(props) {
           <StylePagination
             sx={{ fontSize: '14px !important' }}
             onChange={(_, page) => setParams('page', String(page))}
-            count={paginationDiningRoom?.totalPage}
-            page={Number(dataPagination?.page) || 1}
+            count={dataPagination?.totalPage}
+            page={Number(dataPaginationPram?.page) || 1}
             siblingCount={1}
           />
         </Box>

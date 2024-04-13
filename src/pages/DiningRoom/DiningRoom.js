@@ -13,16 +13,21 @@ import { columnHelper } from '@Core/components/table/CoreTableBody';
 import { statusDingingRoom, statusDiningRoomkey } from './utils/statusDiningRoom';
 import { CoreTableActionView } from '@Core/components/table/CoreTableAction';
 import useApiGetAll from '../../components/Hook/useApiGetAll';
-import { useMemo } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import useModal from 'components/Hook/useModal';
+import { ContextProgress } from 'useContext/LoadingScreen';
 
 const DiningRoom = () => {
-  const { dataArea, dataDiningRoom, paginationDiningRoom } = useApiGetAll();
+  const { dataArea, dataDiningRoom, paginationDiningRoom, loadingDiningRoom } = useApiGetAll();
+  const { setProgress } = useContext(ContextProgress);
   const { onModalDetail, onModalPrimary } = useModal();
 
   const handleViewDetailDiningRoom = (value) => {
     onModalDetail(value);
   };
+  useEffect(() => {
+    loadingDiningRoom ? setProgress(true) : setProgress(false);
+  }, [loadingDiningRoom]);
   const columnDiningRoom = useMemo(() => {
     return [
       columnHelper.accessor((_, index) => index + 1, {
@@ -91,7 +96,7 @@ const DiningRoom = () => {
       <Grid item xs={9.5} md={9.5}>
         <Box>
           <Box sx={{ pb: '10px', display: 'flex', justifyContent: 'space-between' }}>
-            <Typography sx={{ fontSize: theme.typography.font_26_base }}>Hàng hóa</Typography>
+            <Typography sx={{ fontSize: theme.typography.font_26_base }}>Phòng bàn</Typography>
             <Box>
               <Button
                 onClick={() => onModalPrimary()}
@@ -104,7 +109,7 @@ const DiningRoom = () => {
               </Button>
             </Box>
           </Box>
-          {dataDiningRoom && <CoreTable columns={columnDiningRoom} data={dataDiningRoom} paginationDiningRoom={paginationDiningRoom} />}
+          {dataDiningRoom && <CoreTable columns={columnDiningRoom} data={dataDiningRoom} dataPagination={paginationDiningRoom} />}
           <BasicModalPrimary title={'Thêm phòng/bàn.'}>
             <FormCreateDiningRoom dataArea={dataArea} />
           </BasicModalPrimary>

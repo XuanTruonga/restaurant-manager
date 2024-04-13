@@ -10,9 +10,9 @@ const UseAuth = () => {
   const setUser = (data) => {
     dispatch(actionSetUserCur(data));
   };
-  const logout =()=>{
-    dispatch(actionLogout())
-  }
+  const logout = () => {
+    dispatch(actionLogout());
+  };
   return {
     ...state,
     getUser,

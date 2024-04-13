@@ -4,6 +4,7 @@ import UseAuth from 'components/Hook/useAuth';
 import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Routers from 'routers/routers';
+import LoadingScreen from 'useContext/LoadingScreen';
 
 function App() {
   const { isInitialized } = UseAuth();
@@ -12,12 +13,14 @@ function App() {
   }
   return (
     <>
-      <CoreConfirmProvider>
-        <BrowserRouter>
-          <Routers />
-        </BrowserRouter>
-      </CoreConfirmProvider>
-      <ToastContainer />
+      <LoadingScreen>
+        <CoreConfirmProvider>
+          <BrowserRouter>
+            <Routers />
+          </BrowserRouter>
+        </CoreConfirmProvider>
+        <ToastContainer autoClose='1200' />
+      </LoadingScreen>
     </>
   );
 }

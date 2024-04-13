@@ -16,7 +16,7 @@ import productService from 'services/productService';
 import useApiGetAll from 'components/Hook/useApiGetAll';
 
 const FormCreateEating = () => {
-  const { dataCategoryEating } = useApiGetAll();
+  const { dataCategoryEating, refetchApiEating } = useApiGetAll();
   const { offModalPrimary: offModalCreateEating } = useModal();
   const {
     control,
@@ -29,12 +29,13 @@ const FormCreateEating = () => {
   const onSubmitAddEating = async (value) => {
     const category = dataCategoryEating.find((item) => value.categoryId === item.name);
     const newValue = { ...value, categoryId: category.id };
+    refetchApiEating();
     try {
       productService.add(newValue);
-      ToastMessage('success', 'thêm phòng/bàn thành công');
+      ToastMessage('success', 'thêm hàng hóa thành công');
       offModalCreateEating();
     } catch (error) {
-      ToastMessage('success', 'thêm phòng/bàn thất bại');
+      ToastMessage('success', 'thêm hàng hóa thất bại');
     }
   };
 

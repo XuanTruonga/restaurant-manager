@@ -149,6 +149,15 @@ export const theme = createTheme({
               padding: '5px 15px',
               '&:hover': { backgroundColor: '#368138' }
             };
+          } else if (ownerState.color === 'info') {
+            return {
+              backgroundColor: '#0066cc',
+              textTransform: 'none',
+              color: '#fff',
+              fontWeight: 'bold',
+              padding: '5px 15px',
+              '&:hover': { backgroundColor: '#0656a7' }
+            };
           } else {
             return {
               textTransform: 'none',

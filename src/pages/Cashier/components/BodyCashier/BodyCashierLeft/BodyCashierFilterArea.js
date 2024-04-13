@@ -1,24 +1,34 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { theme } from '@Core/Theme/theme';
 import { Box, styled } from '@mui/material';
 import color from '@Core/Theme/color';
-import useApiGetAll from 'components/Hook/useApiGetAll';
+import useSearchParamsHook from 'components/Hook/useSearchParamsHook';
 
 const BodyCashierFilterArea = (props) => {
-  const { valueArea, setValueArea } = props;
-  const { dataArea } = useApiGetAll();
+  const { valueArea, setValueArea, dataArea } = props;
+  const { searchParams, setParams, setSearchParams } = useSearchParamsHook();
+  const handleGetAllArea = () => {
+    setValueArea('all');
+    delete searchParams.areaId;
+    setSearchParams(searchParams);
+  };
 
-  const handleFilterArea = () => {
-    setValueArea({ name: 'all', data: {} });
+  const handleFilterArea = (area) => {
+    setValueArea(area.id);
+    setParams('areaId', area.id);
   };
   return (
     <Box sx={{ display: 'flex' }}>
-      <StyleAreaItem style={valueArea.name === 'all' ? styleActiveArea : null} onClick={handleFilterArea}>
+      <StyleAreaItem style={valueArea === 'all' ? styleActiveArea : null} onClick={handleGetAllArea}>
         Tất cả
       </StyleAreaItem>
       {dataArea?.map((area, index) => {
         return (
-          <StyleAreaItem style={valueArea === area.name ? styleActiveArea : null} onClick={() => setValueArea(area.name)} key={index}>
+          <StyleAreaItem
+            style={searchParams.areaId === String(area.id) ? styleActiveArea : null}
+            onClick={() => handleFilterArea(area)}
+            key={index}>
             {area.name}
           </StyleAreaItem>
         );
@@ -31,9 +41,9 @@ export default BodyCashierFilterArea;
 
 const StyleAreaItem = styled('div')(() => ({
   padding: '6px 14px',
-  fontWeight: 500,
   borderRadius: '16px',
   cursor: 'pointer',
+  fontWeight: '500',
   '&:hover': { backgroundColor: color.gray1 }
 }));
 const styleActiveArea = {

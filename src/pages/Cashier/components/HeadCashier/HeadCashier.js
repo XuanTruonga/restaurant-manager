@@ -1,15 +1,22 @@
 import * as React from 'react';
 import { Grid, Typography, styled } from '@mui/material';
 import ArticleIcon from '@mui/icons-material/Article';
-import HeaderFilters from './HeadFilters';
 import HeadUser from './HeadUser';
 import { theme } from '@Core/Theme/theme';
+import HeaderFilters from './HeadFilters';
 
-const HeadCashier = ({ value, setValue }) => {
+const HeadCashier = ({ value, setValue, dataEating, setPramsEating, pramsEating, refetchEating }) => {
   return (
     <Grid container spacing={2} sx={{ pt: '6px' }}>
       <Grid item xs={6} md={6.6}>
-        <HeaderFilters value={value} setValue={setValue} />
+        <HeaderFilters
+          pramsEating={pramsEating}
+          value={value}
+          setValue={setValue}
+          dataEating={dataEating}
+          setPramsEating={setPramsEating}
+          refetchEating={refetchEating}
+        />
       </Grid>
       <Grid item xs={6} md={5.4} sx={{ textAlign: 'end', display: 'flex', justifyContent: 'space-between' }}>
         <StyleTabBill>

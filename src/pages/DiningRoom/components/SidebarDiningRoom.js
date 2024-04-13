@@ -17,6 +17,8 @@ const SidebarDiningRoom = ({ dataArea }) => {
   const { setParams, searchParams, setSearchParams } = useSearchParamsHook();
 
   const handleChangeRadio = (e) => {
+    setParams('page', 1);
+    console.log(searchParams.page);
     if (e.target.value === statusDingingRoom.all) {
       delete searchParams.status;
       setSearchParams(searchParams);
